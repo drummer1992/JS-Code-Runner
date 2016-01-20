@@ -1,0 +1,31 @@
+{
+  "name": "@backendless/coderunner",
+  "version": "1.0.0",
+  "description": "Application for deploying and execution custom business logic code in Backendless",
+  "scripts": {
+    "test": "echo 'Error: no test specified' && exit 1",
+    "lint": "eslint lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.backendless.com:backendless/backendless-js-coderunner.git"
+  },
+  "bugs": {
+    "url": "http://bugs.backendless.com/browse/BKNDLSS"
+  },
+  "engines": {
+    "node": ">4.0.0"
+  },
+  "keywords": [
+    "backendless"
+  ],
+  "dependencies": {
+    "backendlessjs": "^3.0.0",
+    "commander": "^2.9.0",
+    "redis": "^2.4.2"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^1.10.3"
+  }
+}
