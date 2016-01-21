@@ -6,16 +6,9 @@
     "id": "7178CE20-4753-A3A2-FF32-CD1A8D3DA000",
     "secretKey": "F574DEB4-87BE-D61D-FF3D-75BBA5142900",
     "version": "v1",
-    "src": {
-      "handlers": [
-        "src/examples/builder/handlers"
-      ],
-      "services": [
-        "src/examples/builder/services"
-      ],
-      "timers": [
-        "src/examples/builder/timers"
-      ]
-    }
+    "files": [
+      "examples/**",
+      "!examples/plain/**"
+    ]
   }
 }
