@@ -1,20 +1,19 @@
 'use strict';
 
-var CodeRunner = require('../../../lib');
+var CodeRunner = require('backendless-coderunner');
 var Backendless = require('../../backendless');
-var sync = CodeRunner.handler.sync;
 
 module.exports = CodeRunner.persistenceEventsHandler('*', {
-  beforeRemove: function(context, request) {
+  beforeRemove(context, request) {
     //request.error && request.success are null because of handler async nature;
     Backendless.debug('Hey. Someone is about to remove something!');
   },
 
-  afterRemove: function(context, request, response) {
+  afterRemove(context, request, response) {
     Backendless.debug('Ohh. well.. forget..');
   },
 
-  beforeAdd: sync(function() {
-    Backendless.debug('Yummy! Give me some more!');
-  })
+  beforeAddSync(context, request) {
+    Backendless.debug('');
+  }
 });

@@ -8,6 +8,7 @@
     "version": "v1",
     "files": [
       "examples/**",
+      "!examples/chain/**",
       "!examples/plain/**"
     ]
   }
