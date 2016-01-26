@@ -23,6 +23,7 @@
     "backendlessjs": "^3.0.0",
     "commander": "^2.9.0",
     "glob": "^6.0.4",
+    "node-uuid": "^1.4.7",
     "redis": "^2.4.2",
     "request": "^2.67.0"
   },

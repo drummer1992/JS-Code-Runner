@@ -1,6 +1,11 @@
 {
   "backendless": {
-    "apiServer": "https://api.backendless.com"
+    "apiServer": "https://api.backendless.com",
+
+    "registry": {
+      "host": "cl.backendless.com",
+      "port": 6379
+    }
   },
   "app": {
     "id": "7178CE20-4753-A3A2-FF32-CD1A8D3DA000",
