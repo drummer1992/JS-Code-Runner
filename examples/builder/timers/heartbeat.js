@@ -9,7 +9,7 @@ module.exports = CodeRunner.timer({
     schedule: "once"
   },
 
-  tick: function() {
+  execute: function() {
     console.log("I'm alive!");
   }
 });

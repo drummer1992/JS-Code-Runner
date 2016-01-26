@@ -11,7 +11,7 @@ module.exports = CodeRunner.timer({
     repeat  : {"every": 1}
   },
 
-  tick: function() {
+  execute: function() {
     Backendless.Counters.incrementAndGet(this.name);
   }
 });
