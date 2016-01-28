@@ -1,14 +1,15 @@
 'use strict';
 
-var CodeRunner = require('../../lib');
+module.exports = function(backendless) {
 
-//noinspection JSUnusedLocalSymbols,Eslint
-module.exports = CodeRunner.handler('persistence', 'Order', {
-  beforeRemove: function(context, request) {
-    console.log('Before Order Remove');
-  },
+  return backendless.serverCode.persistanceEventsHandler('Order', {
+    beforeRemove() {
+      console.log('Before Order Remove');
+    },
 
-  afterRemove: function(context, request, response) {
-    console.log('After Order Remove');
-  }
-});
+    afterRemove() {
+      console.log('After Order Remove');
+    }
+  });
+
+};
