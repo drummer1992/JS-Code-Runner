@@ -9,7 +9,7 @@
  */
 module.exports = function(backendless) {
 
-  return backendless.serverCode.persistanceEventsHandler('*', {
+  return backendless.serverCode.persistenceEventsHandler('*', {
     beforeRemove(context, request) {
       backendless.api.data('Hey. Someone is about to remove something!');
     },
