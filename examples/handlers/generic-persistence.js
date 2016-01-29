@@ -10,16 +10,20 @@
 module.exports = function(backendless) {
 
   return backendless.serverCode.persistenceEventsHandler('*', {
+    afterCreate(context, request) {
+      backendless.api.debug('After create');
+    },
+
     beforeRemove(context, request) {
-      backendless.api.data('Hey. Someone is about to remove something!');
+      backendless.api.debug('Hey. Someone is about to remove something!');
     },
 
     afterRemove(context, request, response) {
       backendless.api.debug('Ohh. well.. forget..');
     },
 
-    beforeAddSync(context, request) {
-      backendless.api.debug('');
+    beforeCreateSync(context, request) {
+      backendless.api.debug('Before create. Synchronized');
     }
   });
 

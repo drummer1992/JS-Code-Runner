@@ -6,7 +6,8 @@ module.exports = function(backendless) {
     name: "Heartbeat",
 
     frequency: {
-      schedule: "once"
+      schedule: "custom",
+      repeat: {every: 60}
     },
 
     execute: function() {
