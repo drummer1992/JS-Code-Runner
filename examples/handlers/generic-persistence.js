@@ -9,21 +9,23 @@
  */
 module.exports = function(backendless) {
 
+  const apiLogger = backendless.api.Logging.getLogger('server-code');
+
   return backendless.serverCode.persistenceEventsHandler('*', {
     afterCreate(context, request) {
-      backendless.api.debug('After create');
+      apiLogger.debug('After create');
     },
 
     beforeRemove(context, request) {
-      backendless.api.debug('Hey. Someone is about to remove something!');
+      apiLogger.debug('Hey. Someone is about to remove something!');
     },
 
     afterRemove(context, request, response) {
-      backendless.api.debug('Ohh. well.. forget..');
+      apiLogger.debug('Ohh. well.. forget..');
     },
 
     beforeCreateSync(context, request) {
-      backendless.api.debug('Before create. Synchronized');
+      apiLogger.debug('Before create. Synchronized');
     }
   });
 
