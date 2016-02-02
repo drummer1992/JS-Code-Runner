@@ -5,7 +5,7 @@ module.exports = function(backendless) {
   return backendless.serverCode.timer({
     frequency: {
       schedule: "custom",
-      repeat  : {every: 60}
+      repeat  : {every: 160}
     },
 
     execute: function() {

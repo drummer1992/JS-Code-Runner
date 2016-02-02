@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Application for deploying and execution custom business logic code in Backendless",
   "scripts": {
-    "test": "echo 'Error: no test specified' && exit 1",
+    "test": "mocha --reporter spec",
     "lint": "eslint lib"
   },
   "repository": {
@@ -28,6 +28,9 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^1.10.3"
+    "eslint": "^1.10.3",
+    "mocha": "^2.4.5",
+    "mockery": "^1.4.0",
+    "should": "^8.2.1"
   }
 }
