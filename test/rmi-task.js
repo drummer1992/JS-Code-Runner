@@ -48,8 +48,10 @@ describe('[invoke-method] task', function() {
 
   it('should handle unsupported event', function() {
     return invokeMethod({eventId: -1}, {handlers: []})
+      .then(JSON.parse)
       .then(res => {
-        res.exception.should.startWith('Integrity violation');
+        should.exist(res.exception)
+        res.exception.exceptionMessage.should.startWith('Integrity violation');
       })
   });
 
@@ -59,8 +61,10 @@ describe('[invoke-method] task', function() {
     };
 
     return invokeMethod({eventId: DATA.beforeCreate.id}, stubModel)
+      .then(JSON.parse)
       .then(res => {
-        res.exception.should.startWith('Integrity violation');
+        should.exist(res.exception);
+        res.exception.exceptionMessage.should.startWith('Integrity violation');
       })
   });
 
@@ -70,8 +74,10 @@ describe('[invoke-method] task', function() {
     };
 
     return invokeMethod({eventId: DATA.beforeCreate.id}, stubModel)
+      .then(JSON.parse)
       .then(res => {
-        res.exception.should.startWith('Cannot find module');
+        should.exist(res.exception);
+        res.exception.exceptionMessage.should.startWith('Cannot find module');
       })
   });
 
@@ -81,7 +87,12 @@ describe('[invoke-method] task', function() {
       throw new Error('Error in Handler!');
     });
 
-    return invokeMethod(task, model).should.be.fulfilledWith({exception: 'Error in Handler!'});
+    return invokeMethod(task, model)
+      .then(JSON.parse)
+      .then(res => {
+        should.exist(res.exception);
+        res.exception.exceptionMessage.should.be.eql('Error in Handler!');
+      });
   });
 
   it('should allow input params modifying', function() {
@@ -97,6 +108,7 @@ describe('[invoke-method] task', function() {
     };
 
     return invokeMethod(task, createModelForTask(task, handler))
+      .then(JSON.parse)
       .then((result) => {
         should.not.exist(result.exception);
         should.exist(result.arguments);
@@ -116,6 +128,7 @@ describe('[invoke-method] task', function() {
     };
 
     return invokeMethod(task, createModelForTask(task, handler))
+      .then(JSON.parse)
       .then((result) => {
         should.exist(result.arguments);
         decodeArgs(result.arguments)[2].should.be.eql({name: 'Dou', id: 2});
@@ -127,6 +140,7 @@ describe('[invoke-method] task', function() {
     const handler = (req, res)=> res.success({name: 'Dou', id: 2});
 
     return invokeMethod(task, createModelForTask(task, handler))
+      .then(JSON.parse)
       .then((result) => {
         should.exist(result.arguments);
         decodeArgs(result.arguments)[2].should.be.eql({name: 'Dou', id: 2});
