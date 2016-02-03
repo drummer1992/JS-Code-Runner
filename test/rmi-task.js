@@ -25,7 +25,7 @@ function decodeArgs(args) {
 let stubs = 0;
 
 function createModelForTask(task, handlerFn) {
-  const event = events.types.byId[task.eventId];
+  const event = events.get(task.eventId);
   const handlerName = event.name + (task.async ? '' : 'Sync'); //TODO: flip logic
   const handlerStubId = 'Stub Handler #' + (++stubs);
   const result = {
@@ -95,28 +95,40 @@ describe('[invoke-method] task', function() {
       });
   });
 
-  it('should allow input params modifying', function() {
-    const object = {name: 'John'};
-    const context = {};
-    const task = {eventId: DATA.beforeCreate.id, arguments: encodeArgs([context, object])};
+  it('should fill in input params to [request] object', function() {
+    const task = {eventId: DATA.beforeCreate.id, arguments: encodeArgs([{}, {name: 'John'}])};
     const handler = function(req, res) {
-      req.context.should.be.eql(context);
-      req.object.should.be.eql(object);
+      should.exist(req.item);
+      req.item.should.be.eql({name: 'John'});
+      res.success();
+    };
 
-      req.object = {name: 'Dou'};
+    return invokeMethod(task, createModelForTask(task, handler)).should.be.fulfilled();
+  });
+
+  it('should allow input params modifying in [before] event handler', function() {
+    const task = {eventId: DATA.beforeCreate.id, arguments: encodeArgs([{}, {name: 'John'}])};
+    const handler = function(req, res) {
+      req.item = {name: 'Dou'};
       res.success();
     };
 
     return invokeMethod(task, createModelForTask(task, handler))
       .then(JSON.parse)
       .then((result) => {
-        should.not.exist(result.exception);
+        decodeArgs(result.arguments)[1].should.be.eql({name: 'Dou'});
+      });
+  });
+
+  it('should allow short circuit in [before] event handler', function() {
+    const task = {eventId: DATA.beforeCreate.id, arguments: encodeArgs([{}, {}, {name: 'John', id: 1}])};
+    const handler = (req, res) => res.success({name: 'Dou', id: 2});
+
+    return invokeMethod(task, createModelForTask(task, handler))
+      .then(JSON.parse)
+      .then((result) => {
         should.exist(result.arguments);
-
-        const args = decodeArgs(result.arguments);
-
-        args[0].should.be.eql(context);
-        args[1].should.be.eql({name: 'Dou'});
+        decodeArgs(result.arguments)[0].prematureResult.should.be.eql({name: 'Dou', id: 2});
       });
   });
 
