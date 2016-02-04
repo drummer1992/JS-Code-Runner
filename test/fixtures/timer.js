@@ -1,15 +1,15 @@
 'use strict';
 
-var CodeRunner = require('../../lib');
+module.exports = function(backendless) {
 
-module.exports = CodeRunner.timer({
-  name: "Fixture Timer",
+  return backendless.serverCode.timer({
+    frequency: {
+      schedule: "daily",
+      repeat  : {"every": 1}
+    },
 
-  frequency: {
-    schedule: "once"
-  },
-
-  tick: function() {
-    console.log("Timer tick");
-  }
-});
+    execute: function() {
+      console.log("Timer tick");
+    }
+  });
+};
