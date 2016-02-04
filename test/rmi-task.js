@@ -2,13 +2,11 @@
 
 const mockery      = require('mockery'),
       should       = require('should'),
+      mocha        = require('mocha'),
       path         = require('path'),
       events       = require('../lib/server-code/events'),
+      DATA         = events.providers.DATA,
       invokeMethod = require('../lib/server-code/runners/tasks/invoke-method');
-
-const DATA = events.providers.DATA;
-
-require('mocha');
 
 function stringToBytes(s) {
   return s.split('').map((c, i) => s.charCodeAt(i));
@@ -24,9 +22,9 @@ function decodeArgs(args) {
 
 let stubs = 0;
 
-function createModelForTask(task, handlerFn) {
+function createModel(task, handlerFn) {
   const event = events.get(task.eventId);
-  const handlerName = event.name + (task.async ? '' : 'Sync'); //TODO: flip logic
+  const handlerName = event.name + (task.async ? 'Async' : '');
   const handlerStubId = 'Stub Handler #' + (++stubs);
   const result = {
     app       : {id: 'id', secretKey: 'key', version: 'version'},
@@ -34,128 +32,165 @@ function createModelForTask(task, handlerFn) {
   };
 
   mockery.enable();
-  mockery.registerMock(path.resolve(handlerStubId), function(bless) {
-    return bless.serverCode.EventsHandler.forProvider(event.provider)(task.target, {[handlerName]: handlerFn});
+  mockery.registerMock(path.resolve(handlerStubId), function(backendless) {
+    return backendless.serverCode.EventsHandler.forProvider(event.provider)(task.target, {[handlerName]: handlerFn});
   });
 
   return result;
 }
 
-describe('[invoke-method] task', function() {
-  afterEach(function() {
+function createTask(event, args, async) {
+  return {
+    eventId  : event.id,
+    async    : !!async,
+    arguments: encodeArgs(args || [])
+  }
+}
+
+function invokeAndParse(task, model) {
+  return invokeMethod(task, model)
+    .then(res => res && JSON.parse(res))
+    .then(res => {
+      if (res && res.arguments) {
+        res.arguments = res.arguments && decodeArgs(res.arguments);
+      }
+      return res;
+    });
+}
+
+describe('[invoke-method] task executor', function() {
+  beforeEach(function() {
     mockery.disable();
   });
 
-  it('should handle unsupported event', function() {
-    return invokeMethod({eventId: -1}, {handlers: []})
-      .then(JSON.parse)
-      .then(res => {
-        should.exist(res.exception)
-        res.exception.exceptionMessage.should.startWith('Integrity violation');
-      })
-  });
-
-  it('should handle missed handler event', function() {
-    const stubModel = {
-      getHandler: () => (null)
-    };
-
-    return invokeMethod({eventId: DATA.beforeCreate.id}, stubModel)
-      .then(JSON.parse)
-      .then(res => {
-        should.exist(res.exception);
-        res.exception.exceptionMessage.should.startWith('Integrity violation');
-      })
-  });
-
-  it('should handle event with missed handler module', function() {
-    const stubModel = {
-      getHandler: () => ({provider: 'some/unexisting/handler/module'})
-    };
-
-    return invokeMethod({eventId: DATA.beforeCreate.id}, stubModel)
-      .then(JSON.parse)
-      .then(res => {
-        should.exist(res.exception);
-        res.exception.exceptionMessage.should.startWith('Cannot find module');
-      })
-  });
-
-  it('should handle script errors in handler function', function() {
-    const task = {eventId: DATA.beforeCreate.id};
-    const model = createModelForTask(task, () => {
-      throw new Error('Error in Handler!');
-    });
-
-    return invokeMethod(task, model)
-      .then(JSON.parse)
-      .then(res => {
-        should.exist(res.exception);
-        res.exception.exceptionMessage.should.be.eql('Error in Handler!');
-      });
-  });
-
   it('should fill in input params to [request] object', function() {
-    const task = {eventId: DATA.beforeCreate.id, arguments: encodeArgs([{}, {name: 'John'}])};
-    const handler = function(req, res) {
+    const task = createTask(DATA.beforeCreate, [{}, {name: 'John'}]);
+    const model = createModel(task, (req, res) => {
       should.exist(req.item);
       req.item.should.be.eql({name: 'John'});
       res.success();
-    };
+    });
 
-    return invokeMethod(task, createModelForTask(task, handler)).should.be.fulfilled();
+    return invokeAndParse(task, model).should.be.fulfilled();
   });
 
-  it('should allow input params modifying in [before] event handler', function() {
-    const task = {eventId: DATA.beforeCreate.id, arguments: encodeArgs([{}, {name: 'John'}])};
-    const handler = function(req, res) {
-      req.item = {name: 'Dou'};
-      res.success();
-    };
+  describe('should handle errors', function() {
+    it('due to unsupported event', function() {
+      return invokeAndParse({eventId: -1}, {handlers: []}).then(res => {
+        should.exist(res.exception);
+        res.exception.exceptionMessage.should.startWith('Integrity violation');
+      })
+    });
 
-    return invokeMethod(task, createModelForTask(task, handler))
-      .then(JSON.parse)
-      .then((result) => {
-        decodeArgs(result.arguments)[1].should.be.eql({name: 'Dou'});
+    it('due to missed handler event', function() {
+      const stubModel = {
+        getHandler: () => (null)
+      };
+
+      return invokeAndParse(createTask(DATA.beforeCreate), stubModel).then(res => {
+        should.exist(res.exception);
+        res.exception.exceptionMessage.should.startWith('Integrity violation');
+      })
+    });
+
+    it('due to missed handler module', function() {
+      const stubModel = {
+        getHandler: () => ({provider: 'non/existing/handler/module'})
+      };
+
+      return invokeAndParse(createTask(DATA.beforeCreate), stubModel).then(res => {
+        should.exist(res.exception);
+        res.exception.exceptionMessage.should.startWith('Cannot find module');
+      })
+    });
+
+    it('generated by handler function', function() {
+      const task = createTask(DATA.beforeCreate);
+      const model = createModel(task, () => {
+        throw new Error('Error in Handler!');
       });
+
+      return invokeAndParse(task, model).then(res => {
+        should.exist(res.exception);
+        res.exception.exceptionMessage.should.be.eql('Error in Handler!');
+      });
+    });
   });
 
-  it('should allow short circuit in [before] event handler', function() {
-    const task = {eventId: DATA.beforeCreate.id, arguments: encodeArgs([{}, {}, {name: 'John', id: 1}])};
-    const handler = (req, res) => res.success({name: 'Dou', id: 2});
+  describe('for [before] phase events', function() {
+    it('should allow input parameters modifying', function() {
+      const task = createTask(DATA.beforeCreate, [{}, {name: 'John'}]);
+      const handler = function(req, res) {
+        req.item = {name: 'Dou'};
+        res.success();
+      };
 
-    return invokeMethod(task, createModelForTask(task, handler))
-      .then(JSON.parse)
-      .then((result) => {
-        should.exist(result.arguments);
-        decodeArgs(result.arguments)[0].prematureResult.should.be.eql({name: 'Dou', id: 2});
+      return invokeAndParse(task, createModel(task, handler)).then(res => {
+        res.arguments[1].should.be.eql({name: 'Dou'});
       });
+    });
+
+    it('should allow short circuit feature (stopping the event propagation and returning its own result to the client)', function() {
+      const task = createTask(DATA.beforeCreate, [{}, {}, {name: 'John', id: 1}]);
+      const handler = (req, res) => res.success({name: 'Dou', id: 2});
+
+      return invokeAndParse(task, createModel(task, handler)).then(res => {
+        res.arguments[0].prematureResult.should.be.eql({name: 'Dou', id: 2});
+      });
+    });
   });
 
-  it('should allow result modifying via setting {res.result} a new value', function() {
-    const task = {eventId: DATA.afterCreate.id, arguments: encodeArgs([{}, {}, {name: 'John', id: 1}])};
-    const handler = function(req, res) {
-      res.result = {name: 'Dou', id: 2};
-      res.success();
-    };
+  describe('for [after] phase events', function() {
+    it('should provide {result} object in {response} handler argument', function() {
+      const result = {name: 'John', id: 1};
+      const task = createTask(DATA.afterCreate, [{}, {}, result]);
 
-    return invokeMethod(task, createModelForTask(task, handler))
-      .then(JSON.parse)
-      .then((result) => {
-        should.exist(result.arguments);
-        decodeArgs(result.arguments)[2].should.be.eql({name: 'Dou', id: 2});
+      const handler = function(req, res) {
+        should.exist(res.result);
+        res.result.should.be.eql(result);
+        res.success();
+      };
+
+      return invokeAndParse(task, createModel(task, handler)).then(res => {
+        res.arguments[2].should.be.eql(result);
       });
+    });
+
+    it('should allow modifying server result via calling {res.success} with value', function() {
+      const task = createTask(DATA.afterCreate, [{}, {}, {name: 'John', id: 1}]);
+      const handler = (req, res) => res.success({name: 'Dou', id: 2});
+
+      return invokeAndParse(task, createModel(task, handler)).then(res => {
+        res.arguments[2].should.be.eql({name: 'Dou', id: 2});
+      });
+    });
+
+    it('should allow result modifying via setting {res.result} a new value', function() {
+      const task = createTask(DATA.afterCreate, [{}, {}, {name: 'John', id: 1}]);
+      const handler = function(req, res) {
+        res.result = {name: 'Dou', id: 2};
+        res.success();
+      };
+
+      return invokeAndParse(task, createModel(task, handler)).then(res => {
+        res.arguments[2].should.be.eql({name: 'Dou', id: 2});
+      });
+    });
   });
 
-  it('should allow result modifying via calling {res.success} with value', function() {
-    const task = {eventId: DATA.afterCreate.id, arguments: encodeArgs([{}, {}, {name: 'John', id: 1}])};
-    const handler = (req, res)=> res.success({name: 'Dou', id: 2});
+  describe('for async events', function() {
+    it('should not provide [success] and [error] callbacks', function() {
+      const task = createTask(DATA.afterCreate, [], true);
+      const handler = function(req, res) {
+        should.not.exist(res.success);
+        should.not.exist(res.error);
+      };
 
-    return invokeMethod(task, createModelForTask(task, handler))
-      .then(JSON.parse)
-      .then((result) => {
-        should.exist(result.arguments);
-        decodeArgs(result.arguments)[2].should.be.eql({name: 'Dou', id: 2});
-      });
+      return invokeAndParse(task, createModel(task, handler))
+        .catch(err => {
+          console.log(err);
+        })
+        .should.be.fulfilledWith(undefined);
+    });
   });
 });
