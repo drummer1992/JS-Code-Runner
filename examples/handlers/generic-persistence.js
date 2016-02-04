@@ -9,23 +9,31 @@
  */
 module.exports = function(backendless) {
 
-  const apiLogger = backendless.api.Logging.getLogger('server-code');
-
   return backendless.serverCode.persistenceEventsHandler('*', {
-    afterCreate(context, request) {
-      apiLogger.debug('After create');
+    afterCreate(req, res) {
+      console.log('afterCreate'. req.item, res.result);
+
+      //add some new properties to created object
+      res.result.created = new Date().getTime();
+      res.success();
     },
 
-    beforeRemove(context, request) {
-      apiLogger.debug('Hey. Someone is about to remove something!');
+    beforeRemove(req, res) {
+      console.log('beforeRemove');
+
+      res.error('No way !!'); //stop an operation with an error
     },
 
-    afterRemove(context, request, response) {
-      apiLogger.debug('Ohh. well.. forget..');
-    },
 
-    beforeCreateSync(context, request) {
-      apiLogger.debug('Before create. Synchronized');
+    beforeCreate(req, res) {
+      console.log('beforeCreate');
+
+      //Modify the item in request
+      req.item.name = 'Modified Name';
+      req.item.secondName = 'An additional Property';
+
+      //stop further operation proceeding and respond to client with a specific result
+      res.success({'forget': true});
     }
   });
 
