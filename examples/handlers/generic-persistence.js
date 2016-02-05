@@ -11,7 +11,7 @@ module.exports = function(backendless) {
 
   return backendless.serverCode.persistenceEventsHandler('*', {
     afterCreate(req, res) {
-      console.log('afterCreate'. req.item, res.result);
+      console.log('afterCreate');
 
       //add some new properties to created object
       res.result.created = new Date().getTime();
@@ -32,7 +32,7 @@ module.exports = function(backendless) {
 
 
     beforeCreate(req, res) {
-      console.log('beforeCreate');
+      console.log('beforeCreate:generic');
 
       //Modify the item in request
       req.item.name = 'Modified Name';

@@ -2,7 +2,7 @@
   "backendless": {
     "apiServer": "https://api.backendless.com",
 
-    "registry": {
+    "messageBroker": {
       "host": "cl.backendless.com",
       "port": 6379
     }

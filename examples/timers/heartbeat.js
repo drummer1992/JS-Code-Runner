@@ -11,7 +11,7 @@ module.exports = function(backendless) {
     execute: function() {
       console.log("I'm alive!");
 
-      backendless.api.Logging.getLogger('heartbeat').debug("I'm alive!");
+      //backendless.api.Logging.getLogger('heartbeat').debug("I'm alive!");
     }
   });
 
