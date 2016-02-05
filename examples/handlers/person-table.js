@@ -12,42 +12,30 @@ module.exports = function(backendless) {
   return backendless.serverCode.persistenceEventsHandler('Person', {
 
     /**
-     * @param {Object} request            An object containing an information about event
-     * @param {Object} request.context    Application Event context
-     * @param {Object} request.objectId   An ID of the object
-     * @param {String} request.entityName
+     * @param {Object}req
+     * @param {Object} req.query
      *
-     * @param {Object} response
-     * @param {Function} response.success
-     * @param {Function} response.error
-     * @param {String[]} response.result A handling result for a given request. It will be pre-filled if this is an 'after' event
-     * Ignored for async events
+     * @param {Object} res
+     * @param {Function} res.success
+     * @param {Function} res.error
      */
-    beforeLoadRelations(request, response) {
+    beforeFind(req, res) {
+      console.log('beforeFind:person');
+      res.success();
     },
 
     /**
-     * @param {Object}request
-     * @param {Backendless.DataQuery} request.query
+     * @param {Object}req
+     * @param {Object} req.query
      *
-     * @param {Object} response
-     * @param {Function} response.success
-     * @param {Function} response.error
+     * @param {Object} res
+     * @param {Function} res.success
+     * @param {Function} res.error
+     * @param {Array<Object>} res.result
      */
-    beforeFind(request, response) {
-    },
-
-    /**
-     * @param {Object}request
-     * @param {Backendless.DataQuery} request.query
-     *
-     * @param {Object} response
-     * @param {Function} response.success
-     * @param {Function} response.error
-     * @param {Array<Object>} response.result
-     */
-    afterFind(request, response) {
-
+    afterFind(req, res) {
+      console.log('afterFind:person');
+      res.success();
     }
   });
 

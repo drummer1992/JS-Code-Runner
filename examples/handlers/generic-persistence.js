@@ -18,8 +18,14 @@ module.exports = function(backendless) {
       res.success();
     },
 
+    beforeFind(req, res) {
+      console.log('beforeFind:generic');
+
+      res.success();
+    },
+
     beforeRemove(req, res) {
-      console.log('beforeRemove');
+      console.log('beforeRemove:generic');
 
       res.error('No way !!'); //stop an operation with an error
     },
