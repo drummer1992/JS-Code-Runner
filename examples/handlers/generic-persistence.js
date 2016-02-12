@@ -14,14 +14,14 @@ module.exports = function(backendless) {
       console.log('afterCreate');
 
       //add some new properties to created object
-      res.result.created = new Date().getTime();
-      res.success();
+      //res.result.created = new Date().getTime();
+      res.sendSuccess({ne: 'yebet'});
     },
 
     beforeFind(req, res) {
       console.log('beforeFind:generic');
 
-      res.success();
+      res.sendSuccess();
     },
 
     beforeRemove(req, res) {
@@ -34,12 +34,13 @@ module.exports = function(backendless) {
     beforeCreate(req, res) {
       console.log('beforeCreate:generic');
 
-      //Modify the item in request
+//      res.sendError('Ne nada');
+//      Modify the item in request
       req.item.name = 'Modified Name';
       req.item.secondName = 'An additional Property';
 
       //stop further operation proceeding and respond to client with a specific result
-      res.success({'forget': true});
+      res.sendSuccess();
     }
   });
 

@@ -2,7 +2,7 @@
 
 module.exports = function(backendless) {
 
-  return backendless.serverCode.persistanceEventsHandler('Order', {
+  return backendless.serverCode.persistenceEventsHandler('Order', {
     beforeRemove() {
       console.log('Before Order Remove');
     },
