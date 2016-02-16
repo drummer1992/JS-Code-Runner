@@ -20,9 +20,10 @@ function decodeArgs(args) {
   return (args && args.length && JSON.parse(String.fromCharCode.apply(String, args))) || [];
 }
 
-function modelStub(handlerFn) {
+function modelStub(handlerFn, classMappings) {
   return {
-    invokeEventHandler: (eventId, target, req, res) => handlerFn(req, res)
+    invokeEventHandler: (eventId, target, req, res) => handlerFn(req, res),
+    classMappings     : classMappings
   };
 }
 
@@ -47,9 +48,9 @@ function invokeAndParse(task, model) {
 
 function serverResult(err, result) {
   return {
-    ___jsonclass:"com.backendless.servercode.ExecutionResult",
-    result: result,
-    exception: err && {
+    ___jsonclass: "com.backendless.servercode.ExecutionResult",
+    result      : result,
+    exception   : err && {
       message: err
     }
   }
@@ -71,6 +72,42 @@ describe('[invoke-method]] task executor', function() {
     return invokeAndParse(task, modelStub(handler)).should.be.fulfilled();
   });
 
+  describe('should perform class mapping', function() {
+    it('for persistence items', function() {
+      class Foo {
+      }
+      class Bar {
+      }
+      class Baz {
+      }
+
+      function handler(req, res) {
+        req.item.should.be.instanceof(Foo);
+        should.equal(req.item.a, 'a');
+
+        req.item.bar.should.be.instanceof(Bar);
+        should.equal(req.item.bar.b, 'b');
+
+        res.result.should.be.instanceof(Baz);
+        should.equal(res.result.c, 'c');
+
+        res.sendSuccess();
+      }
+
+      const item = {a: 'a', bar: {___class: 'Bar', b: 'b'}, ___class: 'Foo'};
+      const result = serverResult(null, {c: 'c', ___class: 'Baz'});
+
+      return invokeAndParse(createTask(DATA.afterCreate, [{}, item, result]), modelStub(handler, {Foo, Bar, Baz}))
+        .then((res) => {
+          should.not.exists(res.exception);
+
+          should.equal(res.arguments[1].___class, 'Foo');
+          should.equal(res.arguments[1].bar.___class, 'Bar');
+          should.equal(res.arguments[2].result.___class, 'Baz');
+        });
+    });
+  });
+
   describe('should handle', function() {
     it('unsupported event error', function() {
       return invokeAndParse({eventId: -1}, {handlers: []}).then(res => {
@@ -79,16 +116,31 @@ describe('[invoke-method]] task executor', function() {
       })
     });
 
-    it('model errors', function() {
+    it('errors raised in the event handler', function() {
       const erroredModel = {
         invokeEventHandler: () => {
-          throw new Error('Model Error');
+          throw new Error('Error');
         }
       };
 
       return invokeAndParse(createTask(DATA.beforeCreate), erroredModel).then(res => {
         should.exist(res.exception);
-        res.exception.exceptionMessage.should.equal('Model Error');
+        res.exception.exceptionMessage.should.equal('Error');
+      })
+    });
+
+    it('async errors raised in the event handler', function() {
+      const erroredModel = {
+        invokeEventHandler: () => {
+          process.nextTick(() => {
+            throw new Error('Async Error');
+          }, 0);
+        }
+      };
+
+      return invokeAndParse(createTask(DATA.beforeCreate), erroredModel).then(res => {
+        should.exist(res.exception);
+        res.exception.exceptionMessage.should.equal('Async Error');
       })
     });
 
@@ -213,7 +265,8 @@ describe('[invoke-method]] task executor', function() {
     });
 
     it('should not return any result', function() {
-      return invokeAndParse(createTask(DATA.afterCreate, [], true), modelStub(() => {}))
+      return invokeAndParse(createTask(DATA.afterCreate, [], true), modelStub(() => {
+      }))
         .should.be.fulfilledWith(undefined);
     });
   });
