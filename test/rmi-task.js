@@ -3,6 +3,7 @@
 const mockery      = require('mockery'),
       should       = require('should'),
       events       = require('../lib/server-code/events'),
+      json         = require('../lib/util/json'),
       DATA         = events.providers.DATA,
       invokeMethod = require('../lib/server-code/runners/tasks/invoke-method');
 
@@ -13,11 +14,11 @@ function stringToBytes(s) {
 }
 
 function encodeArgs(args) {
-  return (args && args.length && stringToBytes(JSON.stringify(args))) || [];
+  return (args && args.length && stringToBytes(json.stringify(args))) || [];
 }
 
 function decodeArgs(args) {
-  return (args && args.length && JSON.parse(String.fromCharCode.apply(String, args))) || [];
+  return (args && args.length && json.parse(String.fromCharCode.apply(String, args))) || [];
 }
 
 function modelStub(handlerFn, classMappings) {
@@ -56,7 +57,7 @@ function serverResult(err, result) {
   }
 }
 
-describe('[invoke-method]] task executor', function() {
+describe('[invoke-method] task executor', function() {
   beforeEach(function() {
     mockery.disable();
   });
@@ -88,14 +89,14 @@ describe('[invoke-method]] task executor', function() {
         req.item.bar.should.be.instanceof(Bar);
         should.equal(req.item.bar.b, 'b');
 
-        res.result.should.be.instanceof(Baz);
-        should.equal(res.result.c, 'c');
+        res.result[0].should.be.instanceof(Baz);
+        res.result[1].should.be.instanceof(Baz);
 
         res.sendSuccess();
       }
 
       const item = {a: 'a', bar: {___class: 'Bar', b: 'b'}, ___class: 'Foo'};
-      const result = serverResult(null, {c: 'c', ___class: 'Baz'});
+      const result = serverResult(null, [{___class: 'Baz'}, {___class: 'Baz'}]);
 
       return invokeAndParse(createTask(DATA.afterCreate, [{}, item, result]), modelStub(handler, {Foo, Bar, Baz}))
         .then((res) => {
@@ -103,7 +104,8 @@ describe('[invoke-method]] task executor', function() {
 
           should.equal(res.arguments[1].___class, 'Foo');
           should.equal(res.arguments[1].bar.___class, 'Bar');
-          should.equal(res.arguments[2].result.___class, 'Baz');
+          should.equal(res.arguments[2].result[0].___class, 'Baz');
+          should.equal(res.arguments[2].result[1].___class, 'Baz');
         });
     });
   });
