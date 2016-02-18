@@ -23,7 +23,7 @@ function decodeArgs(args) {
 
 function modelStub(handlerFn, classMappings) {
   return {
-    invokeEventHandler: (eventId, target, req, res) => handlerFn(req, res),
+    invokeEventHandler: (eventId, target, args) => handlerFn.apply(null, args),
     classMappings     : classMappings
   };
 }
@@ -67,7 +67,6 @@ describe('[invoke-method] task executor', function() {
     const handler = (req, res) => {
       should.exist(req.item);
       req.item.should.be.eql({name: 'John'});
-      res.success();
     };
 
     return invokeAndParse(task, modelStub(handler)).should.be.fulfilled();
@@ -91,8 +90,6 @@ describe('[invoke-method] task executor', function() {
 
         res.result[0].should.be.instanceof(Baz);
         res.result[1].should.be.instanceof(Baz);
-
-        res.sendSuccess();
       }
 
       const item = {a: 'a', bar: {___class: 'Bar', b: 'b'}, ___class: 'Foo'};
@@ -150,10 +147,10 @@ describe('[invoke-method] task executor', function() {
       const task = createTask(DATA.beforeCreate);
       task.timeout = 1;
 
-      const handler = function(req, res) {
-        setTimeout(() => {
-          res.success();
-        }, 2);
+      const handler = function() {
+        return new Promise((resolve) => {
+          setTimeout(() => resolve('buba'), 20);
+        })
       };
 
       return invokeAndParse(task, modelStub(handler)).then(res => {
@@ -179,7 +176,6 @@ describe('[invoke-method] task executor', function() {
       const task = createTask(DATA.beforeCreate, [{}, {name: 'John'}]);
       const handler = function(req, res) {
         req.item = {name: 'Dou'};
-        res.sendSuccess();
       };
 
       return invokeAndParse(task, modelStub(handler)).then(res => {
@@ -189,7 +185,7 @@ describe('[invoke-method] task executor', function() {
 
     it('should allow short circuit feature (stopping the event propagation and returning its own result to the client)', function() {
       const task = createTask(DATA.beforeCreate, [{}, {}, {name: 'John', id: 1}]);
-      const handler = (req, res) => res.sendSuccess({name: 'Dou', id: 2});
+      const handler = () => ({name: 'Dou', id: 2});
 
       return invokeAndParse(task, modelStub(handler)).then(res => {
         res.arguments[0].prematureResult.should.be.eql({name: 'Dou', id: 2});
@@ -207,7 +203,6 @@ describe('[invoke-method] task executor', function() {
         should.not.exist(res.error);
         should.exist(res.result);
         res.result.should.be.eql(result);
-        res.sendSuccess();
       };
 
       return invokeAndParse(task, modelStub(handler)).then(res => {
@@ -225,7 +220,7 @@ describe('[invoke-method] task executor', function() {
         should.exist(res.error);
         res.error.message.should.be.eql(error);
 
-        res.sendError();
+        throw new Error(error);
       };
 
       return invokeAndParse(task, modelStub(handler)).then(res => {
@@ -234,9 +229,9 @@ describe('[invoke-method] task executor', function() {
       });
     });
 
-    it('should allow modifying server result via calling {res.success} with value', function() {
+    it('should allow modifying server result by returning new value', function() {
       const task = createTask(DATA.afterCreate, [{}, {}, serverResult(null, {name: 'John', id: 1})]);
-      const handler = (req, res) => res.sendSuccess({name: 'Dou', id: 2});
+      const handler = (req, res) => ({name: 'Dou', id: 2});
 
       return invokeAndParse(task, modelStub(handler)).then(res => {
         res.arguments[2].result.should.be.eql({name: 'Dou', id: 2});
@@ -247,7 +242,6 @@ describe('[invoke-method] task executor', function() {
       const task = createTask(DATA.afterCreate, [{}, {}, serverResult({name: 'John', id: 1})]);
       const handler = function(req, res) {
         res.result = {name: 'Dou', id: 2};
-        res.sendSuccess();
       };
 
       return invokeAndParse(task, modelStub(handler)).then(res => {
