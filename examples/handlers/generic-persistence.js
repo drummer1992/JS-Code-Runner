@@ -4,33 +4,53 @@
  * @param {Object} backendless
  * @param {Object} backendless.api        - Backendless Client API pre-initialized by the context application
  * @param {Object} backendless.serverCode - Business Logic API for creating EventsHandlers, Timers and Services
+ *
+ * @returns {Object} Server Coder Module
  */
 module.exports = function(backendless) {
 
+  //noinspection JSUnusedLocalSymbols,Eslint
   return backendless.serverCode.persistenceEventsHandler('*', {
-    afterCreate(req, res) {
+    /**
+     * @param {Object} request
+     * @param {Object} response
+     * @returns {Object|Promise.<Object>|void}
+     */
+    afterCreate(request, response) {
       console.log('afterCreate');
 
       //stop further operation proceeding and respond to client with a specific result
       return {ne: 'yebet'};
     },
 
-    beforeFind(req) {
+    /**
+     * @param {Object} request
+     * @returns {Object|Promise.<Object>|void}
+     */
+    beforeFind(request) {
       console.log('beforeFind:generic');
     },
 
-    beforeRemove(req) {
+    /**
+     * @param {Object} request
+     * @returns {Object|Promise.<Object>|void}
+     */
+    beforeRemove(request) {
       console.log('beforeRemove:generic');
 
       throw new Error('No way !!'); //stop an operation with an error
     },
 
-    beforeCreate(req) {
+    /**
+     * @param {Object} request
+     * @returns {Object|Promise.<Object>|void}
+     */
+    beforeCreate(request) {
       console.log('beforeCreate:generic');
 
 //      Modify the item in request
-      req.item.name = 'Modified Name';
-      req.item.secondName = 'An additional Property';
+      request.item.name = 'Modified Name';
+      request.item.secondName = 'An additional Property';
     }
   });
 

@@ -1,7 +1,17 @@
 {
   "extends": "eslint:recommended",
   "rules": {
-    "no-console": 0
+    "no-console": 0,
+    "valid-jsdoc": [2, {
+      "requireParamDescription": false,
+      "requireReturnDescription": false,
+      "prefer": {
+        "return": "returns",
+        "String": "string",
+        "Number": "number",
+        "Function": "function"
+      }
+    }]
   },
   "env": {
     "node": true,

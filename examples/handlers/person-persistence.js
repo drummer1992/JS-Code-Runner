@@ -4,6 +4,8 @@
  * @param {Object} backendless
  * @param {Object} backendless.api        - Backendless Client API pre-initialized by the context application
  * @param {Object} backendless.serverCode - Business Logic API for creating EventsHandlers, Timers and Services
+ *
+ * @returns {Object} Server Coder Module
  */
 module.exports = function(backendless) {
 
@@ -36,10 +38,6 @@ module.exports = function(backendless) {
       console.log('after:update');
     },
 
-    /**
-     * @param {Object} req
-     * @param {Person} req.item
-     */
     beforeCreate(req) {
       console.log('beforeCreate:person');
 
