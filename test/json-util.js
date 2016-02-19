@@ -1,18 +1,17 @@
 'use strict';
 
-const json = require('../lib/util/json'),
-      should          = require('should');
+const json   = require('../lib/util/json'),
+      should = require('should');
 
 require('mocha');
-
-const backendlessJSON = '[{"role":["NotAuthenticatedUser"]},{"___jsonclass":"Person","address":"Mars","___class":"Person","name":"Modified Name","ownerId":null,"updated":null,"objectId":"36D8EED5-6CBF-157C-FFCC-A8B3CFC30300","secondName":"An additional Property","nnn":"ggg","___dates___":["1455703539000"]},{"___jsonclass":"com.backendless.servercode.ExecutionResult","exception":null,"result":{"___objectref":3.0}}]';
 
 describe('JSON Util', function() {
   describe('parse', function() {
     it('should resolve object references', function() {
-      const parsed = json.parse(backendlessJSON);
+      const parsed = json.parse('[{"role":[""]},{"name":"John","roles":[""]},{"result":{"___objectref":3}}]');
 
       should.equal(parsed[1], parsed[2].result);
+      should.equal(parsed[1].name, 'John');
     });
 
     it('should resolve circular object references', function() {
@@ -23,11 +22,10 @@ describe('JSON Util', function() {
     });
 
     it('should perform class mappings', function() {
-      class Person {}
+      class Person {
+      }
 
-      const parsed = json.parse(backendlessJSON, {'Person': Person});
-
-      parsed[1].should.be.instanceof(Person);
+      json.parse('{"___class":"Person"}', {'Person': Person}).should.be.instanceof(Person);
     });
   });
 
@@ -36,25 +34,24 @@ describe('JSON Util', function() {
       const a = {};
       const b = {a};
 
-      const stringified = json.stringify({a, b, c: [{a}, {b}]});
-      stringified.should.equal('{"a":{},"b":{"a":{"___objectref":1}},"c":[{"a":{"___objectref":1}},{"b":{"___objectref":2}}]}');
+      const s = json.stringify({a, b, c: [{a}, {b}]});
+      s.should.equal('{"a":{},"b":{"a":{"___objectref":1}},"c":[{"a":{"___objectref":1}},{"b":{"___objectref":2}}]}');
     });
 
     it('should resolve circular object references', function() {
       const a = {};
       a.b = a; //circular
 
-      const stringified = json.stringify(a);
-      stringified.should.equal('{"b":{"___objectref":0}}');
+      json.stringify(a).should.equal('{"b":{"___objectref":0}}');
     });
   });
 
   it('should resolve object references after full transform circle', function() {
     const a = {};
     const b = {a};
+    const z = {a, '10': {}, '01': a, 1: {2: b, a: {}}, d: {}, b, c: [{a}, {b}]};
 
-    const stringified = json.stringify({a, '10': {}, '01': a, 1:{2: b, a:{}}, z:{}, b, c: [{a}, {b}]});
-    const parsed = json.parse(stringified);
+    const parsed = json.parse(json.stringify(z));
 
     should.equal(parsed.a, parsed.b.a);
     should.equal(parsed.a, parsed.c[0].a);
