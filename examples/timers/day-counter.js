@@ -1,15 +1,16 @@
+/* global Backendless */
+
 'use strict';
 
-module.exports = function(Backendless) {
+module.exports = Backendless.ServerCode.timer({
 
-  return Backendless.ServerCode.timer({
-    frequency: {
-      schedule: "daily",
-      repeat  : {"every": 1}
-    },
+  frequency: {
+    schedule: "daily",
+    repeat  : {"every": 1}
+  },
 
-    execute: function() {
-      Backendless.api.Counters.incrementAndGet(this.name);
-    }
-  });
-};
+  execute: function() {
+    Backendless.Counters.incrementAndGet(this.name);
+  }
+
+});
