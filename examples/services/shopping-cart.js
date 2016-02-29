@@ -1,93 +1,94 @@
+/* global Backendless */
+
 'use strict';
 
-module.exports = function(Backendless) {
+class Order {
+  constructor(items) {
+    /**
+     * @type {Array.<ShoppingItem>}
+     */
+    this.items = items;
 
-  class Order {
-    constructor(items) {
-      /**
-       * @type {Array.<ShoppingItem>}
-       */
-      this.items = items;
+    /**
+     * @type {Number}
+     */
+    this.orderPrice = items.reduce((sum, item) => (sum || 0) + (item.price * item.quantity));
+  }
+}
 
-      /**
-       * @type {Number}
-       */
-      this.orderPrice = items.reduce((sum, item) => (sum || 0) + (item.price * item.quantity));
-    }
+class ShoppingCart {
+  constructor() {
+    this.items = [];
   }
 
-  class ShoppingCart {
-    constructor() {
-      this.items = [];
-    }
-
-    addItem(item) {
-      this.items.push(item);
-    }
-
-    getItems() {
-      return this.items;
-    }
+  addItem(item) {
+    this.items.push(item);
   }
 
-  return class ShoppingCartService extends Backendless.ServerCode.Service {
+  getItems() {
+    return this.items;
+  }
+}
 
-    /**
-     * @typedef {Object} ShoppingItem
-     * @property {String} objectId
-     * @property {String} product
-     * @property {Number} price
-     * @property {Number} quantity
-     * */
+class ShoppingCartService extends Backendless.ServerCode.Service {
 
-    /**
-     * @public
-     * @param {String} cartName
-     * @param {ShoppingItem} item
-     * @returns {void}
-     */
-    addItem(cartName, item) {
-      let shoppingCart = this.getCart(cartName);
+  /**
+   * @typedef {Object} ShoppingItem
+   * @property {String} objectId
+   * @property {String} product
+   * @property {Number} price
+   * @property {Number} quantity
+   * */
 
-      if (!shoppingCart) {
-        shoppingCart = new ShoppingCart();
-      }
+  /**
+   * @public
+   * @param {String} cartName
+   * @param {ShoppingItem} item
+   * @returns {void}
+   */
+  addItem(cartName, item) {
+    let shoppingCart = this.getCart(cartName);
 
-      shoppingCart.addItem(item);
-      item.objectId = null;
-
-      Backendless.Cache.put(cartName, shoppingCart)
+    if (!shoppingCart) {
+      shoppingCart = new ShoppingCart();
     }
 
-    /**
-     * @public
-     * @param {String} cartName
-     * @returns {Promise.<Order>}
-     */
-    purchase(cartName) {
-      const shoppingCart = this.getCart(cartName);
+    shoppingCart.addItem(item);
+    item.objectId = null;
 
-      if (!shoppingCart) {
-        throw new Error(`Shopping cart ${cartName} does not exist`);
-      }
+    Backendless.Cache.put(cartName, shoppingCart)
+  }
 
-      const order = new Order(shoppingCart.getItems());
+  /**
+   * @public
+   * @param {String} cartName
+   * @returns {Promise.<Order>}
+   */
+  purchase(cartName) {
+    const shoppingCart = this.getCart(cartName);
 
-      return order.save()
-        .then(() => {
-          Backendless.Cache.delete(cartName);
-
-          return order;
-        })
+    if (!shoppingCart) {
+      throw new Error(`Shopping cart ${cartName} does not exist`);
     }
 
-    /**
-     * @private
-     * @param {String} cartName
-     * @returns {ShoppingCart}
-     */
-    getCart(cartName) {
-      return Backendless.Cache.get(cartName, ShoppingCart.class);
-    }
-  };
-};
+    const order = new Order(shoppingCart.getItems());
+
+    return order.save()
+      .then(() => {
+        Backendless.Cache.delete(cartName);
+
+        return order;
+      })
+  }
+
+  /**
+   * @private
+   * @param {String} cartName
+   * @returns {ShoppingCart}
+   */
+  getCart(cartName) {
+    return Backendless.Cache.get(cartName, ShoppingCart.class);
+  }
+}
+
+module.exports = ShoppingCartService;
