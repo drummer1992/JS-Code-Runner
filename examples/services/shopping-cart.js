@@ -30,7 +30,7 @@ module.exports = function(Backendless) {
     }
   }
 
-  return Backendless.ServerCode.Service('ShoppingCart', {
+  return class ShoppingCartService extends Backendless.ServerCode.Service {
 
     /**
      * @typedef {Object} ShoppingItem
@@ -57,7 +57,7 @@ module.exports = function(Backendless) {
       item.objectId = null;
 
       Backendless.Cache.put(cartName, shoppingCart)
-    },
+    }
 
     /**
      * @public
@@ -79,7 +79,7 @@ module.exports = function(Backendless) {
 
           return order;
         })
-    },
+    }
 
     /**
      * @private
@@ -89,5 +89,5 @@ module.exports = function(Backendless) {
     getCart(cartName) {
       return Backendless.Cache.get(cartName, ShoppingCart.class);
     }
-  });
+  };
 };
