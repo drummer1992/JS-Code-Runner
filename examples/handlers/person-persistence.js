@@ -1,15 +1,15 @@
 'use strict';
 
 /**
- * @param {Object} backendless
- * @param {Object} backendless.api        - Backendless Client API pre-initialized by the context application
- * @param {Object} backendless.serverCode - Business Logic API for creating EventsHandlers, Timers and Services
+ * @param {Object} Backendless
+ * @param {Object} Backendless.api        - Backendless Client API pre-initialized by the context application
+ * @param {Object} Backendless.ServerCode - Business Logic API for creating EventsHandlers, Timers and Services
  *
  * @returns {Object} Server Coder Module
  */
-module.exports = function(backendless) {
+module.exports = function(Backendless) {
 
-  return backendless.serverCode.persistenceEventsHandler('Person', {
+  return Backendless.ServerCode.persistenceEventsHandler('Person', {
     afterCreate(req) {
       console.log('afterCreate:person');
 
@@ -38,6 +38,11 @@ module.exports = function(backendless) {
       console.log('after:update');
     },
 
+    /**
+     * @param {Object} req
+     * @param {Person} req.item
+     * @returns {Promise}
+     */
     beforeCreate(req) {
       console.log('beforeCreate:person');
 

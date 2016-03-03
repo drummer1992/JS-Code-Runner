@@ -1,16 +1,16 @@
 'use strict';
 
 /**
- * @param {Object} backendless
- * @param {Object} backendless.api        - Backendless Client API pre-initialized by the context application
- * @param {Object} backendless.serverCode - Business Logic API for creating EventsHandlers, Timers and Services
+ * @param {Object} Backendless
+ * @param {Object} Backendless.api        - Backendless Client API pre-initialized by the context application
+ * @param {Object} Backendless.ServerCode - Business Logic API for creating EventsHandlers, Timers and Services
  *
  * @returns {Object} Server Coder Module
  */
-module.exports = function(backendless) {
+module.exports = function(Backendless) {
 
   //noinspection JSUnusedLocalSymbols,Eslint
-  return backendless.serverCode.persistenceEventsHandler('*', {
+  return Backendless.ServerCode.persistenceEventsHandler('*', {
     /**
      * @param {Object} request
      * @param {Object} response

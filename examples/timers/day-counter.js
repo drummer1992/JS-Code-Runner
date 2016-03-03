@@ -1,15 +1,15 @@
 'use strict';
 
-module.exports = function(backendless) {
+module.exports = function(Backendless) {
 
-  return backendless.serverCode.timer({
+  return Backendless.ServerCode.timer({
     frequency: {
       schedule: "daily",
       repeat  : {"every": 1}
     },
 
     execute: function() {
-      backendless.api.Counters.incrementAndGet(this.name);
+      Backendless.api.Counters.incrementAndGet(this.name);
     }
   });
 };

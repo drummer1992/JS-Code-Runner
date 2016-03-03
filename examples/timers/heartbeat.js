@@ -1,8 +1,8 @@
 'use strict';
 
-module.exports = function(backendless) {
+module.exports = function(Backendless) {
 
-  return backendless.serverCode.timer({
+  return Backendless.ServerCode.timer({
     frequency: {
       schedule: "custom",
       repeat  : {every: 160}
@@ -11,7 +11,7 @@ module.exports = function(backendless) {
     execute: function() {
       console.log("I'm alive!");
 
-      //backendless.api.Logging.getLogger('heartbeat').debug("I'm alive!");
+      //Backendless.api.Logging.getLogger('heartbeat').debug("I'm alive!");
     }
   });
 
