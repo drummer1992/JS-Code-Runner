@@ -1,3 +1,6 @@
-bin/coderunner debug
-bin/coderunner deploy
-bin/coderunner cloud
+# Backendless CodeRunner for Node.js
+
+This is a tool allowing to write, debug and deploy your Backendless custom business logic
+
+## Getting Started
+  TODO: Describe me

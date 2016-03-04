@@ -1,10 +1,14 @@
 {
-  "name": "@backendless/coderunner",
+  "name": "backendless-coderunner",
   "version": "1.0.0",
-  "description": "Application for deploying and execution custom business logic code in Backendless",
+  "description": "Backendless CodeRunner for Node.js",
   "scripts": {
     "test": "mocha --reporter spec",
     "lint": "eslint lib"
+  },
+  "author": {
+    "name": "Vitaly Vengrov",
+    "email": "vengrov@gmail.com"
   },
   "bin": {
     "debugCode": "bin/coderunner",
