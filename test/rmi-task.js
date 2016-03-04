@@ -1,11 +1,14 @@
 'use strict';
 
-const mockery      = require('mockery'),
-      should       = require('should'),
-      events       = require('../lib/server-code/events'),
-      json         = require('../lib/util/json'),
-      DATA         = events.providers.DATA,
-      invokeMethod = require('../lib/server-code/runners/tasks/invoke-method');
+const mockery       = require('mockery'),
+      should        = require('should'),
+      events        = require('../lib/server-code/events'),
+      json          = require('../lib/util/json'),
+      DATA          = events.providers.DATA,
+      executor      = require('../lib/server-code/runners/tasks/executor'),
+      resultWrapper = require('../lib/server-code/runners/tasks/util/result-wrapper');
+
+var INVOKE_METHOD_TASK = 'com.backendless.coderunner.commons.protocol.RequestMethodInvocation';
 
 require('mocha');
 
@@ -30,31 +33,22 @@ function modelStub(handlerFn, classMappings) {
 
 function createTask(event, args, async) {
   return {
-    eventId  : event.id,
-    async    : !!async,
-    arguments: encodeArgs(args || [])
+    ___jsonclass: INVOKE_METHOD_TASK,
+    eventId     : event.id,
+    async       : !!async,
+    arguments   : encodeArgs(args || [])
   }
 }
 
 function invokeAndParse(task, model) {
-  return invokeMethod(task, model)
-    .then(res => res && JSON.parse(res))
+  return executor.execute(task, {}, model)
+    .then(res => res && json.parse(res))
     .then(res => {
       if (res && res.arguments) {
         res.arguments = res.arguments && decodeArgs(res.arguments);
       }
       return res;
     });
-}
-
-function serverResult(err, result) {
-  return {
-    ___jsonclass: "com.backendless.servercode.ExecutionResult",
-    result      : result,
-    exception   : err && {
-      message: err
-    }
-  }
 }
 
 describe('[invoke-method] task executor', function() {
@@ -93,7 +87,7 @@ describe('[invoke-method] task executor', function() {
       }
 
       const item = {a: 'a', bar: {___class: 'Bar', b: 'b'}, ___class: 'Foo'};
-      const result = serverResult(null, [{___class: 'Baz'}, {___class: 'Baz'}]);
+      const result = resultWrapper.executionResult(null, [{___class: 'Baz'}, {___class: 'Baz'}]);
 
       return invokeAndParse(createTask(DATA.afterCreate, [{}, item, result]), modelStub(handler, {Foo, Bar, Baz}))
         .then((res) => {
@@ -109,7 +103,7 @@ describe('[invoke-method] task executor', function() {
 
   describe('should handle', function() {
     it('unsupported event error', function() {
-      return invokeAndParse({eventId: -1}, {handlers: []}).then(res => {
+      return invokeAndParse(createTask({id: -1}), {handlers: []}).then(res => {
         should.exist(res.exception);
         res.exception.exceptionMessage.should.startWith('Integrity violation');
       })
@@ -128,12 +122,14 @@ describe('[invoke-method] task executor', function() {
       })
     });
 
-    it('async errors raised in the event handler', function() {
+    it('async errors raised in the event handler behind the promise', function() {
       const erroredModel = {
         invokeEventHandler: () => {
           process.nextTick(() => {
             throw new Error('Async Error');
           }, 0);
+
+          return new Promise(() => {}); //never resolved promise
         }
       };
 
@@ -196,7 +192,7 @@ describe('[invoke-method] task executor', function() {
   describe('in [after] event phase', function() {
     it('should provide succeeded server result in {response} handler argument', function() {
       const result = {name: 'John', id: 1};
-      const wrappedResult = serverResult(null, result);
+      const wrappedResult = resultWrapper.executionResult(null, result);
       const task = createTask(DATA.afterCreate, [{}, {}, wrappedResult]);
 
       const handler = function(req, res) {
@@ -212,13 +208,13 @@ describe('[invoke-method] task executor', function() {
 
     it('should provide errored server result in {response} handler argument', function() {
       const error = 'error';
-      const erroredResult = serverResult(error);
+      const erroredResult = resultWrapper.executionResult(error);
       const task = createTask(DATA.afterCreate, [{}, {}, erroredResult]);
 
       const handler = function(req, res) {
         should.not.exist(res.result);
         should.exist(res.error);
-        res.error.message.should.be.eql(error);
+        res.error.exceptionMessage.should.be.eql(error);
 
         throw new Error(error);
       };
@@ -230,7 +226,7 @@ describe('[invoke-method] task executor', function() {
     });
 
     it('should allow modifying server result by returning new value', function() {
-      const task = createTask(DATA.afterCreate, [{}, {}, serverResult(null, {name: 'John', id: 1})]);
+      const task = createTask(DATA.afterCreate, [{}, {}, resultWrapper.executionResult(null, {name: 'John', id: 1})]);
       const handler = (req, res) => ({name: 'Dou', id: 2});
 
       return invokeAndParse(task, modelStub(handler)).then(res => {
@@ -239,7 +235,7 @@ describe('[invoke-method] task executor', function() {
     });
 
     it('should allow result modifying via setting {res.result} a new value', function() {
-      const task = createTask(DATA.afterCreate, [{}, {}, serverResult({name: 'John', id: 1})]);
+      const task = createTask(DATA.afterCreate, [{}, {}, resultWrapper.executionResult({name: 'John', id: 1})]);
       const handler = function(req, res) {
         res.result = {name: 'Dou', id: 2};
       };
