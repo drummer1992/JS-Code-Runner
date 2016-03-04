@@ -16,13 +16,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.backendless.com:backendless/backendless-js-coderunner.git"
+    "url": "git@github.com:Backendless/JS-Code-Runner.git"
   },
   "bugs": {
-    "url": "http://bugs.backendless.com/browse/BKNDLSS"
+    "url": "http://support.backendless.com",
+    "email": "info@backendless.com"
   },
   "engines": {
-    "node": ">4.3"
+    "node": ">=4.2"
   },
   "keywords": [
     "backendless"
