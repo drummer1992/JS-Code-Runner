@@ -1,17 +1,3 @@
 #!/usr/bin/env node
 
-//---- Temporary code for debugging only. Must be removed before releasing to production.
-var handlers = process.listeners('uncaughtException');
-process.removeAllListeners('uncaughtException');
-
-process.on('uncaughtException', function(err) {
-  console.log('!!!Unhandled exception!!! ' + err.message);
-  console.log(err.stack);
-});
-
-handlers.forEach(function(handler) {
-  process.on('uncaughtException', handler);
-});
-//----
-
 require('../lib/cli/clirunner');
