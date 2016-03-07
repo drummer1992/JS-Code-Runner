@@ -1,7 +1,6 @@
 'use strict';
 
-const mockery       = require('mockery'),
-      should        = require('should'),
+const should        = require('should'),
       events        = require('../lib/server-code/events'),
       json          = require('../lib/util/json'),
       DATA          = events.providers.DATA,
@@ -52,10 +51,6 @@ function invokeAndParse(task, model) {
 }
 
 describe('[invoke-method] task executor', function() {
-  beforeEach(function() {
-    mockery.disable();
-  });
-
   it('should fill [request] params', function() {
     const task = createTask(DATA.beforeCreate, [{}, {name: 'John'}]);
     const handler = (req, res) => {
