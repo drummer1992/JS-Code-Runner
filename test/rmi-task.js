@@ -37,6 +37,7 @@ function createTask(event, args, async) {
     ___jsonclass: INVOKE_METHOD_TASK,
     eventId     : event.id,
     async       : !!async,
+    initAppData: {},
     arguments   : encodeArgs(args || [])
   }
 }
