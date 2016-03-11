@@ -30,9 +30,13 @@ class ShoppingCart {
   }
 }
 
-class ShoppingCartService extends Backendless.ServerCode.Service {
+class ShoppingCartService {
 
   /**
+   * A custom type can be described in jsdoc typedef declaration without having its own class
+   * This will help to build a valid Swager doc but the CodeRunner won't be able to transform a plain JS object
+   * from the request into concrete class.
+   *
    * @typedef {Object} ShoppingItem
    * @property {String} objectId
    * @property {String} product
@@ -86,9 +90,10 @@ class ShoppingCartService extends Backendless.ServerCode.Service {
    * @param {String} cartName
    * @returns {ShoppingCart}
    */
-  getCart(cartName) {
+  static getCart(cartName) {
     return Backendless.Cache.get(cartName, ShoppingCart.class);
   }
 }
 
-module.exports = ShoppingCartService;
+Backendless.ServerCode.addType(Order);
+Backendless.ServerCode.addService(ShoppingCartService);

@@ -2,11 +2,11 @@
 
 'use strict';
 
-module.exports = Backendless.ServerCode.timer({
+Backendless.ServerCode.addTimer({
 
   frequency: {
     schedule: "custom",
-    repeat  : {every: 160}
+    repeat  : {every: 60}
   },
 
   execute: function() {

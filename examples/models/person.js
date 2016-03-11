@@ -15,4 +15,4 @@ class Person extends Backendless.ServerCode.PersistenceItem {
   }
 }
 
-module.exports = Person;
+module.exports = Backendless.ServerCode.addType(Person);
