@@ -56,7 +56,7 @@ class ShoppingCartService extends Backendless.ServerCode.Service {
     shoppingCart.addItem(item);
     item.objectId = null;
 
-    Backendless.Cache.put(cartName, shoppingCart)
+    Backendless.Cache.put(cartName, shoppingCart);
   }
 
   /**
@@ -78,7 +78,7 @@ class ShoppingCartService extends Backendless.ServerCode.Service {
         Backendless.Cache.delete(cartName);
 
         return order;
-      })
+      });
   }
 
   /**

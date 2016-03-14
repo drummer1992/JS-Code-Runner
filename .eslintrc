@@ -1,7 +1,39 @@
 {
   "extends": "eslint:recommended",
   "rules": {
-    "no-console": 0,
+    // disallow declaration of variables already declared in the outer scope
+    "no-shadow": 2,
+
+    // require let or const instead of var
+    "no-var": 2,
+
+    // require or disallow use of semicolons instead of ASI
+    "semi": [2, "always"],
+
+    // require the use of === and !== except null comparison
+    "eqeqeq": [2, "smart"],
+
+    // specify whether double or single quotes should be used
+    "quotes": [2, "single", "avoid-escape"],
+
+    // require space before/after arrow function's arrow
+    "arrow-spacing": [2, { "before": true, "after": true }],
+
+    // suggest using of const declaration for variables that are never modified after declared
+    "prefer-const": 2,
+
+    // restrict what can be thrown as an exception
+    "no-throw-literal": 2,
+
+    // suggest using template literals instead of string concatenation
+    "prefer-template": 2,
+
+    // disallow Unused Expressions
+    "no-unused-expressions": [2, { "allowShortCircuit": true }],
+
+    // require padding inside curly braces
+    "object-curly-spacing": [2, "always"],
+
     "valid-jsdoc": [2, {
       "requireReturn": false,
       "requireParamDescription": false,
