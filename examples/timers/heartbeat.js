@@ -5,8 +5,8 @@
 Backendless.ServerCode.addTimer({
 
   frequency: {
-    schedule: "custom",
-    repeat  : {every: 60}
+    schedule: 'custom',
+    repeat  : { every: 60 }
   },
 
   execute: function() {

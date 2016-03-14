@@ -12,7 +12,7 @@ Backendless.ServerCode.persistence.afterCreate('Person', (req, res) => {
 Backendless.ServerCode.persistence.beforeRemove('Person', req => {
     console.log('beforeRemove:person');
 
-    throw new Error('No way')
+    throw new Error('No way');
 });
 
 Backendless.ServerCode.persistence.beforeCreate('Person', (req, res) => {
