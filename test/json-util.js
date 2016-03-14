@@ -25,16 +25,16 @@ describe('JSON Util', function() {
       class Person {
       }
 
-      json.parse('{"___class":"Person"}', {'Person': Person}).should.be.instanceof(Person);
+      json.parse('{"___class":"Person"}', { 'Person': Person }).should.be.instanceof(Person);
     });
   });
 
   describe('stringify', function() {
     it('should resolve object references', function() {
       const a = {};
-      const b = {a};
+      const b = { a };
 
-      const s = json.stringify({a, b, c: [{a}, {b}]});
+      const s = json.stringify({ a, b, c: [{ a }, { b }] });
       s.should.equal('{"a":{},"b":{"a":{"___objectref":1}},"c":[{"a":{"___objectref":1}},{"b":{"___objectref":2}}]}');
     });
 
@@ -48,13 +48,13 @@ describe('JSON Util', function() {
 
   it('should resolve object references after full transform circle', function() {
     const a = {};
-    const b = {a};
-    const z = {a, '10': {}, '01': a, 1: {2: b, a: {}}, d: {}, b, c: [{a}, {b}]};
+    const b = { a };
+    const z = { a, '10': {}, '01': a, 1: { 2: b, a: {} }, d: {}, b, c: [{ a }, { b }] };
 
     const parsed = json.parse(json.stringify(z));
 
     should.equal(parsed.a, parsed.b.a);
     should.equal(parsed.a, parsed.c[0].a);
     should.equal(parsed.b, parsed.c[1].b);
-  })
+  });
 });

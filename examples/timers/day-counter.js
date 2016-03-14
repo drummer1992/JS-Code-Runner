@@ -5,8 +5,8 @@
 module.exports = Backendless.ServerCode.timer({
 
   frequency: {
-    schedule: "daily",
-    repeat  : {"every": 1}
+    schedule: 'daily',
+    repeat  : { 'every': 1 }
   },
 
   execute: function() {

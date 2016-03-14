@@ -1,1 +1,0 @@
-throw new Error("I am a buggy module! Don't touch me");
