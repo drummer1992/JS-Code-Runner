@@ -28,7 +28,7 @@ This is a tool allowing to write, debug and deploy your Backendless custom busin
   3. Modify the code according to your needs.
   4. Deploy the changes to Backendless :
 
-    `npm run-script deploy`
+    `npm run deploy`
 
 
 ## Debug Code
