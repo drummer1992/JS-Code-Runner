@@ -11,8 +11,6 @@ const should        = require('should'),
 
 require('mocha');
 
-const INVOKE_METHOD_TASK = 'com.backendless.coderunner.commons.protocol.RequestMethodInvocation';
-
 function stringToBytes(s) {
   return s.split('').map((c, i) => s.charCodeAt(i));
 }
@@ -34,7 +32,7 @@ function modelStub(handlerFn, classMappings) {
 
 function createTask(event, args, async) {
   return {
-    ___jsonclass: INVOKE_METHOD_TASK,
+    ___jsonclass: executor.RMI,
     eventId     : event.id,
     async       : !!async,
     initAppData : {},
@@ -53,7 +51,7 @@ function invokeAndParse(task, model) {
     });
 }
 
-describe('[invoke-method] task executor', function() {
+describe('[invoke-handler] task executor', function() {
   it('should fill [request] params', function() {
     const task = createTask(BEFORE_CREATE, [{}, { name: 'John' }]);
 
