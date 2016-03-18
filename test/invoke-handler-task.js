@@ -133,8 +133,9 @@ describe('[invoke-handler] task executor', function() {
           throw new Error('Async Error');
         }, 0);
 
+        //never resolved promise
         return new Promise(() => {
-        }); //never resolved promise
+        });
       }
 
       return invokeAndParse(createTask(BEFORE_CREATE), modelStub(handler)).then(res => {
@@ -156,17 +157,6 @@ describe('[invoke-handler] task executor', function() {
       return invokeAndParse(task, modelStub(handler)).then(res => {
         should.exist(res.exception);
         res.exception.exceptionMessage.should.equal('Task execution aborted due to timeout');
-      });
-    });
-
-    it('errors thrown from handler', function() {
-      function handler() {
-        throw new Error('Error in Handler!');
-      }
-
-      return invokeAndParse(createTask(BEFORE_CREATE), modelStub(handler)).then(res => {
-        should.exist(res.exception);
-        res.exception.exceptionMessage.should.be.eql('Error in Handler!');
       });
     });
   });
@@ -286,9 +276,9 @@ describe('[invoke-handler] task executor', function() {
         function handler(req, res) {
           res.result = { name: 'Dou', id: 2 };
           res.error = {
-            code: 4,
+            code            : 4,
             exceptionMessage: 'Error',
-            exceptionClass: 'java.lang.RuntimeException'
+            exceptionClass  : 'java.lang.RuntimeException'
           };
         }
 
@@ -305,20 +295,19 @@ describe('[invoke-handler] task executor', function() {
   });
 
   describe('for async events', function() {
-    it('should not provide [success] and [error] callbacks', function() {
-      function handler(req, res) {
-        should.not.exist(res.success);
-        should.not.exist(res.error);
+    const task = createTask(AFTER_CREATE, [], true);
+
+    it('should not wait for handler`s promise', function() {
+      function handler() {
+        return new Promise(() => {
+        });
       }
 
-      return invokeAndParse(createTask(AFTER_CREATE, [], true), modelStub(handler));
+      return invokeAndParse(task, modelStub(handler)).should.be.fulfilled();
     });
 
     it('should not return any result', function() {
-      const task = createTask(AFTER_CREATE, [], true);
-
-      function handler() {
-      }
+      const handler = () => ({});
 
       return invokeAndParse(task, modelStub(handler)).should.be.fulfilledWith(undefined);
     });
