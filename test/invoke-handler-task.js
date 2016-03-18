@@ -3,6 +3,7 @@
 const should          = require('should'),
       events          = require('../lib/server-code/events'),
       json            = require('../lib/util/json'),
+      ServerCode      = require('../lib/server-code/api'),
       executor        = require('../lib/server-code/runners/tasks/executor'),
       executionResult = require('../lib/server-code/runners/tasks/util/result-wrapper').executionResult,
       PERSISTENCE     = events.providers.PERSISTENCE,
@@ -124,6 +125,18 @@ describe('[invoke-handler] task executor', function() {
       return invokeAndParse(createTask(BEFORE_CREATE), modelStub(handler)).then(res => {
         should.exist(res.exception);
         res.exception.exceptionMessage.should.equal('Error');
+      });
+    });
+
+    it('custom errors', function() {
+      function handler() {
+        throw new ServerCode.Error(10, 'My Custom Error');
+      }
+
+      return invokeAndParse(createTask(BEFORE_CREATE), modelStub(handler)).then(res => {
+        should.exist(res.exception);
+        res.exception.code.should.equal(10);
+        res.exception.exceptionMessage.should.equal('My Custom Error');
       });
     });
 
