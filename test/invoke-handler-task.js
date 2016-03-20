@@ -8,7 +8,8 @@ const should          = require('should'),
       executionResult = require('../lib/server-code/runners/tasks/util/result-wrapper').executionResult,
       PERSISTENCE     = events.providers.PERSISTENCE,
       BEFORE_CREATE   = PERSISTENCE.events.beforeCreate,
-      AFTER_CREATE    = PERSISTENCE.events.afterCreate;
+      AFTER_CREATE    = PERSISTENCE.events.afterCreate,
+      CUSTOM_EVENT    = events.providers.CUSTOM.events.execute;
 
 require('mocha');
 
@@ -323,6 +324,22 @@ describe('[invoke-handler] task executor', function() {
       const handler = () => ({});
 
       return invokeAndParse(task, modelStub(handler)).should.be.fulfilledWith(undefined);
+    });
+  });
+
+  describe('for custom events', function() {
+    it('should return raw, unwrapped result to the server', function() {
+      const task = createTask(CUSTOM_EVENT, []);
+      const result = { a: 'b' };
+
+      function handler() {
+        return result;
+      }
+
+      return invokeAndParse(task, modelStub(handler)).then( res => {
+        should.exists(res.arguments[2]);
+        res.arguments[2].should.be.eql(result);
+      });
     });
   });
 });
