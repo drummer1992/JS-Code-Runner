@@ -34,7 +34,7 @@ This is a tool allowing to write, debug and deploy your Backendless custom busin
 ## Debug Code
 [Using IntelliJ IDEA](https://github.com/Backendless/JS-Code-Runner/wiki/Debugging-Server-Code-in-WebStorm)
 
-[Using node-inspector](https://github.com/Backendless/JS-Code-Runner/wiki/Debugging-ServerCode-with-nodeinspector)
+[Using node-inspector](https://github.com/Backendless/JS-Code-Runner/wiki/Debugging-ServerCode-using-node-inspector)
 
 ## Configure CodeRunner
     TODO: Describe me
