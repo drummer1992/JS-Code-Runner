@@ -66,7 +66,7 @@ class ShoppingCartService {
   /**
    * @public
    * @param {String} cartName
-   * @returns {Promise.<Order>}
+   * @returns {Promise<Order>}
    */
   purchase(cartName) {
     const shoppingCart = this.getCart(cartName);
