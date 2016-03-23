@@ -227,13 +227,13 @@ describe('[invoke-handler] task executor', function() {
       const erredResult = executionResult(error);
       const task = createTask(AFTER_CREATE, [{}, {}, erredResult]);
 
-      const handler = function(req, res) {
+      function handler(req, res) {
         should.not.exist(res.result);
         should.exist(res.error);
         res.error.exceptionMessage.should.be.eql(error);
 
         throw new Error(error);
-      };
+      }
 
       return invokeAndParse(task, modelStub(handler)).then(res => {
         res.arguments.should.be.empty();
@@ -321,7 +321,8 @@ describe('[invoke-handler] task executor', function() {
     });
 
     it('should not return any result', function() {
-      const handler = () => ({});
+      function handler() {
+      }
 
       return invokeAndParse(task, modelStub(handler)).should.be.fulfilledWith(undefined);
     });
@@ -336,7 +337,7 @@ describe('[invoke-handler] task executor', function() {
         return result;
       }
 
-      return invokeAndParse(task, modelStub(handler)).then( res => {
+      return invokeAndParse(task, modelStub(handler)).then(res => {
         should.exists(res.arguments[2]);
         res.arguments[2].should.be.eql(result);
       });
