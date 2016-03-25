@@ -66,6 +66,16 @@ class ShoppingCartService {
   /**
    * @public
    * @param {String} cartName
+   * @param {Array.<ShoppingItem>} items
+   * @returns {void}
+   */
+  addItems(cartName, items) {
+    items.forEach(item => this.addItem(cartName, item));
+  }
+  
+  /**
+   * @public
+   * @param {String} cartName
    * @returns {Promise<Order>}
    */
   purchase(cartName) {

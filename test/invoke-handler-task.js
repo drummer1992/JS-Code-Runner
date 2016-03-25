@@ -34,21 +34,24 @@ function modelStub(handlerFn, classMappings) {
 
 function createTask(event, args, async) {
   return {
-    ___jsonclass: executor.RMI,
-    eventId     : event.id,
-    async       : !!async,
-    initAppData : {},
-    arguments   : encodeArgs(args || [])
+    ___jsonclass : executor.RMI,
+    eventId      : event.id,
+    async        : !!async,
+    initAppData  : {},
+    applicationId: '',
+    relativePath : '',
+    arguments    : encodeArgs(args || [])
   };
 }
 
 function invokeAndParse(task, model) {
-  return executor.execute(task, {}, model)
+  return executor.execute(task, { backendless: { repoPath: '' } }, model)
     .then(res => res && json.parse(res))
     .then(res => {
       if (res && res.arguments) {
         res.arguments = res.arguments && decodeArgs(res.arguments);
       }
+
       return res;
     });
 }
