@@ -37,7 +37,7 @@ const SHOPPING_CART_SERVICE_XML = `<?xml version="1.0" encoding="ISO-8859-1"?>
 
 describe('service descriptor', function() {
   it('should build valid service XML', function() {
-    const serviceXml = buildServiceXml('ShoppingCartService', definitions);
+    const serviceXml = buildServiceXml(['ShoppingCartService'], definitions);
 
     serviceXml.should.equal(SHOPPING_CART_SERVICE_XML);
   });
