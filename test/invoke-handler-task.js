@@ -62,7 +62,7 @@ describe('[invoke-handler] task executor', function() {
       req.item.should.be.eql({ name: 'John' });
     }
 
-    return invokeAndParse(task, modelStub(handler)).should.be.fulfilled();
+    return invokeAndParse(task, modelStub(handler));
   });
 
   describe('should perform class mapping', function() {
@@ -310,18 +310,29 @@ describe('[invoke-handler] task executor', function() {
 
   describe('for async events', function() {
     const task = createTask(AFTER_CREATE, [], true);
+    task.timeout = 3;
 
-    it('should not wait for handler`s promise', function() {
+    it('should wait for handler`s promise', function() {
+      let handlerFinished = false;
+
       function handler() {
-        return new Promise(() => {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            handlerFinished = true;
+            resolve();
+          }, 2);
         });
       }
 
-      return invokeAndParse(task, modelStub(handler)).should.be.fulfilled();
+      return invokeAndParse(task, modelStub(handler))
+        .then(() => {
+          handlerFinished.should.be.true();
+        });
     });
 
     it('should not return any result', function() {
       function handler() {
+        return {};
       }
 
       return invokeAndParse(task, modelStub(handler)).should.be.fulfilledWith(undefined);
