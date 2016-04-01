@@ -2,6 +2,8 @@
 
 'use strict';
 
+Backendless.enablePromises();
+
 class Order extends Backendless.ServerCode.PersistenceItem {
   constructor(items) {
     /**
@@ -51,16 +53,16 @@ class ShoppingCartService {
    * @returns {void}
    */
   addItem(cartName, item) {
-    let shoppingCart = this.getCart(cartName);
+    return ShoppingCartService.getCart(cartName).then(shoppingCart => {
+      if (!shoppingCart) {
+        shoppingCart = new ShoppingCart();
+      }
 
-    if (!shoppingCart) {
-      shoppingCart = new ShoppingCart();
-    }
+      shoppingCart.addItem(item);
+      item.objectId = null;
 
-    shoppingCart.addItem(item);
-    item.objectId = null;
-
-    Backendless.Cache.put(cartName, shoppingCart);
+      return Backendless.Cache.put(cartName, shoppingCart);
+    });
   }
 
   /**
@@ -69,17 +71,17 @@ class ShoppingCartService {
    * @returns {Promise.<Order>}
    */
   purchase(cartName) {
-    const shoppingCart = this.getCart(cartName);
+    return ShoppingCartService.getCart(cartName).then(shoppingCart => {
+      if (!shoppingCart) {
+        throw new Error(`Shopping cart ${cartName} does not exist`);
+      }
 
-    if (!shoppingCart) {
-      throw new Error(`Shopping cart ${cartName} does not exist`);
-    }
+      const order = new Order(shoppingCart.getItems());
 
-    const order = new Order(shoppingCart.getItems());
-
-    return order.save()
-      .then(() => Backendless.Cache.delete(cartName))
-      .then(() => order);
+      return order.save()
+        .then(() => Backendless.Cache.delete(cartName))
+        .then(() => order);
+    });
   }
 
   /**
@@ -88,7 +90,9 @@ class ShoppingCartService {
    * @returns {ShoppingCart}
    */
   static getCart(cartName) {
-    return Backendless.Cache.get(cartName, ShoppingCart.class);
+
+    return Backendless.Cache.get(cartName, ShoppingCart)
+      .then(result => result === 'null' ? null : result); //TODO: bug workaround
   }
 }
 
