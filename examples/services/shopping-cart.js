@@ -2,10 +2,10 @@
 
 'use strict';
 
-Backendless.enablePromises();
-
 class Order extends Backendless.ServerCode.PersistenceItem {
   constructor(items) {
+    super();
+
     /**
      * @type {Array.<ShoppingItem>}
      */
@@ -14,13 +14,16 @@ class Order extends Backendless.ServerCode.PersistenceItem {
     /**
      * @type {Number}
      */
-    this.orderPrice = items.reduce((sum, item) => (sum || 0) + (item.price * item.quantity));
+    this.orderPrice = items.reduce((sum, item) => {
+      return (sum || 0) + (item.price * item.quantity);
+    }, 0);
   }
 }
 
 class ShoppingCart {
-  constructor() {
-    this.items = [];
+  constructor(opts) {
+    this.items = opts.items || [];
+    this.___class = ShoppingCart.name;
   }
 
   addItem(item) {
@@ -90,11 +93,12 @@ class ShoppingCartService {
    * @returns {ShoppingCart}
    */
   static getCart(cartName) {
+    Backendless.Cache.setObjectFactory(ShoppingCart.name, ShoppingCart);
 
-    return Backendless.Cache.get(cartName, ShoppingCart)
-      .then(result => result === 'null' ? null : result); //TODO: bug workaround
+    return Backendless.Cache.get(cartName);
   }
 }
 
+Backendless.enablePromises();
 Backendless.ServerCode.addType(Order);
 Backendless.ServerCode.addService(ShoppingCartService);
