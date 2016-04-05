@@ -141,6 +141,21 @@ describe('[invoke-handler] task executor', function() {
       });
     });
 
+    it('and escape string error code', function() {
+      function handler() {
+        const err = new Error('StreamError');
+        err.code = 'ENOTFOUND';
+
+        throw err;
+      }
+
+      return invokeAndParse(createTask(BEFORE_CREATE), modelStub(handler)).then(res => {
+        should.exist(res.exception);
+        res.exception.code.should.equal(0);
+        res.exception.exceptionMessage.should.equal('StreamError');
+      });
+    });
+
     it('async errors raised in the event handler behind the promise', function() {
       function handler() {
         process.nextTick(() => {
