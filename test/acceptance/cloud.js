@@ -1,8 +1,7 @@
 'use strict';
 
-const serverCode  = require('./server-code'),
+const serverCode  = require('../support/server-code'),
       events      = require('../../lib/server-code/events'),
-      should      = require('should'),
       PERSISTENCE = events.providers.PERSISTENCE;
 
 require('mocha');
