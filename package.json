@@ -4,6 +4,7 @@
   "description": "Backendless CodeRunner for Node.js",
   "scripts": {
     "test": "mocha",
+    "test-acceptance": "mocha test/acceptance",
     "lint": "eslint lib test examples bin"
   },
   "author": {

@@ -33,7 +33,7 @@ class ServerCode {
   addHandler(event, handler, context) {
     const p = event.provider;
     const ctx = p.targeted ? `'${context || '*'}'` : null;
-    const handlerBody = `'use strict';` +
+    const handlerBody = `'use strict';\n` +
       `Backendless.ServerCode.${providerApi(p)}.${event.name}(${ctx ? ctx + ', ' : ''}${handler.toString()});`;
 
     this.items.push(handlerBody);

@@ -1,8 +1,6 @@
-'use strict';
+/* global Backendless */
 
-const serverCode  = require('../support/server-code'),
-      events      = require('../../lib/server-code/events'),
-      PERSISTENCE = events.providers.PERSISTENCE;
+'use strict';
 
 require('mocha');
 
@@ -14,11 +12,10 @@ const app = {
   version: 'v1'
 };
 
-function request(method, path) {
-  return require('supertest')(app.server + '/' + app.version)[method](path)
-    .set('application-id', app.id)
-    .set('secret-key', app.restKey);
-}
+const serverCode  = require('../support/server-code'),
+      request     = require('../support/request')(app),
+      events      = require('../../lib/server-code/events'),
+      PERSISTENCE = events.providers.PERSISTENCE;
 
 describe('In CLOUD', function() {
   describe('[before] event handler', function() {
@@ -33,11 +30,9 @@ describe('In CLOUD', function() {
         .addHandler(PERSISTENCE.events.beforeCreate, handler)
         .deploy()
         .then(() => {
-          request('post', '/data/Person')
-            .send({ name: 'Foo' })
+          request('post', '/data/Person', { name: 'Foo' })
             .expect(200, /"name":"Foo Bar"/, done);
-        })
-        .catch(done);
+        }, done);
     });
 
     it('should be able to replace request', function(done) {
@@ -49,27 +44,42 @@ describe('In CLOUD', function() {
         .addHandler(PERSISTENCE.events.beforeCreate, handler)
         .deploy()
         .then(() => {
-          request('post', '/data/Person')
-            .send({ name: 'Foo' })
+          request('post', '/data/Person', { name: 'Foo' })
             .expect(200, /"Foo":"Bar"/, done);
-        })
-        .catch(done);
+        }, done);
+    });
+
+    it('should be able to prevent [default] and [after] behaviours by returning specific result', function(done) {
+      function beforeHandler() {
+        return { foo: 'bar' };
+      }
+
+      function afterHandler() {
+        throw 'Should not be called';
+      }
+
+      serverCode(app)
+        .addHandler(PERSISTENCE.events.beforeCreate, beforeHandler)
+        .addHandler(PERSISTENCE.events.afterCreate, afterHandler)
+        .deploy()
+        .then(() => {
+          request('post', '/data/Person', { name: 'Foo' })
+            .expect(200, { foo: 'bar' }, done);
+        }, done);
     });
 
     it('should be able to prevent default behavior by throwing simple Error', function(done) {
       function handler() {
-        throw new Error('You shall not pass');
+        throw 'You shall not pass';
       }
-
+      
       serverCode(app)
         .addHandler(PERSISTENCE.events.beforeCreate, handler)
         .deploy()
         .then(() => {
-          request('post', '/data/Person')
-            .send({ name: 'Foo' })
+          request('post', '/data/Person', { name: 'Foo' })
             .expect(400, { code: 0, message: 'You shall not pass' }, done);
-        })
-        .catch(done);
+        }, done);
     });
 
     it('should be able to prevent default behavior by throwing custom Error', function(done) {
