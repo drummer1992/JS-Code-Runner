@@ -22,6 +22,8 @@ class Order extends Backendless.ServerCode.PersistenceItem {
 
 class ShoppingCart {
   constructor(opts) {
+    opts = opts || {};
+
     this.items = opts.items || [];
     this.___class = ShoppingCart.name;
   }
@@ -53,7 +55,7 @@ class ShoppingCartService {
    * @public
    * @param {String} cartName
    * @param {ShoppingItem} item
-   * @returns {void}
+   * @returns {Promise<void>}
    */
   addItem(cartName, item) {
     return ShoppingCartService.getCart(cartName).then(shoppingCart => {

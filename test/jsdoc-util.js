@@ -2,19 +2,34 @@
 
 const jsdoc       = require('../lib/util/jsdoc'),
       definitions = require('./helpers/definitions'),
-      should      = require('should');
+      assert      = require('assert');
 
 require('mocha');
+
+function toMap(classes) {
+  const map = {};
+
+  classes.forEach(clazz => {
+    if (map[clazz.name]) {
+      throw new Error('Duplicate Class found');
+    }
+
+    map[clazz.name] = clazz;
+  });
+
+  return map;
+}
 
 describe('jsdoc util', function() {
   it('should detect and explain classes in file', function() {
     const classes = jsdoc.describeClasses('test/fixtures/shopping-cart.js');
+    const classesMap = toMap(classes);
 
-    should.equal(classes.length, 4);
-    
-    classes[0].should.be.eql(definitions.ORDER);
-    classes[1].should.be.eql(definitions.SHOPPING_CART);
-    classes[2].should.be.eql(definitions.SHOPPING_CART_SERVICE);
-    classes[3].should.be.eql(definitions.SHOPPING_ITEM);
+    assert.equal(classes.length, 4);
+
+    assert.deepEqual(classesMap.Order, definitions.ORDER);
+    assert.deepEqual(classesMap.ShoppingCart, definitions.SHOPPING_CART);
+    assert.deepEqual(classesMap.ShoppingCartService, definitions.SHOPPING_CART_SERVICE);
+    assert.deepEqual(classesMap.ShoppingItem, definitions.SHOPPING_ITEM);
   });
 });
