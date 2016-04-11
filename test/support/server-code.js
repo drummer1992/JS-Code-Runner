@@ -32,24 +32,42 @@ class ServerCode {
 
   addHandler(event, handler, context) {
     const p = event.provider;
-    const ctx = p.targeted ? `'${context || '*'}'` : null;
+    const ctx = p.targeted ? `'${context || '*'}'` : '';
     const handlerBody = `'use strict';\n` +
-      `Backendless.ServerCode.${providerApi(p)}.${event.name}(${ctx ? ctx + ', ' : ''}${handler.toString()});`;
+      `Backendless.ServerCode.${providerApi(p)}.${event.name}(${ctx}${ctx ? ', ' : ''}${handler.toString()});`;
 
     this.items.push(handlerBody);
+
     return this;
   }
 
   addTimer(opts) {
+    const tickFn = opts.execute;
+    delete opts.execute;
+
+    opts = JSON.stringify(opts);
+
+    const timerBody = `'use strict';\n` +
+      `Backendless.ServerCode.addTimer(${opts.substring(0, opts.length - 1)}, 
+        execute: ${tickFn.toString()}
+      });`;
+
+    this.items.push(timerBody);
+
+    return this;
+  }
+
+  addService() {
     //TODO: implement me
     return this;
   }
-  
-  addService(service) {
-    //TODO: implement me
-    return this;
+
+  clean() {
+    this.items = [];
+
+    return this.deploy();
   }
-  
+
   deploy() {
     prepareDir();
 
@@ -58,6 +76,7 @@ class ServerCode {
     });
 
     return CodeRunner.deploy({
+      allowEmpty : true,
       backendless: {
         apiServer: this.app.server
       },

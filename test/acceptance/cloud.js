@@ -1,8 +1,4 @@
-/* global Backendless */
-
 'use strict';
-
-require('mocha');
 
 const app = {
   server : 'http://apitest.backendless.com',
@@ -12,15 +8,38 @@ const app = {
   version: 'v1'
 };
 
-const serverCode  = require('../support/server-code'),
+const promise     = require('../../lib/util/promise'),
+      assert      = require('assert'),
+      Backendless = require('backendless'),
+      serverCode  = require('../support/server-code'),
       request     = require('../support/request')(app),
       events      = require('../../lib/server-code/events'),
       PERSISTENCE = events.providers.PERSISTENCE;
 
-describe('In CLOUD', function() {
-  describe('[before] event handler', function() {
-    this.timeout(10000);
+require('mocha');
 
+Backendless.serverURL = app.server;
+Backendless.enablePromises();
+Backendless.initApp(app.id, app.restKey, app.version);
+
+function cleanTable(tableName) {
+  const dataStore = Backendless.Persistence.of(tableName);
+  const restUrl = dataStore.restUrl;
+
+  dataStore.restUrl = `${Backendless.appPath}/data/bulk/${dataStore.className}?where=created>0`;
+
+  return dataStore.remove({ toJSON: () => '' })
+    .then(() => dataStore.restUrl = restUrl);
+}
+
+describe('In CLOUD', function() {
+  this.timeout(10000);
+
+  beforeEach(function() {
+    return serverCode(app).clean();
+  });
+
+  describe('[before] event handler', function() {
     it('should be able to modify request', function(done) {
       function handler(req) {
         req.item.name += ' Bar';
@@ -72,7 +91,7 @@ describe('In CLOUD', function() {
       function handler() {
         throw 'You shall not pass';
       }
-      
+
       serverCode(app)
         .addHandler(PERSISTENCE.events.beforeCreate, handler)
         .deploy()
@@ -101,5 +120,48 @@ describe('In CLOUD', function() {
 
   describe('[after] event handler', function() {
 
+  });
+
+  describe('timer', function() {
+    before(function() {
+      return serverCode(app).clean()
+        .then(() => Backendless.Persistence.of('TestTimer').save({}));
+    });
+
+    beforeEach(function() {
+      return cleanTable('TestTimer');
+    });
+
+    it('should tick', function(done) {
+      function timerTick() {
+        Backendless.enablePromises();
+        Backendless.Logging.getLogger('TestTimer').info(new Date().getTime());
+
+        return Backendless.Persistence.of('TestTimer').save({ tick: new Date().getTime() });
+      }
+
+      const timer = {
+        name: 'test-timer',
+
+        frequency: {
+          schedule: 'custom',
+          repeat  : { every: 60 }
+        },
+
+        execute: timerTick
+      };
+
+      serverCode(app)
+        .addTimer(timer)
+        .deploy()
+        .then(() => promise.wait(125000)) //wait for 2 ticks + pad
+        .then(() => {
+          return Backendless.Persistence.of('TimerTicks').find().then(result => {
+            assert.equal(result.data.length, 2);
+          });
+        })
+        .then(done)
+        .catch(done);
+    });
   });
 });
