@@ -4,6 +4,8 @@
 
 class Order extends Backendless.ServerCode.PersistenceItem {
   constructor(items) {
+    super();
+    
     /**
      * @type {Array.<ShoppingItem>}
      */
