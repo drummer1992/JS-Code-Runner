@@ -2,13 +2,18 @@
 
 'use strict';
 
+const DICT = {};
+DICT['English'] = 'Welcome';
+DICT['German'] = 'Willkommen';
+DICT['Spanish'] = 'Bienvenido';
+
 class GreetingsService {
   /**
    * @param {String} userName
-   * @returns {string}
+   * @returns {String}
    */
   getGreeting(userName) {
-    return `${this.config.lang} ${userName}`;
+    return `${DICT[this.config.lang]} ${userName} !`;
   }
 }
 
@@ -17,7 +22,7 @@ GreetingsService.configItems = [
     name        : 'lang',
     displayName : 'Language',
     required    : true,
-    type        : 'boolean',
+    type        : 'choice',
     defaultValue: 'English',
     options     : ['English', 'German', 'Spanish'],
     hint        : 'Please select a Greetings Language'
