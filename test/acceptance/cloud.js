@@ -245,10 +245,9 @@ describe('In CLOUD', function() {
   });
 
   describe('task timeout', function() {
-    it('should be respected', function(done) {
+    it('should be respected in custom event handler', function(done) {
       serverCode(app)
-        .addCustomEvent('testTimeout', () => new Promise(() => {
-        }))
+        .addCustomEvent('testTimeout', () => new Promise(() => {}))
         .deploy()
         .then(() => {
           request('post', '/servercode/events/testTimeout')
@@ -256,30 +255,39 @@ describe('In CLOUD', function() {
         })
         .catch(done);
     });
+
+    it('should be respected in persistence', function(done) {
+      serverCode(app)
+        .addHandler(PERSISTENCE.events.beforeCreate, () => new Promise(() => {}))
+        .deploy()
+        .then(() => {
+          request('post', '/data/Person', { name: 'Foo' })
+            .expect(400, { code: 1000, message: 'You shall not pass' }, done);
+        })
+        .catch(done);
+    });
   });
 
   describe('timer', function() {
     before(function() {
-      return serverCode(app).clean()
-        .then(() => Backendless.Persistence.of('TestTimer').save({}));
+      return Backendless.Persistence.of('TestTimer').save({});
     });
 
     beforeEach(function() {
       return cleanTable('TestTimer');
     });
 
-    it('should tick', function(done) {
+    it('should tick', function() {
       this.timeout(200000);
 
       function timerTick() {
         Backendless.enablePromises();
-        Backendless.Logging.getLogger('TestTimer').info(new Date().getTime());
 
         return Backendless.Persistence.of('TestTimer').save({ tick: new Date().getTime() });
       }
 
       const timer = {
-        name: 'test-timer',
+        name: 'test',
 
         frequency: {
           schedule: 'custom',
@@ -289,18 +297,12 @@ describe('In CLOUD', function() {
         execute: timerTick
       };
 
-      serverCode(app)
+      return serverCode(app)
         .addTimer(timer)
         .deploy()
         .then(() => promise.wait(130000)) //wait for 2 ticks + pad
-        .then(() => {
-          return Backendless.Persistence.of('TimerTicks').find()
-            .then(result => {
-              assert.equal(result.data.length, 2);
-            });
-        })
-        .then(done)
-        .catch(done);
+        .then(() => Backendless.Persistence.of('TestTimer').find())
+        .then(result => assert.equal(result.data.length, 2));
     });
   });
 });

@@ -11,7 +11,8 @@
     "secretKey": "",
     "version": "",
     "files": [
-      "examples/**"
+      "examples/**",
+      "!node_modules/**"
     ]
   }
 }
