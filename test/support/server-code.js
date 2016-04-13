@@ -41,6 +41,15 @@ class ServerCode {
     return this;
   }
 
+  addCustomEvent(event, handler) {
+    const handlerBody = `'use strict';\n` +
+      `Backendless.ServerCode.customEvent('${event}', ${handler.toString()});`;
+
+    this.items.push(handlerBody);
+
+    return this;
+  }
+
   addTimer(opts) {
     const tickFn = opts.execute;
     delete opts.execute;
