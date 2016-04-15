@@ -355,7 +355,37 @@ describe('[invoke-handler] task executor', function() {
   });
 
   describe('for custom events', function() {
-    it('should return raw, unwrapped result to the server', function() {
+    it('should wrap numeric value to object', function() {
+      return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(() => 1)).then(res => {
+        should.exists(res.arguments[2]);
+        res.arguments[2].should.be.eql({ result: 1 });
+      });
+    });
+
+    it('should wrap string value to object', function() {
+      return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(() => 'abc')).then(res => {
+        should.exists(res.arguments[2]);
+        res.arguments[2].should.be.eql({ result: 'abc' });
+      });
+    });
+
+    it('should wrap boolean value to object', function() {
+      return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(() => true)).then(res => {
+        should.exists(res.arguments[2]);
+        res.arguments[2].should.be.eql({ result: true });
+      });
+    });
+
+    it('should wrap date value to object', function() {
+      const date = new Date();
+
+      return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(() => date)).then(res => {
+        should.exists(res.arguments[2]);
+        res.arguments[2].should.be.eql({ result: date.toISOString() });
+      });
+    });
+
+    it('should not wrap complex object', function() {
       const task = createTask(CUSTOM_EVENT, []);
       const result = { a: 'b' };
 
@@ -366,6 +396,22 @@ describe('[invoke-handler] task executor', function() {
       return invokeAndParse(task, modelStub(handler)).then(res => {
         should.exists(res.arguments[2]);
         res.arguments[2].should.be.eql(result);
+      });
+    });
+
+    it('should not wrap null or undefined value', function() {
+      return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(() => undefined)).then(res => {
+        should.equal(res.arguments[2], null);
+      });
+    });
+
+    it('should wrap error', function() {
+      function handler() {
+        throw new Error('Error');
+      }
+
+      return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(handler)).then(res => {
+        should.equal(res.exception.exceptionMessage, 'Error');
       });
     });
   });
