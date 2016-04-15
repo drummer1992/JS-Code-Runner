@@ -94,7 +94,7 @@ describe('In CLOUD', function() {
 
     it('should be able to prevent default behavior by throwing custom Error', function(done) {
       serverCode(app)
-        .addHandler(PERSISTENCE.events.beforeCreate, (res) => {
+        .addHandler(PERSISTENCE.events.beforeCreate, () => {
           throw new Backendless.ServerCode.Error(1000, 'You shall not pass');
         })
         .deploy()
@@ -166,7 +166,7 @@ describe('In CLOUD', function() {
         .deploy()
         .then(() => {
           request('post', '/servercode/events/readdir')
-            .expect(200, 'test', done);
+            .expect(200, { result: 'test' }, done);
         })
         .catch(done);
     });
