@@ -245,6 +245,8 @@ describe('In CLOUD', function() {
   });
 
   describe('task timeout', function() {
+    this.timeout(30000);
+
     it('should be respected in custom event handler', function(done) {
       serverCode(app)
         .addCustomEvent('testTimeout', () => new Promise(() => {}))
