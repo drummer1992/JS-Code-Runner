@@ -22,7 +22,7 @@ class ServerCodeTestModel extends ServerCodeModel {
 
   addDefinition(name, definition) {
     if (definition) {
-      this.definitions.types[name] = definition;
+      this.definitions.types[name] = Object.assign({ name: name }, definition);
     }
 
     return this;

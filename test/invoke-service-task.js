@@ -5,6 +5,8 @@ const assert    = require('assert'),
       executor  = require('../lib/server-code/runners/tasks/executor'),
       argsUtil  = require('../lib/server-code/runners/tasks/util/args');
 
+const SUCCESS = 'success';
+
 require('mocha');
 
 function createTask(service, method, args, configItems) {
@@ -33,72 +35,66 @@ describe('[invoke-service] task executor', function() {
   it('should invoke service method', function() {
     let invoked = false;
 
-    class Service {
-      test() {
+    class Foo {
+      bar() {
         invoked = true;
       }
     }
 
-    return invoke(createTask(Service.name, 'test'), new TestModel().addService(Service))
-      .then(res => assert.equal(res, null))
-      .then(() => assert.ok(invoked));
+    return invoke(createTask(Foo.name, 'bar'), new TestModel().addService(Foo))
+      .then(() => assert(invoked));
   });
 
   it('should pass arguments to service method', function() {
-    let invoked = false;
-
-    class Service {
-      test(a, b, c) {
+    class Foo {
+      bar(a, b, c) {
         assert.equal(a, 1);
         assert.equal(b, 2);
         assert.deepEqual(c, {});
 
-        invoked = true;
+        return SUCCESS;
       }
     }
 
-    return invoke(createTask(Service.name, 'test', [1, 2, {}]), new TestModel().addService(Service))
-      .then(res => {
-        assert.equal(res, null);
-        assert(invoked);
-      });
+    return invoke(createTask(Foo.name, 'bar', [1, 2, {}]), new TestModel().addService(Foo))
+      .then(assertSuccess);
   });
 
   describe('should handle error', function() {
     it('when service not found', function() {
-      return invoke(createTask('Test', 'test'), new TestModel())
-        .then(res => assert.equal(res.exceptionMessage, '[Test] service does not exist'));
+      return invoke(createTask('Foo', 'bar'), new TestModel())
+        .then(res => assert.equal(res.exceptionMessage, '[Foo] service does not exist'));
     });
 
     it('when service method not found', function() {
-      class Test {
+      class Foo {
       }
 
-      return invoke(createTask('Test', 'test'), new TestModel().addService(Test))
+      return invoke(createTask('Foo', 'bar'), new TestModel().addService(Foo))
         .then(res => assert.equal(res.exceptionMessage,
-          '[test] method does not exist in [Test] service or is not a function'));
+          '[bar] method does not exist in [Foo] service or is not a function'));
     });
 
     it('when service method throws an error', function() {
-      class Test {
-        test() {
-          throw new Error('Oops');
+      class Foo {
+        bar() {
+          throw new Error('erred');
         }
       }
 
-      return invoke(createTask('Test', 'test'), new TestModel().addService(Test))
-        .then(res => assert.equal(res.exceptionMessage, 'Oops'));
+      return invoke(createTask(Foo.name, 'bar'), new TestModel().addService(Foo))
+        .then(res => assert.equal(res.exceptionMessage, 'erred'));
     });
 
     it('when service method rejects promise', function() {
-      class Test {
-        test() {
-          return Promise.reject('Oops');
+      class Foo {
+        bar() {
+          return Promise.reject('rejected');
         }
       }
 
-      return invoke(createTask('Test', 'test'), new TestModel().addService(Test))
-        .then(res => assert.equal(res.exceptionMessage, 'Oops'));
+      return invoke(createTask('Foo', 'bar'), new TestModel().addService(Foo))
+        .then(res => assert.equal(res.exceptionMessage, 'rejected'));
     });
 
     it('when service method produces async error behind promise', function() {
@@ -106,22 +102,21 @@ describe('[invoke-service] task executor', function() {
         test() {
           return new Promise(() => {
             process.nextTick(() => {
-              throw new Error('Oops');
+              throw new Error('async-erred');
             });
           });
         }
       }
 
       return invoke(createTask('Test', 'test'), new TestModel().addService(Test))
-        .then(res => assert.equal(res.exceptionMessage, 'Oops'));
+        .then(res => assert.equal(res.exceptionMessage, 'async-erred'));
     });
   });
 
   it('should transform arguments if custom types are defined', function() {
-    let invoked = false;
-
     class Foo {
     }
+
     class Bar {
       constructor() {
         this.baz = {};
@@ -139,7 +134,7 @@ describe('[invoke-service] task executor', function() {
         assert(baz[0] instanceof Baz, 'Invalid array elements type casting');
         assert(baz[1] instanceof Baz, 'Invalid array elements type casting');
 
-        invoked = true;
+        return SUCCESS;
       }
     }
 
@@ -149,7 +144,7 @@ describe('[invoke-service] task executor', function() {
           test: {
             params: [
               { name: 'foo', type: { name: 'Foo' } },
-              { name: 'boo', type: { name: 'Bar' } },
+              { name: 'bar', type: { name: 'Bar' } },
               { name: 'baz', type: { name: 'Array', elementType: { name: 'Baz' } } }
             ]
           }
@@ -159,11 +154,67 @@ describe('[invoke-service] task executor', function() {
       .addType(Bar, { properties: { baz: { type: { name: 'Baz' } } } })
       .addType(Baz);
 
-    return invoke(createTask(Service, 'test', [new Foo(), new Bar(), [new Baz(), new Baz()]]), model)
-      .then((res) => {
-        assert.equal(res, null);
-        assert(invoked);
-      });
+    return invoke(createTask(Service.name, 'test', [new Foo(), new Bar(), [new Baz(), new Baz()]]), model)
+      .then(assertSuccess);
   });
 
+  it('should provide a [request] in execution context', function() {
+    const task = createTask('Foo', 'bar');
+    const model = new TestModel().addService(class Foo {
+      bar() {
+        assert.equal(this.context, task.invocationContextDto);
+
+        return SUCCESS;
+      }
+    });
+
+    return invoke(task, model).then(assertSuccess);
+  });
+
+  it('should provide a [config items] in execution context', function() {
+    class Foo {
+      bar() {
+        assert.equal(this.config.one, 'uno');
+        assert.equal(this.config.two, '');
+        assert.equal(this.config.three, 0);
+        assert.equal(this.config.four, 4);
+        assert.equal(this.config.five, undefined);
+
+        return SUCCESS;
+      }
+    }
+
+    Foo.configItems = [{
+      name        : 'one',
+      defaultValue: 'one',
+      type: 'string'
+    }, {
+      name        : 'two',
+      defaultValue: 'two',
+      type: 'string'
+    }, {
+      name        : 'three',
+      defaultValue: 3,
+      type: 'string'
+    }, {
+      name        : 'four',
+      defaultValue: 4,
+      type: 'string'
+    }, {
+      name: 'five',
+      type: 'string'
+    }
+    ];
+
+    const one = { name: 'one', value: 'uno' };
+    const two = { name: 'two', value: '' }; //empty value should not be replaced with default value
+    const three = { name: 'three', value: 0 }; //zero should not be replaced with default value
+
+    return invoke(createTask('Foo', 'bar', null, [one, two, three]), new TestModel().addService(Foo))
+      .then(assertSuccess);
+  });
 });
+
+function assertSuccess(res) {
+  assert.equal(res, SUCCESS);
+}
