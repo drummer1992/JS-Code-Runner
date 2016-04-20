@@ -17,20 +17,14 @@ class GreetingsService {
   }
 }
 
-GreetingsService.configItems = [
+Backendless.ServerCode.addService(GreetingsService, [
   {
     name        : 'lang',
+    type        : 'choice',
     displayName : 'Language',
     required    : true,
-    type        : 'choice',
     defaultValue: 'English',
     options     : ['English', 'German', 'Spanish'],
     hint        : 'Please select a Greetings Language'
   }
-];
-
-// GreetingsService.configItems = Backendless.ServerCode.ServiceConfigBuilder()
-//   .addChoise('lang', 'Language', true, ['English', 'German', 'Spanish'], 'English', 'Please select a Greetings Language')
-//   .build();
-
-Backendless.ServerCode.addService(GreetingsService);
+]);
