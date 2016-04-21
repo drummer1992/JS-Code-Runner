@@ -12,10 +12,7 @@ function createTask(path) {
     initAppData  : {},
     actionType   : 'PARSE_CUSTOM_SERVICE_FROM_JAR',
     applicationId: '',
-    relativePath : 'test',
-    argObject    : {
-      fileName: path
-    }
+    relativePath : `test/${path}`
   };
 }
 
