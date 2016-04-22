@@ -113,6 +113,36 @@ describe('[invoke-service] task executor', function() {
     });
   });
 
+  it('should handle custom error', function() {
+    class Foo {
+      bar() {
+        throw new Backendless.ServerCode.Error(126, 'erred');
+      }
+    }
+
+    return invoke(createTask(Foo.name, 'bar'), new TestModel().addService(Foo))
+      .then(res => {
+        assert.equal(res.exceptionMessage, 'erred');
+        assert.equal(res.code, 126);
+        assert.equal(res.httpStatusCode, -1);
+      });
+  });
+
+  it('should handle custom error with specific http status code', function() {
+    class Foo {
+      bar() {
+        throw new Backendless.ServerCode.Error(126, 'erred', 403);
+      }
+    }
+
+    return invoke(createTask(Foo.name, 'bar'), new TestModel().addService(Foo))
+      .then(res => {
+        assert.equal(res.exceptionMessage, 'erred');
+        assert.equal(res.code, 126);
+        assert.equal(res.httpStatusCode, 403);
+      });
+  });
+
   it('should transform arguments if custom types are defined', function() {
     class Foo {
     }
