@@ -6,24 +6,13 @@ const should          = require('should'),
       ServerCode      = require('../lib/server-code/api'),
       executor        = require('../lib/server-code/runners/tasks/executor'),
       executionResult = require('../lib/server-code/runners/tasks/util/result-wrapper').executionResult,
+      argsUtil        = require('../lib/server-code/runners/tasks/util/args'),
       PERSISTENCE     = events.providers.PERSISTENCE,
       BEFORE_CREATE   = PERSISTENCE.events.beforeCreate,
       AFTER_CREATE    = PERSISTENCE.events.afterCreate,
       CUSTOM_EVENT    = events.providers.CUSTOM.events.execute;
 
 require('mocha');
-
-function stringToBytes(s) {
-  return s.split('').map((c, i) => s.charCodeAt(i));
-}
-
-function encodeArgs(args) {
-  return (args && args.length && stringToBytes(json.stringify(args))) || [];
-}
-
-function decodeArgs(args) {
-  return (args && args.length && json.parse(String.fromCharCode.apply(String, args))) || [];
-}
 
 function modelStub(handlerFn, classMappings) {
   return {
@@ -40,7 +29,7 @@ function createTask(event, args, async) {
     initAppData  : {},
     applicationId: '',
     relativePath : '',
-    arguments    : encodeArgs(args || [])
+    arguments    : argsUtil.encode(args || [])
   };
 }
 
@@ -49,7 +38,7 @@ function invokeAndParse(task, model) {
     .then(res => res && json.parse(res))
     .then(res => {
       if (res && res.arguments) {
-        res.arguments = res.arguments && decodeArgs(res.arguments);
+        res.arguments = res.arguments && argsUtil.decode(res.arguments);
       }
 
       return res;
@@ -188,7 +177,7 @@ describe('[invoke-handler] task executor', function() {
 
       return invokeAndParse(task, modelStub(handler)).then(res => {
         should.exist(res.exception);
-        res.exception.exceptionMessage.should.equal('Task execution aborted due to timeout');
+        res.exception.exceptionMessage.should.equal('Task execution is aborted due to timeout');
       });
     });
   });
