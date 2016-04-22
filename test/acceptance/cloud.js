@@ -8,6 +8,8 @@ const app = {
   version: 'v1'
 };
 
+const TIMEOUT_EXCEEDED_MSG = 'Custom business logic execution has been terminated because it did not complete in permitted time - 5 seconds';
+
 const promise     = require('../../lib/util/promise'),
       assert      = require('assert'),
       Backendless = require('backendless'),
@@ -134,7 +136,7 @@ describe('In CLOUD', function() {
         }, done);
     });
 
-    it('should be able to throw e rror', function(done) {
+    it('should be able to throw an error', function(done) {
       serverCode(app)
         .addHandler(PERSISTENCE.events.afterCreate, () => {
           throw new Backendless.ServerCode.Error(1000, 'You shall not pass');
@@ -253,7 +255,7 @@ describe('In CLOUD', function() {
         .deploy()
         .then(() => {
           request('post', '/servercode/events/testTimeout')
-            .expect(400, { code: 0, message: '' }, done);
+            .expect(400, { code: 15000, message: TIMEOUT_EXCEEDED_MSG }, done);
         })
         .catch(done);
     });
@@ -264,7 +266,7 @@ describe('In CLOUD', function() {
         .deploy()
         .then(() => {
           request('post', '/data/Person', { name: 'Foo' })
-            .expect(400, { code: 1000, message: 'You shall not pass' }, done);
+            .expect(400, { code: 15000, message: TIMEOUT_EXCEEDED_MSG }, done);
         })
         .catch(done);
     });

@@ -12,8 +12,10 @@ require('mocha');
  */
 function createTask(actionType) {
   return {
-    ___jsonclass: executor.RAI,
-    actionType : actionType
+    ___jsonclass : executor.RAI,
+    actionType   : actionType,
+    applicationId: '',
+    relativePath : ''
   };
 }
 
@@ -31,7 +33,7 @@ describe('[invoke-action] task executor', function() {
         process.exit = exit;
       };
 
-      return executor.execute(createTask(SHUTDOWN), {})
+      return executor.execute(createTask(SHUTDOWN), { backendless: { repoPath: '' } })
         .then(process.exit.restore, process.exit.restore)
         .then(() => should.equal(exitCalled, true));
     });

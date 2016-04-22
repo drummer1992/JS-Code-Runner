@@ -2,98 +2,141 @@
 
 'use strict';
 
-class Order {
-  constructor(items) {
-    /**
-     * @type {Array.<ShoppingItem>}
-     */
-    this.items = items;
-
-    /**
-     * @type {Number}
-     */
-    this.orderPrice = items.reduce((sum, item) => (sum || 0) + (item.price * item.quantity));
-  }
-}
+const Order = require('../models/order');
 
 class ShoppingCart {
-  constructor() {
-    this.items = [];
+  constructor(opts) {
+    opts = opts || {};
+
+    this.name = opts.name;
+    this.items = opts.items || [];
+    this.___class = ShoppingCart.name;
   }
 
   addItem(item) {
+    item.objectId = null;
+
     this.items.push(item);
+  }
+
+  deleteItem(product) {
+    const idx = this.items.findIndex(item => item.product === product);
+
+    if (idx === -1) {
+      throw new Error(`No ${product} in cart`);
+    }
+
+    this.items.splice(idx, 1);
+
+    return this;
+  }
+
+  setQuantity(product, quantity) {
+    const productItem = this.items.find(item => item.product === product);
+
+    if (!productItem) {
+      throw new Error(`No [${product}] in cart`);
+    }
+
+    productItem.quantity = quantity;
+
+    return this;
   }
 
   getItems() {
     return this.items;
+  }
+
+  destroy() {
+    Backendless.Cache.remove(this.name, this);
+  }
+
+  save() {
+    Backendless.Cache.put(this.name, this);
+  }
+
+  static get(name, mustExist) {
+    Backendless.Cache.setObjectFactory(ShoppingCart.name, ShoppingCart);
+
+    return Backendless.Cache.get(name).then(cart => {
+      if (!cart && mustExist) {
+        throw new Error(`Shopping cart [${name}] does not exist`);
+      }
+
+      return cart;
+    });
   }
 }
 
 class ShoppingCartService {
 
   /**
-   * A custom type can be described in jsdoc typedef declaration without having its own class
-   * This will help to build a valid Swager doc but the CodeRunner won't be able to transform a plain JS object
-   * from the request into concrete class.
-   *
-   * @typedef {Object} ShoppingItem
-   * @property {String} objectId
-   * @property {String} product
-   * @property {Number} price
-   * @property {Number} quantity
-   * */
-
-  /**
-   * @public
    * @param {String} cartName
    * @param {ShoppingItem} item
-   * @returns {void}
+   * @returns {Promise.<void>}
    */
   addItem(cartName, item) {
-    let shoppingCart = this.getCart(cartName);
-
-    if (!shoppingCart) {
-      shoppingCart = new ShoppingCart();
-    }
-
-    shoppingCart.addItem(item);
-    item.objectId = null;
-
-    Backendless.Cache.put(cartName, shoppingCart);
+    return this.addItems(cartName, [item]);
   }
 
   /**
-   * @public
+   * @param {String} cartName
+   * @param {Array.<ShoppingItem>} items
+   * @returns {Promise.<void>}
+   */
+  addItems(cartName, items) {
+    return ShoppingCart.get(cartName).then(cart => {
+      if (!cart) {
+        cart = new ShoppingCart({ name: cartName });
+      }
+
+      items.forEach(item => cart.addItem(item));
+
+      return cart.save();
+    });
+  }
+
+  /**
+   * @param {String} cartName
+   * @param {String} product
+   * @returns {Promise.<void>}
+   */
+  deleteItem(cartName, product) {
+    return ShoppingCart.get(cartName, true).then(cart => cart.deleteItem(product).save());
+  }
+
+  /**
+   * @param {String} cartName
+   * @returns {Promise.<Array.<ShoppingItem>>}
+   */
+  getItems(cartName) {
+    return ShoppingCart.get(cartName, true).then(cart => cart.getItems());
+  }
+
+  /**
+   * @param {String} cartName
+   * @param {String} productName
+   * @param {Number} quantity
+   * @returns {Promise.<void>}
+   */
+  setQuantity(cartName, productName, quantity) {
+    return ShoppingCart.get(cartName, true).then(cart => cart.setQuantity(productName, quantity).save());
+  }
+
+  /**
    * @param {String} cartName
    * @returns {Promise.<Order>}
    */
   purchase(cartName) {
-    const shoppingCart = this.getCart(cartName);
+    return ShoppingCart.get(cartName, true).then(cart => {
+      const order = new Order(cart.getItems());
 
-    if (!shoppingCart) {
-      throw new Error(`Shopping cart ${cartName} does not exist`);
-    }
-
-    const order = new Order(shoppingCart.getItems());
-
-    return order.save()
-      .then(() => {
-        Backendless.Cache.delete(cartName);
-
-        return order;
-      });
-  }
-
-  /**
-   * @private
-   * @param {String} cartName
-   * @returns {ShoppingCart}
-   */
-  static getCart(cartName) {
-    return Backendless.Cache.get(cartName, ShoppingCart.class);
+      return order.save()
+        .then(() => cart.destroy())
+        .then(() => order);
+    });
   }
 }
 
-Backendless.ServerCode.addType(Order);
+Backendless.enablePromises();
 Backendless.ServerCode.addService(ShoppingCartService);
