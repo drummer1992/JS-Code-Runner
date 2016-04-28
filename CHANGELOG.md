@@ -1,5 +1,9 @@
 ## Change Log
 
+### v1.5.4 (2016/04/28)
+- fix `service not found` error in `cloud` mode
+- increase server code parsing time in `cloud` mode
+
 ### v1.5.3 (2016/04/28)
 - add temporary limitation to single service in deployment
 - update `eslint`, `should`, `jszip` and `request` to their latest versions
