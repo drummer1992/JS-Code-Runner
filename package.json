@@ -38,16 +38,16 @@
     "commander": "^2.9.0",
     "glob": "^6.0.4",
     "jsdoc-api": "^1.1.0",
-    "jszip": "^2.5.0",
+    "jszip": "^2.6.0",
     "redis": "^2.5.3",
-    "request": "^2.69.0",
+    "request": "^2.72.0",
     "xml": "^1.0.1"
   },
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^2.7.0",
+    "eslint": "^2.8.0",
     "mocha": "^2.4.5",
-    "should": "^8.2.1",
+    "should": "^8.3.1",
     "supertest": "^1.2.0"
   }
 }
