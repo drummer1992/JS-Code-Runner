@@ -7,7 +7,8 @@
 ### v1.5.3 (2016/04/28)
 - add temporary limitation to single service in deployment
 - update `eslint`, `should`, `jszip` and `request` to their latest versions
-- change service meta in the result of `PARSE-SERVICE` task as it required by server
+- change service meta in the result of `PARSE-SERVICE` task as it is required by server
+- make single call to api engine to register all debug services
 
 ### v1.5.2 (2016/04/28)
 - optimize a list of dependencies included to the deployment in `npm3` env
