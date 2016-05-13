@@ -8,7 +8,9 @@ const app = {
   version: 'v1'
 };
 
-const TIMEOUT_EXCEEDED_MSG = 'Custom business logic execution has been terminated because it did not complete in permitted time - 5 seconds';
+const TIMEOUT_EXCEEDED_MSG = (
+  'Custom business logic execution has been terminated because it did not complete in permitted time - 5 seconds'
+);
 
 const promise     = require('../../lib/util/promise'),
       assert      = require('assert'),

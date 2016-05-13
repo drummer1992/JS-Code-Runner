@@ -195,7 +195,7 @@ describe('[invoke-handler] task executor', function() {
       });
     });
 
-    it('should allow short circuit feature (stopping the event propagation and returning its own result to the client)', function() {
+    it('should allow short circuit', function() {
       const task = createTask(BEFORE_CREATE, [{}, {}, { name: 'John', id: 1 }]);
 
       function handler() {

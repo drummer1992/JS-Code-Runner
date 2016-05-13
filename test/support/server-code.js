@@ -33,8 +33,10 @@ class ServerCode {
   addHandler(event, handler, context) {
     const p = event.provider;
     const ctx = p.targeted ? `'${context || '*'}'` : '';
-    const handlerBody = `'use strict';\n` +
-      `Backendless.ServerCode.${providerApi(p)}.${event.name}(${ctx}${ctx ? ', ' : ''}${handler.toString()});`;
+    const handlerBody = (
+      `'use strict';\n` +
+      `Backendless.ServerCode.${providerApi(p)}.${event.name}(${ctx}${ctx ? ', ' : ''}${handler.toString()});`
+    );
 
     this.items.push(handlerBody);
 
@@ -42,8 +44,10 @@ class ServerCode {
   }
 
   addCustomEvent(event, handler) {
-    const handlerBody = `'use strict';\n` +
-      `Backendless.ServerCode.customEvent('${event}', ${handler.toString()});`;
+    const handlerBody = (
+      `'use strict';\n` +
+      `Backendless.ServerCode.customEvent('${event}', ${handler.toString()});`
+    );
 
     this.items.push(handlerBody);
 
@@ -56,10 +60,12 @@ class ServerCode {
 
     opts = JSON.stringify(opts);
 
-    const timerBody = `'use strict';\n` +
-      `Backendless.ServerCode.addTimer(${opts.substring(0, opts.length - 1)}, 
+    const timerBody = (`
+      'use strict';
+      Backendless.ServerCode.addTimer(${opts.substring(0, opts.length - 1)}, 
         execute: ${tickFn.toString()}
-      });`;
+      });
+    `);
 
     this.items.push(timerBody);
 

@@ -6,6 +6,7 @@ const definitions     = require('./helpers/definitions').map,
 require('mocha');
 require('should');
 
+/*eslint max-len: ["off"]*/
 const SHOPPING_CART_SERVICE_XML = `<?xml version="1.0" encoding="ISO-8859-1"?>
 <namespaces>
   <namespace name="services" fullname="services">

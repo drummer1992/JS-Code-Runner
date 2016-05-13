@@ -11,6 +11,8 @@
     // require let or const instead of var
     "no-var": 2,
 
+    "max-len": ["error", 120],
+
     // require or disallow use of semicolons instead of ASI
     "semi": [2, "always"],
 
@@ -28,9 +30,6 @@
 
     // restrict what can be thrown as an exception
     "no-throw-literal": 2,
-
-    // suggest using template literals instead of string concatenation
-    "prefer-template": 2,
 
     // disallow Unused Expressions
     "no-unused-expressions": [2, { "allowShortCircuit": true }],
