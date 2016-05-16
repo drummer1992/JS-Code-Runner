@@ -34,8 +34,9 @@
     "backendless"
   ],
   "dependencies": {
-    "backendless": "^3.1.8",
+    "backendless": "^3.1.9",
     "commander": "^2.9.0",
+    "eslint": "^2.10.1",
     "glob": "^6.0.4",
     "jsdoc-api": "^1.1.0",
     "jszip": "^2.6.0",
