@@ -1,5 +1,10 @@
 ## Change Log
 
+### v1.5.5 (2016/05/16)
+- update `eslint`, `backendless` to their latest versions
+- fix `undefined` custom event name in model summary output
+- remove redundant `(debug)` suffix from service name being registered for `debug`
+
 ### v1.5.4 (2016/04/28)
 - fix `service not found` error in `cloud` mode
 - increase server code parsing time in `cloud` mode
