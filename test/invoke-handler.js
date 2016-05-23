@@ -377,6 +377,13 @@ describe('[invoke-handler] task executor', function() {
       });
     });
 
+    it('should wrap null', function() {
+      return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(() => null)).then(res => {
+        should.exists(res.arguments[2]);
+        res.arguments[2].should.be.eql({ result: null });
+      });
+    });
+
     it('should not wrap complex object', function() {
       const task = createTask(CUSTOM_EVENT, []);
       const result = { a: 'b' };
@@ -391,8 +398,14 @@ describe('[invoke-handler] task executor', function() {
       });
     });
 
-    it('should not wrap null or undefined value', function() {
+    it('should nullify undefined', function() {
       return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(() => undefined)).then(res => {
+        should.equal(res.arguments[2], null);
+      });
+    });
+
+    it('should nullify function', function() {
+      return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(() => function() {})).then(res => {
         should.equal(res.arguments[2], null);
       });
     });

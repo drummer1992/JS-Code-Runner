@@ -38,7 +38,7 @@ describe('[parse-service] task executor', function() {
         assert.deepEqual(res.arguments.services, [{
           'name'        : 'ShoppingCartService',
           'description' : 'ShoppingCartService',
-          'version'     : '0.0.0',
+          'version'     : '1.0.0',
           'config'      : [],
           '___jsonclass': 'com.backendless.coderunner.commons.model.ServiceModel',
           'xml'         : '<?xml version="1.0" encoding="ISO-8859-1"?>\n' +
