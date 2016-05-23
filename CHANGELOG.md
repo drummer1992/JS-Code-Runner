@@ -1,5 +1,9 @@
 ## Change Log
 
+### v1.5.6 (2016/05/23)
+- fix `timeout error` when custom event handler returns a `Function`
+- fix publisher bug related to npm2 env and a module used by two other modules
+
 ### v1.5.5 (2016/05/16)
 - update `eslint`, `backendless` to their latest versions
 - fix `undefined` custom event name in model summary output
