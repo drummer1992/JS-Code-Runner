@@ -1,5 +1,9 @@
 ## Change Log
 
+### v1.6.0 (2016/05/25)
+- multiple services is now allowed to deploy
+- default service version is `1.0.0` (was `0.0.0`)
+
 ### v1.5.6 (2016/05/23)
 - fix `timeout error` when custom event handler returns a `Function`
 - fix publisher bug related to npm2 env and a module used by two other modules
