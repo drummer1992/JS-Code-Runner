@@ -400,13 +400,14 @@ describe('[invoke-handler] task executor', function() {
 
     it('should nullify undefined', function() {
       return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(() => undefined)).then(res => {
-        should.equal(res.arguments[2], null);
+        res.arguments[2].should.be.eql({});
       });
     });
 
     it('should nullify function', function() {
-      return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(() => function() {})).then(res => {
-        should.equal(res.arguments[2], null);
+      return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(() => function() {
+      })).then(res => {
+        res.arguments[2].should.be.eql({});
       });
     });
 
