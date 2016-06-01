@@ -17,6 +17,8 @@ class GreetingsService {
   }
 }
 
+GreetingsService.version = '1.4.3';
+
 Backendless.ServerCode.addService(GreetingsService, [
   {
     name        : 'lang',
