@@ -1,5 +1,11 @@
 ## Change Log
 
+### v1.7.0 (2016/06/01)
+- show error line number in model summary output
+- in 'verbose' mode print full stack trace of the module validation errors
+- wrap a value returned from custom event handler into an object ({result: value})
+except those cases where the value is already an object
+
 ### v1.6.0 (2016/05/25)
 - multiple services is now allowed to deploy
 - default service version is `1.0.0` (was `0.0.0`)
