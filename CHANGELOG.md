@@ -1,5 +1,8 @@
 ## Change Log
 
+### v1.7.1 (2016/06/08)
+- fix `Can not parse generic service` error when publish service with third-party dependencies
+
 ### v1.7.0 (2016/06/01)
 - show error line number in model summary output
 - in 'verbose' mode print full stack trace of the module validation errors
