@@ -30,7 +30,7 @@ function createTask(service, method, args, configItems) {
 function invoke(task, model) {
   return executor.execute(task, { backendless: { repoPath: '' } }, model)
     .then(res => JSON.parse(res))
-    .then(res => res[0]);
+    .then(res => res.arguments.length ? res.arguments : res);
 }
 
 describe('[invoke-service] task executor', function() {
@@ -65,7 +65,7 @@ describe('[invoke-service] task executor', function() {
   describe('should handle error', function() {
     it('when service not found', function() {
       return invoke(createTask('Foo', 'bar'), new TestModel())
-        .then(res => assert.equal(res.exceptionMessage, '[Foo] service does not exist'));
+        .then(res => assert.equal(res.exception.exceptionMessage, '[Foo] service does not exist'));
     });
 
     it('when service method not found', function() {
@@ -73,7 +73,7 @@ describe('[invoke-service] task executor', function() {
       }
 
       return invoke(createTask('Foo', 'bar'), new TestModel().addService(Foo))
-        .then(res => assert.equal(res.exceptionMessage,
+        .then(res => assert.equal(res.exception.exceptionMessage,
           '[bar] method does not exist in [Foo] service or is not a function'));
     });
 
@@ -85,7 +85,7 @@ describe('[invoke-service] task executor', function() {
       }
 
       return invoke(createTask(Foo.name, 'bar'), new TestModel().addService(Foo))
-        .then(res => assert.equal(res.exceptionMessage, 'erred'));
+        .then(res => assert.equal(res.exception.exceptionMessage, 'erred'));
     });
 
     it('when service method rejects promise', function() {
@@ -96,7 +96,7 @@ describe('[invoke-service] task executor', function() {
       }
 
       return invoke(createTask('Foo', 'bar'), new TestModel().addService(Foo))
-        .then(res => assert.equal(res.exceptionMessage, 'rejected'));
+        .then(res => assert.equal(res.exception.exceptionMessage, 'rejected'));
     });
 
     it('when service method produces async error behind promise', function() {
@@ -111,7 +111,7 @@ describe('[invoke-service] task executor', function() {
       }
 
       return invoke(createTask('Test', 'test'), new TestModel().addService(Test))
-        .then(res => assert.equal(res.exceptionMessage, 'async-erred'));
+        .then(res => assert.equal(res.exception.exceptionMessage, 'async-erred'));
     });
   });
 
@@ -124,9 +124,9 @@ describe('[invoke-service] task executor', function() {
 
     return invoke(createTask(Foo.name, 'bar'), new TestModel().addService(Foo))
       .then(res => {
-        assert.equal(res.exceptionMessage, 'erred');
-        assert.equal(res.code, 126);
-        assert.equal(res.httpStatusCode, -1);
+        assert.equal(res.exception.exceptionMessage, 'erred');
+        assert.equal(res.exception.code, 126);
+        assert.equal(res.exception.httpStatusCode, -1);
       });
   });
 
@@ -139,9 +139,9 @@ describe('[invoke-service] task executor', function() {
 
     return invoke(createTask(Foo.name, 'bar'), new TestModel().addService(Foo))
       .then(res => {
-        assert.equal(res.exceptionMessage, 'erred');
-        assert.equal(res.code, 126);
-        assert.equal(res.httpStatusCode, 403);
+        assert.equal(res.exception.exceptionMessage, 'erred');
+        assert.equal(res.exception.code, 126);
+        assert.equal(res.exception.httpStatusCode, 403);
       });
   });
 
