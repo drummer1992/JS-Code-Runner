@@ -1,5 +1,8 @@
 ## Change Log
 
+### v1.7.2 (2016/06/14)
+- change: same response shape for each task  executors
+
 ### v1.7.1 (2016/06/08)
 - fix `Can not parse generic service` error when publish service with third-party dependencies
 
