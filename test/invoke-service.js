@@ -4,6 +4,7 @@
 
 const assert    = require('assert'),
       TestModel = require('./support/test-model'),
+      invoke    = require('./helpers/invoke-task'),
       executor  = require('../lib/server-code/runners/tasks/executor'),
       argsUtil  = require('../lib/server-code/runners/tasks/util/args');
 
@@ -25,12 +26,6 @@ function createTask(service, method, args, configItems) {
     },
     arguments           : argsUtil.encode(args || [])
   };
-}
-
-function invoke(task, model) {
-  return executor.execute(task, { backendless: { repoPath: '' } }, model)
-    .then(res => JSON.parse(res))
-    .then(res => res.arguments.length ? res.arguments : res);
 }
 
 describe('[invoke-service] task executor', function() {
@@ -219,19 +214,19 @@ describe('[invoke-service] task executor', function() {
     Foo.configItems = [{
       name        : 'one',
       defaultValue: 'one',
-      type: 'string'
+      type        : 'string'
     }, {
       name        : 'two',
       defaultValue: 'two',
-      type: 'string'
+      type        : 'string'
     }, {
       name        : 'three',
       defaultValue: 3,
-      type: 'string'
+      type        : 'string'
     }, {
       name        : 'four',
       defaultValue: 4,
-      type: 'string'
+      type        : 'string'
     }, {
       name: 'five',
       type: 'string'
@@ -248,5 +243,5 @@ describe('[invoke-service] task executor', function() {
 });
 
 function assertSuccess(res) {
-  assert.equal(res, SUCCESS);
+  assert.equal(res.arguments, SUCCESS);
 }
