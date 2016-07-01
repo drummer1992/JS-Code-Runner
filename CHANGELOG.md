@@ -1,7 +1,10 @@
 ## Change Log
 
+### v1.7.3 (2016/07/01)
+- fix `HashMap cannot be cast to InvocationResult` error when invoking service method which returns non string value
+
 ### v1.7.2 (2016/06/14)
-- change: same response shape for each task  executors
+- change: same response shape for each task executors
 
 ### v1.7.1 (2016/06/08)
 - fix `Can not parse generic service` error when publish service with third-party dependencies
