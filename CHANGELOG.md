@@ -1,5 +1,8 @@
 ## Change Log
 
+### v1.7.4 (2016/07/14)
+- fix: `false` returned from service's method results in `null` result on client side
+
 ### v1.7.3 (2016/07/01)
 - fix `HashMap cannot be cast to InvocationResult` error when invoking service method which returns non string value
 

@@ -1,4 +1,6 @@
 {
+  "verbose":true,
+
   "backendless": {
     "apiServer": "https://api.backendless.com",
     "msgBroker": {
@@ -12,6 +14,8 @@
     "version": "",
     "files": [
       "examples/**",
+      "!examples/services/**",
+      "!examples/timers/**",
       "!node_modules/**"
     ]
   }
