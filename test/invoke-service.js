@@ -57,6 +57,75 @@ describe('[invoke-service] task executor', function() {
       .then(assertSuccess);
   });
 
+  describe('should handle service method result', function() {
+    it('numeric', function() {
+      class Foo {
+        bar() {
+          return 100;
+        }
+      }
+
+      return invoke(createTask('Foo', 'bar'), new TestModel().addService(Foo))
+        .then(res => assert.equal(res.arguments, 100));
+    });
+
+    it('positive boolean', function() {
+      class Foo {
+        bar() {
+          return true;
+        }
+      }
+
+      return invoke(createTask('Foo', 'bar'), new TestModel().addService(Foo))
+        .then(res => assert.strictEqual(res.arguments, true));
+    });
+
+    it('positive boolean (promised)', function() {
+      class Foo {
+        bar() {
+          return Promise.resolve(true);
+        }
+      }
+
+      return invoke(createTask('Foo', 'bar'), new TestModel().addService(Foo))
+        .then(res => assert.strictEqual(res.arguments, true));
+    });
+
+    it('negative boolean', function() {
+      class Foo {
+        bar() {
+          return false;
+        }
+      }
+
+      return invoke(createTask('Foo', 'bar'), new TestModel().addService(Foo))
+        .then(res => assert.strictEqual(res.arguments, false));
+    });
+
+    it('negative boolean (promised)', function() {
+      class Foo {
+        bar() {
+          return Promise.resolve(false);
+        }
+      }
+
+      return invoke(createTask('Foo', 'bar'), new TestModel().addService(Foo))
+        .then(res => assert.strictEqual(res.arguments, false));
+    });
+
+    it('complex object', function() {
+      class Foo {
+        bar() {
+          return { name: 'John Dou' };
+        }
+      }
+
+      return invoke(createTask('Foo', 'bar'), new TestModel().addService(Foo))
+        .then(res => assert.deepEqual(res.arguments, { name: 'John Dou' }));
+    });
+
+  });
+
   describe('should handle error', function() {
     it('when service not found', function() {
       return invoke(createTask('Foo', 'bar'), new TestModel())
