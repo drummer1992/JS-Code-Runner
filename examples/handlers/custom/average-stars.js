@@ -15,19 +15,17 @@ Backendless.ServerCode.customEvent('movieRating', request => {
 
   return Backendless.Persistence.of('Review').find(query).then(
     reviews => {
+      const totalReviews = reviews.data.length;
+      const totalStars = reviews.data.reduce((memo, review) => memo + review.stars, 0);
 
-      //use console.log to debug your ServerCode
-      console.log(`${reviews.data.length} reviews found`);
+      //use console.log to debug your server code
+      console.log(`${totalReviews} reviews found with ${totalStars} stars in total`);
 
-      if (reviews.data.length === 0) {
+      if (totalReviews === 0) {
         throw new Error(`No reviews found for [${movie}] movie` );
       }
 
-      let totalStars = 0;
-
-      reviews.data.forEach( review => totalStars += review.stars);
-
-      return totalStars / reviews.data.length;
+      return totalStars / totalReviews;
     },
 
     //You can omit this part if you don't want to wrap a lookup error into a specific error message
