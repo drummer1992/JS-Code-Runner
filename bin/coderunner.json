@@ -14,8 +14,7 @@
     "version": "",
     "files": [
       "examples/**",
-      "!examples/services/**",
-      "!examples/timers/**",
+      "!examples/services/wsdl-proxy/**",
       "!node_modules/**"
     ]
   }

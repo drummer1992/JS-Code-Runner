@@ -31,6 +31,8 @@ Backendless.ServerCode.customEvent('movieRating', request => {
     //You can omit this part if you don't want to wrap a lookup error into a specific error message
     //Also it is redundant to print the error using console.log for debug because the Code Runner will do this anyway
     err => {
+      console.error(err);
+
       throw new Error('Movie lookup failed');
     }
   );
