@@ -1,5 +1,12 @@
 ## Change Log
 
+### v1.8.0 (2016/08/17)
+- in `CLOUD` mode the CodeRunner forwards all console logging 
+(including CodeRunner task processing info) to `Backendless.Logging` which makes it possible to 
+monitor deployed Business Logic
+- When run in production, the CodeRunner now prints how much times it takes, to load a context specific 
+business logic modules and their dependencies 
+
 ### v1.7.4 (2016/07/14)
 - fix: `false` returned from service's method results in `null` result on client side
 
