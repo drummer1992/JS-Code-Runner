@@ -11,10 +11,12 @@ contact Backendless support forum to resolve the issue
 
 The log messages may contain an errors raised during Business logic execution and this information may help you to fix them
 
-If you see that some the Business Logic execution was interrupted (for example, you see some `console.log` messages but don't see the others), 
-that means that you have some undeclared asynchronous IO operations which were interrupted by the CodeRunner due to 
+If you see that the Business Logic execution was interrupted (for example, you see some of the `console.log` messages, but don't see the others), 
+that means that you have some __undeclared__ asynchronous IO operations, which were interrupted by the CodeRunner due to its
 unawareness of them.
+
 Such business logic method must return a Promise to the CodeRunner which should be resolved only when all asynchronous jobs are finished
+
 This is explained in the [Sync vs Async Article](https://backendless.com/documentation/business-logic/js/bl_sync_vs_async_code.htm)
 
 
@@ -38,7 +40,7 @@ Consider the following example of an `execute` function of a dummy [Heartbeat ti
 
 After this timer run in production, you will find the following log messages in the logs :
 
-<img src='http://imgur.com/a/OhfM3' width='70%'>
+<img src='http://i.imgur.com/wKnRWWo.png'>
 
 
 ### The size of my code is bigger than allowed in the current payment tier
