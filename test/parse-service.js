@@ -32,7 +32,7 @@ describe('[parse-service] task executor', function() {
           'xml'         : '<?xml version="1.0" encoding="ISO-8859-1"?>\n' +
           '<namespaces>\n' +
           '  <namespace name="services" fullname="services">\n' +
-          '    <service name="ShoppingCartService" fullname="services.ShoppingCartService">\n' +
+          '    <service name="ShoppingCartService" fullname="services.ShoppingCartService" namespace="services">\n' +
           '      <method name="addItem" type="void" nativetype="void" fulltype="void" javatype="void">\n' +
           '        <arg name="cartName" type="String" nativetype="String" fulltype="String" javatype="java.lang.String"/>\n' +
           '        <arg name="item" type="ShoppingItem" nativetype="services.ShoppingItem" fulltype="services.ShoppingItem" javatype="services.ShoppingItem"/>\n' +
