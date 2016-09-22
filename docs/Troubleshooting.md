@@ -1,28 +1,7 @@
 # Troubleshooting
-
-### ServerCode works perfect in DEBUG mode but does not when deployed
-
-First of all, make sure the code is getting invoked when the related Business Event is raised. 
-To verify this, in the Development Console, go to `Files` section and check for corresponding `SERVER_CODE` category 
-log messages in the log files of the `logging` folder.
-
-If you do not see such messages and you are sure that the corresponding business event was raised, please 
-contact Backendless support forum to resolve the issue
-
-The log messages may contain an errors raised during Business logic execution and this information may help you to fix them
-
-If you see that the Business Logic execution was interrupted (for example, you see some of the `console.log` messages, but don't see the others), 
-that means that you have some __undeclared__ asynchronous IO operations, which were interrupted by the CodeRunner due to its
-unawareness of them.
-
-Such business logic method must return a Promise to the CodeRunner which should be resolved only when all asynchronous jobs are finished
-
-This is explained in the [Sync vs Async Article](https://backendless.com/documentation/business-logic/js/bl_sync_vs_async_code.htm)
-
-
 ### How do I debug after I have deployed ?
 When the code is deployed, all `console.log` calls, in addition to the CodeRunner service messages, are redirected 
-to `Backendless.Logging` API calls.
+to `Backendless.Logging` API calls and will be saved in Backendless log files.
 
 This results in a file with all logged messages located in `root/logging` folder in the `Files` section
 See more on [Backendless.Logging documentation article](https://backendless.com/documentation/manage/mgmt_logging.htm)
@@ -38,10 +17,23 @@ Consider the following example of an `execute` function of a dummy [Heartbeat ti
   }
 ```
 
-After this timer run in production, you will find the following log messages in the logs :
+After this timer runs in production, you will find the following log messages in the logs :
 
 <img src='http://i.imgur.com/wKnRWWo.png'>
 
+### ServerCode works well in the DEBUG mode, but does not when deployed to the Cloud
+
+First of all, make sure the code is getting invoked when a triggerring event is raised. It could be an API call, a timer event, a custom event or a service invocation.
+
+To verify this, open the Backendless Console, go to the `Files` section and check the files in the `logging` directory. You should see log messages in the `SERVER_CODE` logging category.
+
+If you do not see any messages in that logging category and you are sure that the corresponding business logic triggering event is raised, please contact the Backendless support forum to resolve the issue.
+
+The log messages may contain errors raised during business logic execution and this information may help you in diagnosing and fixing the problem.
+
+If you see that the Business Logic execution was interrupted (for example, you see some of the `console.log` messages, but don't see the others), that means that you have some __undeclared__ asynchronous IO operations, which were interrupted by the CodeRunner. This happens when asynchronous operations started by your code are not properly returned to CodeRunner. Business logic method must return a Promise to CodeRunner which should be resolved only when all asynchronous jobs are finished.
+
+This is explained in the [Sync vs Async Article](https://backendless.com/documentation/business-logic/js/bl_sync_vs_async_code.htm).
 
 ### The size of my code is bigger than allowed in the current payment tier
 
