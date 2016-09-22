@@ -1,5 +1,5 @@
 # Troubleshooting
-### How do I debug after I have deployed ?
+### How do I debug after I have deployed business logic to the Backendless Cloud?
 When the code is deployed, all `console.log` calls, in addition to the CodeRunner service messages, are redirected 
 to `Backendless.Logging` API calls and will be saved in Backendless log files.
 
@@ -38,31 +38,36 @@ This is explained in the [Sync vs Async Article](https://backendless.com/documen
 ### The size of my code is bigger than allowed in the current payment tier
 
 You can decrease an application deployment zip size by adding an exclusion filters to your `app.files` config parameter which is 
-located in the `{PROJECT_DIR}/coderunner.json` file
+located in the `{PROJECT_DIR}/coderunner.json` file.
 
-This parameter contains an array of inclusion/exclusion patterns forming the content of the server code deployment
+This parameter contains an array of inclusion/exclusion patterns forming the content of the server code deployment. The default value of the parameter is a pattern which means 'include all files under `{PROJECT_DIR}/app` folder:
 
-By default it contains a pattern which is described as 'include all files under `{PROJECT_DIR}/app` folder'.
+```
+    "app": {
+    "files": [
+      "app/**"
+    ]
+  }
+```
+CodeRunner will automatically include into the deployment all non-dev dependencies from the node_modules folder listed in the `project.json` file.
 
-Automatically, CodeRunner will include to the deployment all non-dev dependencies from the node_modules folder listed in the `project.json`.
+Notice that `backendless-coderunner` is a `dev` dependency. When deploying your code to the client, all `dev` dependencies are excluded.
 
-`backendless-coderunner` is a `dev` dependency and those will be skipped
-
-You can run the deployment with few additional parameters which will give you more control on what's going on
+You can run the deployment with a few additional parameters which will give you more control of the deployment process:
 
 ```
 npm run deploy -- --verbose --keep-zip
 ```
 
-With `--verbose` parameter, you will see all deployment patterns applied (declared in `app.files` param explicitly and automatically added)
+When using the `--verbose` parameter, you will see all applied deployment patterns which are declared in `app.files` configuration parameter.
 
-With `--keep-zip` parameter, after deployment (or its attempt) you will find `deploy.zip` file in the `{PROJECT_DIR}` folder. You will be able to check its size and the content
+When using the  `--keep-zip` parameter, once the deployment is complete (or even after you attempt to run it), you will find the `deploy.zip` file in the `{PROJECT_DIR}` folder. You will be able to check its size and the contents.
 
-Cumulative size of the deployed code (which includes all dependencies) is limited for the Backendless Online deployments to 2 megabytes. It can be expanded by purchasing a Function Pack from the Backendless Marketplace
+The cumulative size of the deployed code (which includes all the dependencies) is limited to 2 megabytes in the free tier of Backendless Cloud. The limit can be expanded by purchasing a Function Pack from the Backendless Marketplace.
 
-To reduce the deployment size, consider minimizing the installation of the dependencies to only what the code needs
+To reduce the deployment size, consider minimizing the installation of the dependencies to only the ones your the code needs/uses.
 
-Additionally you may filter of what from the depended module folder should be skipped. For instance if {some_module} has an `examples` folder you may omit its inclusion by adding the following exclusion pattern to app.files - `!node_modules/some_module/examples`
+Additionally, you may apply additional filtering to identify what should be skipped from the depended module's folder. For instance, if {some_module} has the `examples` folder you may omit its inclusion by adding the following exclusion pattern in app.files - `!node_modules/some_module/examples`
 
 Some of this information can be found in the README file of the generated and downloaded from the console servercode project. 
-There are several examples of app.files config parameter tweaking
+There are several examples of app.files config parameter tweaking.
