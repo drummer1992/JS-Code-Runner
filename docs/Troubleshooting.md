@@ -40,7 +40,7 @@ This is explained in the [Sync vs Async Article](https://backendless.com/documen
 You can decrease application deployment zip size by adding exclusion filters to your `app.files` config parameter which is 
 located in the `{PROJECT_DIR}/coderunner.json` file.
 
-This parameter contains an array of inclusion/exclusion patterns forming the content of the server code deployment. The default value of the parameter is a pattern which means 'include all files under `{PROJECT_DIR}/app` folder:
+This parameter contains an array of inclusion/exclusion patterns forming the content of the server code deployment. The default value of the parameter is a pattern which means 'include all files under `{PROJECT_DIR}/app` folder':
 
 ```
     "app": {
