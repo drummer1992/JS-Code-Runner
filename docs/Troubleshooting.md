@@ -23,7 +23,7 @@ After this timer runs in production, you will find the following log messages in
 
 ### ServerCode works well in the DEBUG mode, but does not when deployed to the Cloud
 
-First of all, make sure the code is getting invoked when a triggerring event is raised. It could be an API call, a timer event, a custom event or a service invocation.
+First of all, make sure the code is getting invoked when a triggering event is raised. It could be an API call, a timer event, a custom event or a service invocation.
 
 To verify this, open the Backendless Console, go to the `Files` section and check the files in the `logging` directory. You should see log messages in the `SERVER_CODE` logging category.
 
