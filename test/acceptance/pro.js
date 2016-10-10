@@ -1,11 +1,16 @@
 'use strict';
 
 const app = {
-  server : 'http://apitest.backendless.com',
-  id     : '321AEB7F-3789-7AF8-FFA5-425A7F482200',
-  blKey  : 'B742A4A3-7678-3F21-FF53-B8047CED4200',
-  restKey: '5E99B304-EB00-9ABA-FF19-180F6B370800',
-  version: 'v1'
+  server   : 'http://localhost:9000',
+  msgBroker: {
+    host: 'localhost',
+    port: 6379
+  },
+  repoPath : '../backendless/src/server/play/target/repo',
+  id       : '3ECCA0CA-7C6D-B07F-FF17-C06398CBF700',
+  blKey    : '0A163650-AA1B-4CB2-FF46-3F9D4D11C000',
+  restKey  : '0A163650-AA1B-4CB2-FF46-3F9D4D11C000',
+  version  : 'v1'
 };
 
 const TIMEOUT_EXCEEDED_MSG = (
@@ -41,7 +46,15 @@ describe('In CLOUD', function() {
   this.timeout(10000);
 
   before(function() {
+    this.proRunner = serverCode(app).startPro();
+
     return serverCode(app).clean();
+  });
+
+  after(function() {
+    if (this.proRunner) {
+      this.proRunner.kill();
+    }
   });
 
   describe('[before] event handler', function() {
@@ -253,7 +266,8 @@ describe('In CLOUD', function() {
 
     it('should be respected in custom event handler', function(done) {
       serverCode(app)
-        .addCustomEvent('testTimeout', () => new Promise(() => {}))
+        .addCustomEvent('testTimeout', () => new Promise(() => {
+        }))
         .deploy()
         .then(() => {
           request('post', '/servercode/events/testTimeout')
@@ -264,7 +278,8 @@ describe('In CLOUD', function() {
 
     it('should be respected in persistence', function(done) {
       serverCode(app)
-        .addHandler(PERSISTENCE.events.beforeCreate, () => new Promise(() => {}))
+        .addHandler(PERSISTENCE.events.beforeCreate, () => new Promise(() => {
+        }))
         .deploy()
         .then(() => {
           request('post', '/data/Person', { name: 'Foo' })

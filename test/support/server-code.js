@@ -83,6 +83,30 @@ class ServerCode {
     return this.deploy();
   }
 
+  startPro() {
+    const spawn = require('child_process').spawn;
+
+    const proRunner = spawn('bin/coderunner', [
+      'pro',
+      '--msg-broker-host',
+      this.app.msgBroker.host,
+      '--msg-broker-port',
+      this.app.msgBroker.port,
+      '--repo-path',
+      this.app.repoPath,
+    ], { stdio: 'inherit' });
+
+    proRunner.on('exit', function(code) {
+      console.log('ProRunner exit with code', code);
+    });
+
+    proRunner.on('error', (err) => {
+      console.log('Failed to start ProRunner', err);
+    });
+
+    return proRunner;
+  }
+
   deploy() {
     prepareDir();
 
