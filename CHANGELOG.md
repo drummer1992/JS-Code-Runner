@@ -1,5 +1,8 @@
 ## Change Log
 
+### v1.9.0 (2016/10/25)
+- add `PRO` mode
+
 ### v1.8.0 (2016/08/17)
 - in `CLOUD` mode the CodeRunner forwards all console logging 
 (including CodeRunner task processing info) to `Backendless.Logging` which makes it possible to 
