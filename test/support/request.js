@@ -15,9 +15,7 @@ module.exports = function(app) {
    * @returns {Test}
    */
   return function(method, path, body) {
-    const result = supertest(`${app.server}/${app.version}`)[method](path)
-      .set('application-id', app.id)
-      .set('secret-key', app.restKey);
+    const result = supertest(`${app.server}/${app.id}/${app.restKey}`)[method](path);
     
     if (body) {
       result.send(body);

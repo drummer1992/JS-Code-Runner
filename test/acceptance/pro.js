@@ -7,10 +7,9 @@ const app = {
     port: 6379
   },
   repoPath : '../backendless/src/server/play/target/repo',
-  id       : '3ECCA0CA-7C6D-B07F-FF17-C06398CBF700',
-  blKey    : '0A163650-AA1B-4CB2-FF46-3F9D4D11C000',
-  restKey  : '0A163650-AA1B-4CB2-FF46-3F9D4D11C000',
-  version  : 'v1'
+  id       : '5B6D91FD-94C6-6AA4-FF45-17A3DED94C00',
+  blKey    : '1B0B4E6C-C4B7-D7B6-FFB4-46304E371100',
+  restKey  : '9C8AC77F-FB2C-6659-FF03-1933A4243A00'
 };
 
 const TIMEOUT_EXCEEDED_MSG = (
@@ -30,7 +29,7 @@ require('mocha');
 
 Backendless.serverURL = app.server;
 Backendless.enablePromises();
-Backendless.initApp(app.id, app.restKey, app.version);
+Backendless.initApp(app.id, app.restKey);
 
 function cleanTable(tableName) {
   const dataStore = Backendless.Persistence.of(tableName);
