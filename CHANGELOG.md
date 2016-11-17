@@ -1,5 +1,9 @@
 ## Change Log
 
+### v4.0.0 (?)
+- add new relations API events support
+- Backendless Server v4.0 support
+
 ### v1.9.0 (2016/10/25)
 - add `PRO` mode
 
