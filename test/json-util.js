@@ -21,6 +21,30 @@ describe('JSON Util', function() {
       should.equal(a.b, a.c);
     });
 
+    it('should resolve encoded dates', function() {
+      const parsed = json.parse(JSON.stringify({
+        firstName  : 'Foo',
+        created    : '1479813417000',
+        updated    : '1479813417001',
+        lastName   : 'Bar',
+        nested     : {
+          created    : '1479813417000',
+          ___dates___: ['1479813417000'],
+          result: { ___objectref: 1 }
+        },
+        ___dates___: ['1479813417000', '1479813417001']
+      }));
+
+      should.ok(parsed.created instanceof Date);
+      should.ok(parsed.nested.created instanceof Date);
+      should.not.exist(parsed.___dates___);
+      should.not.exist(parsed.nested.___dates___);
+
+      should.equal(parsed.created.getTime(), 1479813417000);
+      should.equal(parsed.updated.getTime(), 1479813417001);
+      should.equal(parsed.nested.created.getTime(), 1479813417000);
+    });
+
     it('should perform class mappings', function() {
       class Person {
       }
