@@ -1,5 +1,8 @@
 ## Change Log
 
+### v1.10.0 (2016/11/25)
+- update backendless sdk dependency to latest
+
 ### v1.9.1 (2016/11/22)
 - resolve ___dates___ meta fields in server's JSON
 - when critical error, exit with zero status code to avoid too noisy NPM complains
