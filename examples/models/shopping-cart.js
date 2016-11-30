@@ -66,6 +66,4 @@ class ShoppingCart {
   }
 }
 
-Backendless.enablePromises();
-
 module.exports = ShoppingCart;

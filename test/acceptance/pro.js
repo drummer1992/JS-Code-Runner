@@ -28,7 +28,6 @@ const promise     = require('../../lib/util/promise'),
 require('mocha');
 
 Backendless.serverURL = app.server;
-Backendless.enablePromises();
 Backendless.initApp(app.id, app.restKey);
 
 function cleanTable(tableName) {
@@ -65,7 +64,8 @@ describe('In CLOUD', function() {
         .deploy()
         .then(() => {
           request('post', '/data/Person', { name: 'Foo' })
-            .expect(200, /"name":"Foo Bar"/, done);
+            .expect(res => res.body = { name: res.body.name })
+            .expect(200, { name: 'Foo Bar' }, done);
         }, done);
     });
 
@@ -92,18 +92,20 @@ describe('In CLOUD', function() {
         .deploy()
         .then(() => {
           request('post', '/data/Person', { name: 'Foo' })
-            .expect(200, { foo: 'bar' }, done);
+            .expect(200, { foo: 'bar', ___class: 'Person' }, done);
         }, done);
     });
 
     it('should be able to prevent default behavior by throwing simple Error', function(done) {
       serverCode(app)
         .addHandler(PERSISTENCE.events.beforeCreate, () => {
-          throw 'You shall not pass';
+          throw new Error('You shall not pass');
         })
         .deploy()
         .then(() => {
           request('post', '/data/Person', { name: 'Foo' })
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
             .expect(400, { code: 0, message: 'You shall not pass' }, done);
         }, done);
     });
@@ -138,7 +140,7 @@ describe('In CLOUD', function() {
         }, done);
     });
 
-    it('should be able replace server response', function(done) {
+    it('should be able to replace server response', function(done) {
       serverCode(app)
         .addHandler(PERSISTENCE.events.afterCreate, () => {
           return { replaced: true };
@@ -301,8 +303,6 @@ describe('In CLOUD', function() {
       this.timeout(200000);
 
       function timerTick() {
-        Backendless.enablePromises();
-
         return Backendless.Persistence.of('TestTimer').save({ tick: new Date().getTime() });
       }
 

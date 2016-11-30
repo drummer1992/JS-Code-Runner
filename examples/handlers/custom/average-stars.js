@@ -8,7 +8,6 @@
  * calculates the average star rating for the passed movie and returns it to the caller
  */
 
-Backendless.enablePromises();
 Backendless.ServerCode.customEvent('movieRating', request => {
   const movie = request.args.movie;
   const query = {

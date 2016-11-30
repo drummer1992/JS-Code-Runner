@@ -146,8 +146,6 @@ class ShoppingCartService {
  */
 ShoppingCartService.version = '1.0.1';
 
-Backendless.enablePromises();
-
 /**
  * lets CodeRunner know that ShoppingCartService class is an API Service
  */
