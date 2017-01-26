@@ -7,6 +7,7 @@ const should          = require('should'),
       executor        = require('../lib/server-code/runners/tasks/executor'),
       executionResult = require('../lib/server-code/runners/tasks/util/result-wrapper').executionResult,
       argsUtil        = require('../lib/server-code/runners/tasks/util/args'),
+      Backendless     = require('backendless'),
       PERSISTENCE     = events.providers.PERSISTENCE,
       BEFORE_CREATE   = PERSISTENCE.events.beforeCreate,
       AFTER_CREATE    = PERSISTENCE.events.afterCreate,
@@ -35,14 +36,37 @@ function createTask(event, args, async) {
 
 describe('[invoke-handler] task executor', function() {
   it('should fill [request] params', function() {
-    const task = createTask(BEFORE_CREATE, [{}, { name: 'John' }]);
+    const context = { userId: 'userId', userToken: 'userToken', userRoles: ['RestUser'] };
+    const item = { name: 'John' };
+
+    const task = createTask(BEFORE_CREATE, [context, item]);
 
     function handler(req) {
       should.exist(req.item);
-      req.item.should.be.eql({ name: 'John' });
+      should.exist(req.context);
+
+      req.item.should.be.eql(item);
+      req.context.should.be.eql(context);
     }
 
     return invoke(task, modelStub(handler));
+  });
+
+  it('should initialise Backendless with user-token from the request context', function() {
+    const userToken = 'wddeupxnpjncbykrlpegexyiunuixxqfckrr';
+    const task = createTask(BEFORE_CREATE, [{ userToken: userToken }]);
+    let handlerInvoked = false;
+
+    function handler() {
+      handlerInvoked = true;
+
+      should.equal(Backendless.LocalCache.get('user-token'), userToken);
+    }
+
+    return invoke(task, modelStub(handler)).then(res => {
+      handlerInvoked.should.be.true();
+      should.not.exists(res.exception);
+    });
   });
 
   describe('should perform class mapping', function() {

@@ -2,11 +2,12 @@
 
 'use strict';
 
-const assert    = require('assert'),
-      TestModel = require('./support/test-model'),
-      invoke    = require('./helpers/invoke-task'),
-      executor  = require('../lib/server-code/runners/tasks/executor'),
-      argsUtil  = require('../lib/server-code/runners/tasks/util/args');
+const assert     = require('assert'),
+      TestModel  = require('./support/test-model'),
+      invoke     = require('./helpers/invoke-task'),
+      ServerCode = require('../lib/server-code/api'),
+      executor   = require('../lib/server-code/runners/tasks/executor'),
+      argsUtil   = require('../lib/server-code/runners/tasks/util/args');
 
 const SUCCESS = 'success';
 
@@ -55,6 +56,23 @@ describe('[invoke-service] task executor', function() {
 
     return invoke(createTask(Foo.name, 'bar', [1, 2, {}]), new TestModel().addService(Foo))
       .then(assertSuccess);
+  });
+
+  it('should initialise Backendless with user-token from the request context', function() {
+    const userToken = 'wddeupxnpjncbykrlpegexyiunuixxqfckrr';
+
+    class Service {
+      testMethod() {
+        assert.equal(Backendless.LocalCache.get('user-token'), userToken);
+
+        return SUCCESS;
+      }
+    }
+
+    const task = createTask(Service.name, 'testMethod');
+    task.invocationContextDto.userToken = userToken;
+
+    return invoke(task, new TestModel().addService(Service)).then(assertSuccess);
   });
 
   describe('should handle service method result', function() {
@@ -182,7 +200,7 @@ describe('[invoke-service] task executor', function() {
   it('should handle custom error', function() {
     class Foo {
       bar() {
-        throw new Backendless.ServerCode.Error(126, 'erred');
+        throw new ServerCode.Error(126, 'erred');
       }
     }
 
@@ -197,7 +215,7 @@ describe('[invoke-service] task executor', function() {
   it('should handle custom error with specific http status code', function() {
     class Foo {
       bar() {
-        throw new Backendless.ServerCode.Error(126, 'erred', 403);
+        throw new ServerCode.Error(126, 'erred', 403);
       }
     }
 
@@ -312,5 +330,6 @@ describe('[invoke-service] task executor', function() {
 });
 
 function assertSuccess(res) {
+  assert.equal(res.exception, null, res.exception && res.exception.exceptionMessage || undefined);
   assert.equal(res.arguments, SUCCESS);
 }
