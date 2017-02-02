@@ -34,7 +34,7 @@
     "backendless"
   ],
   "dependencies": {
-    "backendless": "Backendless/JS-SDK#4.0/master",
+    "backendless": "^4.0.1-beta",
     "commander": "^2.9.0",
     "glob": "^6.0.4",
     "jsdoc-api": "^1.1.0",
