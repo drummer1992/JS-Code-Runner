@@ -1,8 +1,10 @@
 ## Change Log
 
-### v4.0.0-beta (?)
-- add new relations API events support
+### v4.0.0-beta (2017/02/03)
 - Backendless Server v4.0 support
+- add socialRegister events support
+- userToken of a user originated the BL execution to be injected into every Backendless API call made from the BL
+
 
 ### v1.10.1 (2016/11/25)
 - update Backendless SDK dependency to latest
