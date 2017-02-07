@@ -1,5 +1,12 @@
 ## Change Log
 
+### v4.0.1-beta (2017/02/07)
+- add Backendless.ServerCode.Data alias to Backendless.ServerCode.Persistence
+- pass config and context into Service constructor
+- fix `JSDOC_ERROR: There are no input files to process` related to services/types defined
+in a module without js extension
+- stop logs sending attempt for RAI tasks
+
 ### v4.0.0-beta (2017/02/03)
 - Backendless Server v4.0 support
 - add socialRegister events support
