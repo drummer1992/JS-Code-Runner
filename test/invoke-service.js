@@ -327,6 +327,27 @@ describe('[invoke-service] task executor', function() {
     return invoke(createTask('Foo', 'bar', null, [one, two, three]), new TestModel().addService(Foo))
       .then(assertSuccess);
   });
+
+  it('should provide a context and config into service constructor', function() {
+    const lang = { name: 'lang', value: 'english' };
+    const task = createTask('GreetingsService', 'greetings', null, [lang]);
+
+    class GreetingsService {
+      constructor(config, context) {
+        assert.equal(config.lang, 'english');
+        assert.equal(context, task.invocationContextDto);
+      }
+
+      greetings() {
+        return SUCCESS;
+      }
+    }
+
+    GreetingsService.configItems = [{ name: 'lang', type: 'string' }];
+
+    return invoke(task, new TestModel().addService(GreetingsService))
+      .then(assertSuccess);
+  });
 });
 
 function assertSuccess(res) {
