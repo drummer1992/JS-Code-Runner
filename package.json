@@ -8,8 +8,8 @@
     "lint": "eslint lib test examples bin"
   },
   "author": {
-    "name": "Vitaly Vengrov",
-    "email": "vengrov@gmail.com"
+    "name": "Backendless Corp",
+    "email": "info@backendless.com"
   },
   "bin": {
     "coderunner": "bin/coderunner"
