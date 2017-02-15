@@ -10,7 +10,7 @@
   },
   "app": {
     "id": "",
-    "secretKey": "",
+    "apiKey": "",
     "version": "",
     "files": [
       "examples/**",

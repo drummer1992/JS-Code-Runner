@@ -120,10 +120,10 @@ class ServerCode {
         apiServer: this.app.server
       },
       app        : {
-        id       : this.app.id,
-        secretKey: this.app.blKey,
-        version  : this.app.version,
-        files    : ['!node_modules/**', `${DIR}/**`]
+        id     : this.app.id,
+        apiKey : this.app.blKey,
+        version: this.app.version,
+        files  : ['!node_modules/**', `${DIR}/**`]
       }
     });
   }
