@@ -1,4 +1,5 @@
 'use strict';
+const path = require('path');
 
 const app = {
   server   : 'http://localhost:9000',
@@ -6,10 +7,10 @@ const app = {
     host: 'localhost',
     port: 6379
   },
-  repoPath : '../backendless/src/server/play/target/repo',
-  id       : '5B6D91FD-94C6-6AA4-FF45-17A3DED94C00',
-  blKey    : '1B0B4E6C-C4B7-D7B6-FFB4-46304E371100',
-  restKey  : '9C8AC77F-FB2C-6659-FF03-1933A4243A00'
+  repoPath : path.resolve(__dirname, '../../../backendless/src/server/play/repo'),
+  id       : 'A90A535E-6B03-DC58-FF29-C4D3FD914D00',
+  blKey    : '3ECC46DC-7C6D-5E27-FF17-D61C98CB5500',
+  restKey  : 'AD8A0EC2-A131-D635-FF00-18C88BEBB500'
 };
 
 const TIMEOUT_EXCEEDED_MSG = (

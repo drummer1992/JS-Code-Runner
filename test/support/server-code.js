@@ -1,7 +1,8 @@
 'use strict';
 
 const CodeRunner = require('../../lib'),
-      fs         = require('fs');
+      fs         = require('fs'),
+      path       = require('path');
 
 const DIR = 'acceptance';
 
@@ -85,6 +86,7 @@ class ServerCode {
 
   startPro() {
     const spawn = require('child_process').spawn;
+    const cwd = path.resolve(__dirname, '../../');
 
     const proRunner = spawn('bin/coderunner', [
       'pro',
@@ -94,7 +96,7 @@ class ServerCode {
       this.app.msgBroker.port,
       '--repo-path',
       this.app.repoPath,
-    ], { stdio: 'inherit' });
+    ], { cwd, stdio: 'inherit' });
 
     proRunner.on('exit', function(code) {
       console.log('ProRunner exit with code', code);
