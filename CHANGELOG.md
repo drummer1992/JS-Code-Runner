@@ -12,6 +12,8 @@ in a module without js extension
 - add socialRegister events support
 - userToken of a user originated the BL execution to be injected into every Backendless API call made from the BL
 
+### v1.11.0 (2017/02/20)
+- add `Backendless.ServerCode.verbose()` method, giving a possibility to enable verbose logging mode
 
 ### v1.10.1 (2016/11/25)
 - update Backendless SDK dependency to latest
