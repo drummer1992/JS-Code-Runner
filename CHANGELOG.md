@@ -1,5 +1,8 @@
 ## Change Log
 
+### v1.11.0 (2017/02/20)
+- add `Backendless.ServerCode.verbose()` method, giving a possibility to enable verbose logging mode
+
 ### v1.10.1 (2016/11/25)
 - update Backendless SDK dependency to latest
 
