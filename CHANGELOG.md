@@ -1,5 +1,9 @@
 ## Change Log
 
+### v4.0.3-beta (2017/02/21)
+- add retry strategy for messages broker
+- change secretKey naming to apiKey
+
 ### v4.0.1-beta (2017/02/07)
 - add Backendless.ServerCode.Data alias to Backendless.ServerCode.Persistence
 - pass config and context into Service constructor
