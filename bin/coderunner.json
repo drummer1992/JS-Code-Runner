@@ -5,7 +5,8 @@
     "apiServer": "https://api.backendless.com",
     "msgBroker": {
       "host": "cl.backendless.com",
-      "port": 6379
+      "port": 6379,
+      "max_attempts": 5
     }
   },
   "app": {
