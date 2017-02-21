@@ -34,7 +34,7 @@
     "backendless"
   ],
   "dependencies": {
-    "backendless": "^4.0.1-beta",
+    "backendless": "^4.0.2-beta",
     "commander": "^2.9.0",
     "glob": "^6.0.4",
     "jsdoc-api": "^1.1.0",
@@ -45,7 +45,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^3.7.1",
+    "eslint": "^3.16.0",
     "mocha": "^3.1.0",
     "should": "^11.1.0",
     "supertest": "^2.0.0"

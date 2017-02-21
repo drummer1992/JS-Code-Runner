@@ -211,7 +211,7 @@ describe('In CLOUD', function() {
 
     it('should forbid access to fs outside of user/app home folder', function(done) {
       function handler() {
-        const fs = require('fs'), path = require('path');
+        const fs = require('fs');
 
         return {
           items: fs.readdirSync(path.resolve(process.env.HOME, '..'))
