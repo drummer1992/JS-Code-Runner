@@ -40,7 +40,6 @@
     "jsdoc-api": "^1.1.0",
     "jszip": "^2.6.1",
     "redis": "^2.6.5",
-    "request": "^2.75.0",
     "xml": "^1.0.1"
   },
   "license": "MIT",
