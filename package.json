@@ -35,12 +35,12 @@
   ],
   "dependencies": {
     "backendless": "^4.0.2-beta",
+    "backendless-request": "0.0.1",
     "commander": "^2.9.0",
     "glob": "^6.0.4",
     "jsdoc-api": "^1.1.0",
     "jszip": "^2.6.1",
     "redis": "^2.6.5",
-    "request": "^2.75.0",
     "xml": "^1.0.1"
   },
   "license": "MIT",
