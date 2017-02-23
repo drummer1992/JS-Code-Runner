@@ -1,5 +1,8 @@
 ## Change Log
 
+### v4.1.0-beta (2017/02/23)
+- Add `Backendless.Request` giving a possibility to make one liner http requests from BL
+
 ### v4.0.3-beta (2017/02/21)
 - add retry strategy for messages broker
 - change secretKey naming to apiKey
