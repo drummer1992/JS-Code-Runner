@@ -1,5 +1,3 @@
-/* global Backendless */
-
 'use strict';
 
 class Person extends Backendless.ServerCode.PersistenceItem {

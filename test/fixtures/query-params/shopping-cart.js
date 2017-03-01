@@ -1,5 +1,3 @@
-/* global Backendless */
-
 'use strict';
 
 class Order extends Backendless.ServerCode.PersistenceItem {
@@ -35,10 +33,6 @@ class ShoppingCart {
 class ShoppingCartService {
 
   /**
-   * A custom type can be described in jsdoc typedef declaration without having its own class
-   * This will help to build a valid Swager doc but the CodeRunner won't be able to transform a plain JS object
-   * from the request into concrete class.
-   *
    * @typedef {Object} ShoppingItem
    * @property {String} objectId
    * @property {String} product

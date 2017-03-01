@@ -22,7 +22,7 @@ function toMap(classes) {
 
 describe('jsdoc util', function() {
   it('should detect and explain classes in file', function() {
-    const classes = jsdoc.describeClasses('test/fixtures/shopping-cart.js');
+    const classes = jsdoc.describeClasses('test/fixtures/query-params/shopping-cart.js');
     const classesMap = toMap(classes);
 
     assert.equal(classes.length, 4);
@@ -32,4 +32,13 @@ describe('jsdoc util', function() {
     assert.deepEqual(classesMap.ShoppingCartService, definitions.SHOPPING_CART_SERVICE);
     assert.deepEqual(classesMap.ShoppingItem, definitions.SHOPPING_ITEM);
   });
+
+  it('should detect extra tags', function() {
+    const classes = jsdoc.describeClasses('test/fixtures/path-params/pet-store.js');
+    const classesMap = toMap(classes);
+
+    assert.equal(classes.length, 3);
+    assert.deepEqual(classesMap.Pet, definitions.PET);
+    assert.deepEqual(classesMap.PetStore, definitions.PET_STORE);
+  })
 });

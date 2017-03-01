@@ -1,5 +1,3 @@
-/* global Backendless */
-
 'use strict';
 
 Backendless.ServerCode.User.afterRegister((req, res) => {

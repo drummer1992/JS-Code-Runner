@@ -1,5 +1,3 @@
-/* global Backendless */
-
 'use strict';
 
 class ShoppingCart {

@@ -1,5 +1,3 @@
-/* global Backendless */
-
 'use strict';
 
 class Order extends Backendless.ServerCode.PersistenceItem {

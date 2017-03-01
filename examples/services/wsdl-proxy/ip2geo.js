@@ -1,5 +1,3 @@
-/* global Backendless */
-
 'use strict';
 
 //you should add 'easysoap' module to your project dependencies as [npm i easysoap --save]
