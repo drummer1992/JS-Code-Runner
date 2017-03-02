@@ -1,5 +1,12 @@
 ## Change Log
 
+### v4.2.0-beta (2017/03/02)
+- Service Methods now may have specific route defined in a jsdoc `@route` tag
+- Route may include path params like `/order/{orderId}/item/{itemId}`
+- Service and service methods description defined in jsdoc is visible in Backendless Dev Console
+- In service method there is `this.request` containing the execution context including http path, headers, path params,
+query params, user, user roles and so on
+
 ### v4.1.0-beta (2017/02/23)
 - Add `Backendless.Request` giving a possibility to make one liner http requests from BL
 
