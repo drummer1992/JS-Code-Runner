@@ -4,7 +4,7 @@ const executor = require('../../lib/server-code/runners/tasks/executor'),
 
 /**
  * @param {Object} task
- * @param {Object} model
+ * @param {ServerCodeModel=} model
  * @returns {Promise.<Object>}
  */
 module.exports = function(task, model) {

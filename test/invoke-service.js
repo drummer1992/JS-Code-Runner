@@ -1,5 +1,3 @@
-/* global Backendless */
-
 'use strict';
 
 const assert     = require('assert'),
@@ -276,7 +274,7 @@ describe('[invoke-service] task executor', function() {
     const task = createTask('Foo', 'bar');
     const model = new TestModel().addService(class Foo {
       bar() {
-        assert.equal(this.context, task.invocationContextDto);
+        assert.equal(this.request.context, task.invocationContextDto);
 
         return SUCCESS;
       }

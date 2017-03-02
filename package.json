@@ -5,7 +5,7 @@
   "scripts": {
     "test": "mocha",
     "test-acceptance": "mocha test/acceptance",
-    "lint": "eslint lib test examples bin"
+    "lint": "eslint lib test examples bin --fix"
   },
   "author": {
     "name": "Backendless Corp",
