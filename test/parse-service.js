@@ -116,7 +116,7 @@ describe('[parse-service] task executor', function() {
 
         assert.equal(services.length, 1);
         assert.equal(services[0].name, 'PetStore');
-        assert.equal(services[0].description, 'PetStore');
+        assert.equal(services[0].description, 'Simple Pet Store demonstrating explicit http routes for service methods');
         assert.equal(services[0].version, '1.0.0');
         assert.equal(services[0].config.length, 0);
         assert.equal(services[0].xml, PET_STORE_SERVICE_XML);

@@ -40,5 +40,5 @@ describe('jsdoc util', function() {
     assert.equal(classes.length, 3);
     assert.deepEqual(classesMap.Pet, definitions.PET);
     assert.deepEqual(classesMap.PetStore, definitions.PET_STORE);
-  })
+  });
 });
