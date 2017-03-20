@@ -13,10 +13,6 @@
     "id": "",
     "apiKey": "",
     "version": "",
-    "files": [
-      "examples/**",
-      "!examples/services/wsdl-proxy/**",
-      "!node_modules/**"
-    ]
+    "exclude": []
   }
 }
