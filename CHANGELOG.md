@@ -1,5 +1,11 @@
 ## Change Log
 
+### v4.3.0-beta.1 (2017/03/29)
+- For `pro` and `debug` modes, each task result is sent to a task-specific message broker channel
+- runner registration is not required anymore to publish server code
+- `app.files` config param was replaced by `app.exclude`. Coderunner now searches for all files in the current working
+directory except those that matches `app.exclude` patterns
+
 ### v4.2.0-beta (2017/03/02)
 - Service Methods now may have specific route defined in a jsdoc `@route` tag
 - Route may include path params like `/order/{orderId}/item/{itemId}`
