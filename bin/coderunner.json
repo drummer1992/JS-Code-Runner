@@ -1,6 +1,4 @@
 {
-  "verbose":false,
-
   "backendless": {
     "apiServer": "https://api.backendless.com",
     "msgBroker": {
@@ -14,5 +12,7 @@
     "apiKey": "",
     "version": "",
     "exclude": []
-  }
+  },
+  "sandbox": true,
+  "verbose": false
 }
