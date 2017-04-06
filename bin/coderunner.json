@@ -10,7 +10,6 @@
   "app": {
     "id": "",
     "apiKey": "",
-    "version": "",
     "exclude": []
   },
   "sandbox": true,
