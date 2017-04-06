@@ -1,5 +1,8 @@
 ## Change Log
 
+### v4.3.0-beta.4 (2017/04/06)
+- Standalone work in `cloud` mode . CodeRunnerDriver is not required anymore.
+
 ### v4.3.0-beta.1 (2017/03/29)
 - For `pro` and `debug` modes, each task result is sent to a task-specific message broker channel
 - runner registration is not required anymore to publish server code
