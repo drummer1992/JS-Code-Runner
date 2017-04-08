@@ -1,5 +1,8 @@
 ## Change Log
 
+### v4.3.0-beta.5 (2017/04/08)
+- fix (deploy) `require(...).publish is not a function`
+
 ### v4.3.0-beta.4 (2017/04/06)
 - Standalone work in `cloud` mode . CodeRunnerDriver is not required anymore.
 
