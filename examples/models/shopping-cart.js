@@ -44,7 +44,7 @@ class ShoppingCart {
   }
 
   destroy() {
-    return Backendless.Cache.remove(this.name, this);
+    return Backendless.Cache.remove(this.name);
   }
 
   save() {
