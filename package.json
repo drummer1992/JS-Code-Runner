@@ -39,6 +39,7 @@
     "commander": "^2.9.0",
     "glob": "^6.0.4",
     "jsdoc-api": "^1.1.0",
+    "jsdoc-strip-async-await": "^0.1.0",
     "jszip": "^2.6.1",
     "redis": "^2.6.5",
     "xml": "^1.0.1"

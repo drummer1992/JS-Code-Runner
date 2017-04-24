@@ -1,0 +1,9 @@
+{
+  "plugins": [
+    "node_modules/jsdoc-strip-async-await"
+  ],
+  "source": {
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": ""
+  }
+}
