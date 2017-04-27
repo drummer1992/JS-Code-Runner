@@ -17,7 +17,8 @@
   "files": [
     "bin",
     "examples",
-    "lib"
+    "lib",
+    "jsdoc-conf.json"
   ],
   "repository": {
     "type": "git",
