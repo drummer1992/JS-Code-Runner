@@ -1,5 +1,9 @@
 ## Change Log
 
+### v4.3.0-beta.6 (2017/04/27)
+- add support for async service methods
+- fix processing files whose names start from underscore
+
 ### v4.3.0-beta.5 (2017/04/08)
 - fix (deploy) `require(...).publish is not a function`
 
