@@ -1,6 +1,6 @@
 ## Change Log
 
-### v4.3.0-beta.8 (2017/04/28)
+### v4.3.0-beta.9 (2017/04/28)
 - add support for async service methods
 - fix processing files whose names start from underscore
 

@@ -1,6 +1,6 @@
 {
   "name": "backendless-coderunner",
-  "version": "4.3.0-beta.8",
+  "version": "4.3.0-beta.9",
   "description": "Backendless CodeRunner for Node.js",
   "scripts": {
     "test": "mocha",
