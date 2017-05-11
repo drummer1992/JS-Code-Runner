@@ -10,7 +10,13 @@
   "app": {
     "id": "",
     "apiKey": "",
-    "exclude": []
+    "exclude": [
+      ".git",
+      ".idea",
+      "lib",
+      "test",
+      "docs"
+    ]
   },
   "sandbox": true,
   "verbose": false
