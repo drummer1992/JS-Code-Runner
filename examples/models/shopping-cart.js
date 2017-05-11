@@ -1,5 +1,7 @@
 'use strict';
 
+const ShoppingItem = require('./shopping-item');
+
 class ShoppingCart {
   constructor(opts) {
     opts = opts || {};
@@ -55,7 +57,9 @@ class ShoppingCart {
     Backendless.Cache.setObjectFactory(ShoppingCart.name, ShoppingCart);
 
     return Backendless.Cache.get(name).then(cart => {
-      if (!cart && mustExist) {
+      if (cart) {
+        cart.items = cart.items.map(item => Object.assign(new ShoppingItem(), item));
+      } else if (mustExist) {
         throw new Error(`Shopping cart [${name}] does not exist`);
       }
 

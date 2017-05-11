@@ -13,6 +13,7 @@
     "exclude": [
       "+(git|.idea|lib|test|docs|bin|deploy)/**",
       "+(LICENSE|*.md|*.json|.*)",
+      "node_modules/**",
       "examples/services/wsdl-proxy/**"
     ]
   },
