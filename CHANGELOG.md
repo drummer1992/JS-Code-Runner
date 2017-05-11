@@ -1,5 +1,11 @@
 ## Change Log
 
+### v4.3.0-beta.10 (2017/05/11)
+- use relations API in ShoppingCartService example
+- fix (deploy) --keep-zip command line argument is ignored
+- fix exclusion pattern is ignored during model build phase
+- add setRelation and addRelation methods to PersistenceItem class
+
 ### v4.3.0-beta.9 (2017/04/28)
 - add support for async service methods
 - fix processing files whose names start from underscore
