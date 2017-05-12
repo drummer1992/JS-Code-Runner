@@ -22,7 +22,7 @@ class Order extends Backendless.ServerCode.PersistenceItem {
       .then(serverOrder => this.objectId = serverOrder.objectId)
       .then(() => Promise.all(this.items.map(item => item.save())))
       .then(items => this.items = items)
-      .then(() => this.setRelation('items', this.items));
+      .then(() => this.setRelation('items:ShoppingItem:n', this.items));
   }
 }
 
