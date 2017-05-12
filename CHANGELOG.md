@@ -1,5 +1,8 @@
 ## Change Log
 
+### v4.3.0-beta.11 (2017/05/12)
+- increase model build time by loading only files relevant to the event
+
 ### v4.3.0-beta.10 (2017/05/11)
 - use relations API in ShoppingCartService example
 - fix (deploy) --keep-zip command line argument is ignored
