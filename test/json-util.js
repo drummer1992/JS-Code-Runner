@@ -1,9 +1,16 @@
 'use strict';
 
-const json   = require('../lib/util/json'),
-      should = require('should');
+const json         = require('../lib/util/json'),
+      should       = require('should'),
+      path         = require('path'),
+      readFileSync = require('fs').readFileSync;
 
 require('mocha');
+
+const space = '  ';
+
+const readAndFormatJSON = filePath =>
+  JSON.stringify(JSON.parse(readFileSync(filePath, 'utf-8')), null, space);
 
 describe('JSON Util', function() {
   describe('parse', function() {
@@ -28,9 +35,15 @@ describe('JSON Util', function() {
         updated    : '1479813417001',
         lastName   : 'Bar',
         nested     : {
-          created    : '1479813417000',
-          ___dates___: ['1479813417000'],
-          result: { ___objectref: 1 }
+          created    : '1479813417003',
+          ___dates___: ['1479813417003'],
+          test       : {},
+          result     : { ___objectref: 1 }
+        },
+        nested2    : {
+          created    : '1479813417002',
+          ___dates___: ['1479813417002'],
+          result     : { ___objectref: 3 }
         },
         ___dates___: ['1479813417000', '1479813417001']
       }));
@@ -42,7 +55,10 @@ describe('JSON Util', function() {
 
       should.equal(parsed.created.getTime(), 1479813417000);
       should.equal(parsed.updated.getTime(), 1479813417001);
-      should.equal(parsed.nested.created.getTime(), 1479813417000);
+      should.equal(parsed.nested.result, parsed.nested);
+      should.equal(parsed.nested.created.getTime(), 1479813417003);
+      should.equal(parsed.nested2.result, parsed.nested2);
+      should.equal(parsed.nested2.created.getTime(), 1479813417002);
     });
 
     it('should perform class mappings', function() {
@@ -80,5 +96,15 @@ describe('JSON Util', function() {
     should.equal(parsed.a, parsed.b.a);
     should.equal(parsed.a, parsed.c[0].a);
     should.equal(parsed.b, parsed.c[1].b);
+  });
+
+  it('should restore the complex structure into its original state', function() {
+
+    const complexJson = readAndFormatJSON(path.resolve(__dirname, './fixtures/complex.json'));
+
+    const parsed = json.parse(complexJson);
+    const stringified = json.stringify(parsed, space);
+
+    should.equal(stringified, complexJson);
   });
 });
