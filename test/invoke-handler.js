@@ -361,7 +361,7 @@ describe('[invoke-handler] task executor', function() {
 
       return invoke(createTask(CUSTOM_EVENT, []), modelStub(() => date)).then(res => {
         should.exists(res.arguments[2]);
-        res.arguments[2].should.be.eql({ result: date.toISOString() });
+        res.arguments[2].should.be.eql({ result: date });
       });
     });
 

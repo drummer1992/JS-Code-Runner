@@ -34,8 +34,8 @@ class ServerCode {
     const p = event.provider;
     const ctx = p.targeted ? `'${context || '*'}'` : '';
     const handlerBody = (
-      `'use strict';\n` +
-      `Backendless.ServerCode.${providerApi(p)}.${event.name}(${ctx}${ctx ? ', ' : ''}${handler.toString()});`
+      `'use strict';
+        Backendless.ServerCode.${providerApi(p)}.${event.name}(${ctx}${ctx ? ', ' : ''}${handler.toString()});`
     );
 
     this.items.push(handlerBody);
@@ -45,8 +45,8 @@ class ServerCode {
 
   addCustomEvent(event, handler) {
     const handlerBody = (
-      `'use strict';\n` +
-      `Backendless.ServerCode.customEvent('${event}', ${handler.toString()});`
+      `'use strict';
+        Backendless.ServerCode.customEvent('${event}', ${handler.toString()});`
     );
 
     this.items.push(handlerBody);
