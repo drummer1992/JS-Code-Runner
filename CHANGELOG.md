@@ -3,6 +3,7 @@
 ### v4.3.0-beta.12 (2017/05/23)
 - fix invalid objectrefs calculations during json parse if object contains ___dates___ meta fields
 - decorate dates into ___dates___ metafields in a response to the server
+- better info about business logic parsing errors
 
 ### v4.3.0-beta.11 (2017/05/12)
 - increase model build time by loading only files relevant to the event
