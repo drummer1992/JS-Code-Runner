@@ -1,5 +1,9 @@
 ## Change Log
 
+### v1.11.1 (2017/05/23)
+- fix invalid objectrefs calculations during json parse if object contains ___dates___ meta fields
+- decorate dates into ___dates___ metafields in a response to the server
+
 ### v1.11.0 (2017/02/20)
 - add `Backendless.ServerCode.verbose()` method, giving a possibility to enable verbose logging mode
 
