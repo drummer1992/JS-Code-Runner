@@ -1,6 +1,6 @@
 {
   "name": "backendless-coderunner",
-  "version": "1.7.2",
+  "version": "1.11.1",
   "description": "Backendless CodeRunner for Node.js",
   "scripts": {
     "test": "mocha",
@@ -34,21 +34,20 @@
     "backendless"
   ],
   "dependencies": {
-    "backendless": "^3.1.9",
+    "backendless": "^3.1.21",
     "commander": "^2.9.0",
-    "eslint": "^2.10.1",
     "glob": "^6.0.4",
     "jsdoc-api": "^1.1.0",
-    "jszip": "^2.6.0",
-    "redis": "^2.5.3",
-    "request": "^2.72.0",
+    "jszip": "^2.6.1",
+    "redis": "^2.6.2",
+    "request": "^2.75.0",
     "xml": "^1.0.1"
   },
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^2.8.0",
-    "mocha": "^2.4.5",
-    "should": "^8.3.1",
-    "supertest": "^1.2.0"
+    "eslint": "^3.7.1",
+    "mocha": "^3.1.0",
+    "should": "^11.1.0",
+    "supertest": "^2.0.0"
   }
 }

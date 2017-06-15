@@ -4,6 +4,7 @@
 
 const assert    = require('assert'),
       TestModel = require('./support/test-model'),
+      invoke    = require('./helpers/invoke-task'),
       executor  = require('../lib/server-code/runners/tasks/executor'),
       argsUtil  = require('../lib/server-code/runners/tasks/util/args');
 
@@ -25,12 +26,6 @@ function createTask(service, method, args, configItems) {
     },
     arguments           : argsUtil.encode(args || [])
   };
-}
-
-function invoke(task, model) {
-  return executor.execute(task, { backendless: { repoPath: '' } }, model)
-    .then(res => JSON.parse(res))
-    .then(res => res.arguments.length ? res.arguments : res);
 }
 
 describe('[invoke-service] task executor', function() {
@@ -60,6 +55,75 @@ describe('[invoke-service] task executor', function() {
 
     return invoke(createTask(Foo.name, 'bar', [1, 2, {}]), new TestModel().addService(Foo))
       .then(assertSuccess);
+  });
+
+  describe('should handle service method result', function() {
+    it('numeric', function() {
+      class Foo {
+        bar() {
+          return 100;
+        }
+      }
+
+      return invoke(createTask('Foo', 'bar'), new TestModel().addService(Foo))
+        .then(res => assert.equal(res.arguments, 100));
+    });
+
+    it('positive boolean', function() {
+      class Foo {
+        bar() {
+          return true;
+        }
+      }
+
+      return invoke(createTask('Foo', 'bar'), new TestModel().addService(Foo))
+        .then(res => assert.strictEqual(res.arguments, true));
+    });
+
+    it('positive boolean (promised)', function() {
+      class Foo {
+        bar() {
+          return Promise.resolve(true);
+        }
+      }
+
+      return invoke(createTask('Foo', 'bar'), new TestModel().addService(Foo))
+        .then(res => assert.strictEqual(res.arguments, true));
+    });
+
+    it('negative boolean', function() {
+      class Foo {
+        bar() {
+          return false;
+        }
+      }
+
+      return invoke(createTask('Foo', 'bar'), new TestModel().addService(Foo))
+        .then(res => assert.strictEqual(res.arguments, false));
+    });
+
+    it('negative boolean (promised)', function() {
+      class Foo {
+        bar() {
+          return Promise.resolve(false);
+        }
+      }
+
+      return invoke(createTask('Foo', 'bar'), new TestModel().addService(Foo))
+        .then(res => assert.strictEqual(res.arguments, false));
+    });
+
+    it('complex object', function() {
+      class Foo {
+        bar() {
+          return { name: 'John Dou' };
+        }
+      }
+
+      return invoke(createTask('Foo', 'bar'), new TestModel().addService(Foo))
+        .then(res => assert.deepEqual(res.arguments, { name: 'John Dou' }));
+    });
+
   });
 
   describe('should handle error', function() {
@@ -219,19 +283,19 @@ describe('[invoke-service] task executor', function() {
     Foo.configItems = [{
       name        : 'one',
       defaultValue: 'one',
-      type: 'string'
+      type        : 'string'
     }, {
       name        : 'two',
       defaultValue: 'two',
-      type: 'string'
+      type        : 'string'
     }, {
       name        : 'three',
       defaultValue: 3,
-      type: 'string'
+      type        : 'string'
     }, {
       name        : 'four',
       defaultValue: 4,
-      type: 'string'
+      type        : 'string'
     }, {
       name: 'five',
       type: 'string'
@@ -248,5 +312,5 @@ describe('[invoke-service] task executor', function() {
 });
 
 function assertSuccess(res) {
-  assert.equal(res, SUCCESS);
+  assert.equal(res.arguments, SUCCESS);
 }

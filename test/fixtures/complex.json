@@ -1,0 +1,241 @@
+[
+  {
+    "___jsonclass": "com.backendless.servercode.RunnerContext",
+    "deviceType": "REST",
+    "userRoles": [
+      "RestUser",
+      "NotAuthenticatedUser"
+    ],
+    "userToken": null,
+    "prematureResult": null,
+    "missingProperties": null,
+    "appId": "3796C630-9B31-66C4-FFA2-AC58D9ABF600",
+    "httpHeaders": {
+      "Origin": "http://localhost",
+      "Accept": "*/*",
+      "Referer": "http://localhost/",
+      "secret-key": "942DA6EC-0957-707E-FFB0-0832C137DE00",
+      "Connection": "keep-alive",
+      "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
+      "Host": "localhost:9000",
+      "Accept-Language": "ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4",
+      "Accept-Encoding": "gzip, deflate, sdch, br",
+      "application-id": "3796C630-9B31-66C4-FFA2-AC58D9ABF600",
+      "Content-Type": "application/json"
+    },
+    "userRole": {
+      "___objectref": 2
+    },
+    "userId": "AD401826-7B57-555A-FF43-B6FB00275C00",
+    "eventContext": "Person"
+  },
+  {
+    "___jsonclass": "com.backendless.services.persistence.BackendlessDataQuery",
+    "withAcl": true,
+    "whereClause": "groups.name like '%s%'",
+    "__DEFAULT": {
+      "___jsonclass": "com.backendless.services.persistence.BackendlessDataQuery",
+      "withAcl": false,
+      "whereClause": "",
+      "__DEFAULT": {
+        "___objectref": 5
+      },
+      "queryOptions": {
+        "___jsonclass": "com.backendless.services.persistence.QueryOptions",
+        "offset": 0,
+        "related": [],
+        "pageSize": 10,
+        "sortBy": [],
+        "relationsDepth": 0
+      },
+      "fromSql": null,
+      "propertiesSql": "null.*",
+      "tableAclGranted": false,
+      "properties": [],
+      "fromTable": null
+    },
+    "queryOptions": {
+      "___jsonclass": "com.backendless.services.persistence.QueryOptions",
+      "offset": 0,
+      "related": [
+        "emails",
+        "reminders",
+        "addresses",
+        "notes",
+        "phones",
+        "groups",
+        "status",
+        "interactions"
+      ],
+      "pageSize": 3,
+      "sortBy": [],
+      "relationsDepth": 0
+    },
+    "fromSql": "`Person.52DC5CD7-8EF7-F0DE-FFDF-4D70577CB300`",
+    "propertiesSql": "`Person.52DC5CD7-8EF7-F0DE-FFDF-4D70577CB300`.*",
+    "tableAclGranted": true,
+    "properties": [],
+    "fromTable": "`Person.52DC5CD7-8EF7-F0DE-FFDF-4D70577CB300`"
+  },
+  {
+    "___jsonclass": "com.backendless.servercode.ExecutionResult",
+    "exception": null,
+    "result": {
+      "___jsonclass": "com.backendless.services.persistence.BackendlessCollection",
+      "nextpage": null,
+      "data": [
+        {
+          "___jsonclass": "Person",
+          "reminders": [],
+          "addresses": [],
+          "occupation": null,
+          "notes": [],
+          "created": "1495440186000",
+          "phones": [],
+          "groups": [
+            {
+              "___jsonclass": "Group",
+              "color": "2BB8CE",
+              "created": "1495039769000",
+              "name": "Fun",
+              "___class": "Group",
+              "ownerId": "01BD69AA-B983-9174-FFE1-511496CE0700",
+              "updated": "1495138402000",
+              "objectId": "8802DF31-5FAC-5F36-FF15-8CE7694D9E00",
+              "__meta": "{\"relationRemovalIds\":{},\"selectedProperties\":[\"color\",\"created\",\"name\",\"ownerId\",\"updated\",\"objectId\"],\"relatedObjects\":{}}",
+              "___dates___": [
+                "1495039769000",
+                "1495138402000"
+              ]
+            },
+            {
+              "___jsonclass": "Group",
+              "color": "F84141",
+              "created": "1495239161000",
+              "name": "Friends",
+              "___class": "Group",
+              "ownerId": "6C0666AA-7EEC-AFBC-FF87-E75FA47DC000",
+              "updated": null,
+              "objectId": "A2C90439-BB00-6661-FF51-83B8D6654900",
+              "__meta": "{\"relationRemovalIds\":{},\"selectedProperties\":[\"color\",\"created\",\"name\",\"ownerId\",\"updated\",\"objectId\"],\"relatedObjects\":{}}",
+              "___dates___": [
+                "1495239161000"
+              ]
+            }
+          ],
+          "ownerId": null,
+          "interactions": [],
+          "__meta": "{\"relationRemovalIds\":{},\"selectedProperties\":[\"reminders\",\"addresses\",\"occupation\",\"notes\",\"created\",\"phones\",\"groups\",\"ownerId\",\"interactions\",\"emails\",\"name\",\"___class\",\"skipCount\",\"updated\",\"objectId\",\"status\"],\"relatedObjects\":{\"groups\":[\"8802DF31-5FAC-5F36-FF15-8CE7694D9E00\",\"A2C90439-BB00-6661-FF51-83B8D6654900\"]}}",
+          "emails": [],
+          "name": "test_b",
+          "___class": "Person",
+          "skipCount": null,
+          "updated": null,
+          "objectId": "D3DFD853-4CB3-D313-FFB5-C85C263A5900",
+          "status": [],
+          "___dates___": [
+            "1495440186000"
+          ]
+        },
+        {
+          "___jsonclass": "Person",
+          "reminders": [],
+          "addresses": [],
+          "occupation": "",
+          "notes": [],
+          "created": "1495258500000",
+          "phones": [
+            {
+              "___jsonclass": "Phone",
+              "number": "+1 (832) 794-9876",
+              "created": "1495258500000",
+              "___class": "Phone",
+              "label": "mobile",
+              "ownerId": "6C0666AA-7EEC-AFBC-FF87-E75FA47DC000",
+              "updated": null,
+              "objectId": "E850DE44-6A90-85BC-FFAB-34BB2763BC00",
+              "__meta": "{\"relationRemovalIds\":{},\"selectedProperties\":[\"number\",\"created\",\"label\",\"ownerId\",\"updated\",\"objectId\"],\"relatedObjects\":{}}",
+              "___dates___": [
+                "1495258500000"
+              ]
+            }
+          ],
+          "groups": [
+            {
+              "___jsonclass": "Group",
+              "color": "E2C224",
+              "created": "1495239178000",
+              "name": "Mentors",
+              "___class": "Group",
+              "ownerId": "6C0666AA-7EEC-AFBC-FF87-E75FA47DC000",
+              "updated": "1495258500000",
+              "objectId": "F7548C60-07B2-0B17-FFEE-BF3C75CB5D00",
+              "___dates___": [
+                "1495239178000",
+                "1495258500000"
+              ]
+            }
+          ],
+          "ownerId": "6C0666AA-7EEC-AFBC-FF87-E75FA47DC000",
+          "interactions": [],
+          "__meta": "{\"relationRemovalIds\":{},\"selectedProperties\":[\"reminders\",\"addresses\",\"occupation\",\"notes\",\"created\",\"phones\",\"groups\",\"ownerId\",\"interactions\",\"emails\",\"name\",\"___class\",\"skipCount\",\"updated\",\"objectId\",\"status\"],\"relatedObjects\":{\"phones\":[\"E850DE44-6A90-85BC-FFAB-34BB2763BC00\"],\"groups\":[\"F7548C60-07B2-0B17-FFEE-BF3C75CB5D00\"]}}",
+          "emails": [],
+          "name": "Jacob  Shoesmith",
+          "___class": "Person",
+          "skipCount": 0,
+          "updated": null,
+          "objectId": "88F12EA2-E708-5CA4-FF4F-2666C943B700",
+          "status": [],
+          "___dates___": [
+            "1495258500000"
+          ]
+        },
+        {
+          "___jsonclass": "Person",
+          "reminders": [],
+          "addresses": [],
+          "occupation": "",
+          "notes": [],
+          "created": "1495258500000",
+          "phones": [
+            {
+              "___jsonclass": "Phone",
+              "number": "+12146830300",
+              "created": "1495258500000",
+              "___class": "Phone",
+              "label": "mobile",
+              "ownerId": "6C0666AA-7EEC-AFBC-FF87-E75FA47DC000",
+              "updated": null,
+              "objectId": "96C7B50B-EF55-AF12-FF7F-994CCE0E8500",
+              "__meta": "{\"relationRemovalIds\":{},\"selectedProperties\":[\"number\",\"created\",\"label\",\"ownerId\",\"updated\",\"objectId\"],\"relatedObjects\":{}}",
+              "___dates___": [
+                "1495258500000"
+              ]
+            }
+          ],
+          "groups": [
+            {
+              "___objectref": 35
+            }
+          ],
+          "ownerId": "6C0666AA-7EEC-AFBC-FF87-E75FA47DC000",
+          "interactions": [],
+          "__meta": "{\"relationRemovalIds\":{},\"selectedProperties\":[\"reminders\",\"addresses\",\"occupation\",\"notes\",\"created\",\"phones\",\"groups\",\"ownerId\",\"interactions\",\"emails\",\"name\",\"___class\",\"skipCount\",\"updated\",\"objectId\",\"status\"],\"relatedObjects\":{\"phones\":[\"96C7B50B-EF55-AF12-FF7F-994CCE0E8500\"],\"groups\":[\"F7548C60-07B2-0B17-FFEE-BF3C75CB5D00\"]}}",
+          "emails": [],
+          "name": "Jacob  Baynham",
+          "___class": "Person",
+          "skipCount": 0,
+          "updated": null,
+          "objectId": "7ADB6F30-1EAC-7471-FF09-460F486FAD00",
+          "status": [],
+          "___dates___": [
+            "1495258500000"
+          ]
+        }
+      ],
+      "offset": 0,
+      "entityName": "Person",
+      "totalObjects": 12
+    }
+  }
+]

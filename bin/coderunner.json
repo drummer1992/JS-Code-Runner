@@ -1,4 +1,6 @@
 {
+  "verbose":false,
+
   "backendless": {
     "apiServer": "https://api.backendless.com",
     "msgBroker": {
@@ -12,6 +14,7 @@
     "version": "",
     "files": [
       "examples/**",
+      "!examples/services/wsdl-proxy/**",
       "!node_modules/**"
     ]
   }

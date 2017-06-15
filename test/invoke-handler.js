@@ -2,7 +2,7 @@
 
 const should          = require('should'),
       events          = require('../lib/server-code/events'),
-      json            = require('../lib/util/json'),
+      invoke          = require('./helpers/invoke-task'),
       ServerCode      = require('../lib/server-code/api'),
       executor        = require('../lib/server-code/runners/tasks/executor'),
       executionResult = require('../lib/server-code/runners/tasks/util/result-wrapper').executionResult,
@@ -33,18 +33,6 @@ function createTask(event, args, async) {
   };
 }
 
-function invokeAndParse(task, model) {
-  return executor.execute(task, { backendless: { repoPath: '' } }, model)
-    .then(res => res && json.parse(res))
-    .then(res => {
-      if (res && res.arguments) {
-        res.arguments = res.arguments && argsUtil.decode(res.arguments);
-      }
-
-      return res;
-    });
-}
-
 describe('[invoke-handler] task executor', function() {
   it('should fill [request] params', function() {
     const task = createTask(BEFORE_CREATE, [{}, { name: 'John' }]);
@@ -54,7 +42,7 @@ describe('[invoke-handler] task executor', function() {
       req.item.should.be.eql({ name: 'John' });
     }
 
-    return invokeAndParse(task, modelStub(handler));
+    return invoke(task, modelStub(handler));
   });
 
   describe('should perform class mapping', function() {
@@ -84,7 +72,7 @@ describe('[invoke-handler] task executor', function() {
       const item = { a: 'a', bar: { ___class: 'Bar', b: 'b' }, ___class: 'Foo' };
       const result = executionResult(null, [{ ___class: 'Baz' }, { ___class: 'Baz' }]);
 
-      return invokeAndParse(createTask(AFTER_CREATE, [{}, item, result]), modelStub(handler, {
+      return invoke(createTask(AFTER_CREATE, [{}, item, result]), modelStub(handler, {
         Foo,
         Bar,
         Baz
@@ -104,7 +92,7 @@ describe('[invoke-handler] task executor', function() {
 
   describe('should handle', function() {
     it('unsupported event error', function() {
-      return invokeAndParse(createTask({ id: -1 }), { handlers: [] }).then(res => {
+      return invoke(createTask({ id: -1 }), { handlers: [] }).then(res => {
         should.exist(res.exception);
         res.exception.exceptionMessage.should.startWith('Integrity violation');
       });
@@ -115,7 +103,7 @@ describe('[invoke-handler] task executor', function() {
         throw new Error('Error');
       }
 
-      return invokeAndParse(createTask(BEFORE_CREATE), modelStub(handler)).then(res => {
+      return invoke(createTask(BEFORE_CREATE), modelStub(handler)).then(res => {
         should.exist(res.exception);
         res.exception.exceptionMessage.should.equal('Error');
       });
@@ -126,7 +114,7 @@ describe('[invoke-handler] task executor', function() {
         throw new ServerCode.Error(10, 'My Custom Error');
       }
 
-      return invokeAndParse(createTask(BEFORE_CREATE), modelStub(handler)).then(res => {
+      return invoke(createTask(BEFORE_CREATE), modelStub(handler)).then(res => {
         should.exist(res.exception);
         res.exception.code.should.equal(10);
         res.exception.exceptionMessage.should.equal('My Custom Error');
@@ -141,7 +129,7 @@ describe('[invoke-handler] task executor', function() {
         throw err;
       }
 
-      return invokeAndParse(createTask(BEFORE_CREATE), modelStub(handler)).then(res => {
+      return invoke(createTask(BEFORE_CREATE), modelStub(handler)).then(res => {
         should.exist(res.exception);
         res.exception.code.should.equal(0);
         res.exception.exceptionMessage.should.equal('StreamError');
@@ -159,7 +147,7 @@ describe('[invoke-handler] task executor', function() {
         });
       }
 
-      return invokeAndParse(createTask(BEFORE_CREATE), modelStub(handler)).then(res => {
+      return invoke(createTask(BEFORE_CREATE), modelStub(handler)).then(res => {
         should.exist(res.exception);
         res.exception.exceptionMessage.should.equal('Async Error');
       });
@@ -175,7 +163,7 @@ describe('[invoke-handler] task executor', function() {
         });
       }
 
-      return invokeAndParse(task, modelStub(handler)).then(res => {
+      return invoke(task, modelStub(handler)).then(res => {
         should.exist(res.exception);
         res.exception.exceptionMessage.should.equal('Task execution is aborted due to timeout');
       });
@@ -190,7 +178,7 @@ describe('[invoke-handler] task executor', function() {
         req.item = { name: 'Dou' };
       }
 
-      return invokeAndParse(task, modelStub(handler)).then(res => {
+      return invoke(task, modelStub(handler)).then(res => {
         res.arguments[1].should.be.eql({ name: 'Dou' });
       });
     });
@@ -202,7 +190,7 @@ describe('[invoke-handler] task executor', function() {
         return { name: 'Dou', id: 2 };
       }
 
-      return invokeAndParse(task, modelStub(handler)).then(res => {
+      return invoke(task, modelStub(handler)).then(res => {
         should.not.exists(res.exception);
 
         res.arguments[0].prematureResult.should.be.eql({ name: 'Dou', id: 2 });
@@ -222,7 +210,7 @@ describe('[invoke-handler] task executor', function() {
         res.result.should.be.eql(result);
       }
 
-      return invokeAndParse(task, modelStub(handler)).then(res => {
+      return invoke(task, modelStub(handler)).then(res => {
         should.not.exists(res.exception);
 
         res.arguments[2].should.be.eql(wrappedResult);
@@ -242,7 +230,7 @@ describe('[invoke-handler] task executor', function() {
         throw new Error(error);
       }
 
-      return invokeAndParse(task, modelStub(handler)).then(res => {
+      return invoke(task, modelStub(handler)).then(res => {
         res.arguments.should.be.empty();
         res.exception.exceptionMessage.should.be.eql(error);
       });
@@ -259,7 +247,7 @@ describe('[invoke-handler] task executor', function() {
           return { name: 'Dou', id: 2 };
         }
 
-        return invokeAndParse(task, modelStub(handler)).then(res => {
+        return invoke(task, modelStub(handler)).then(res => {
           res.arguments[2].result.should.be.eql({ name: 'Dou', id: 2 });
         });
       });
@@ -271,7 +259,7 @@ describe('[invoke-handler] task executor', function() {
           res.result.name = 'John Dou';
         }
 
-        return invokeAndParse(task, modelStub(handler)).then(res => {
+        return invoke(task, modelStub(handler)).then(res => {
           res.arguments[2].result.should.be.eql({ name: 'John Dou', id: 1 });
         });
       });
@@ -283,7 +271,7 @@ describe('[invoke-handler] task executor', function() {
           res.error.code = 1;
         }
 
-        return invokeAndParse(task, modelStub(handler)).then(res => {
+        return invoke(task, modelStub(handler)).then(res => {
           should.exists(res.arguments[2].exception);
 
           res.arguments[2].exception.code.should.equal(1);
@@ -303,7 +291,7 @@ describe('[invoke-handler] task executor', function() {
           };
         }
 
-        return invokeAndParse(task, modelStub(handler)).then(res => {
+        return invoke(task, modelStub(handler)).then(res => {
           should.exists(res.arguments[2].result);
           should.exists(res.arguments[2].exception);
 
@@ -331,7 +319,7 @@ describe('[invoke-handler] task executor', function() {
         });
       }
 
-      return invokeAndParse(task, modelStub(handler))
+      return invoke(task, modelStub(handler))
         .then(() => {
           handlerFinished.should.be.true();
         });
@@ -342,27 +330,27 @@ describe('[invoke-handler] task executor', function() {
         return {};
       }
 
-      return invokeAndParse(task, modelStub(handler)).should.be.fulfilledWith(undefined);
+      return invoke(task, modelStub(handler)).should.be.fulfilledWith(undefined);
     });
   });
 
   describe('for custom events', function() {
     it('should wrap numeric value to object', function() {
-      return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(() => 1)).then(res => {
+      return invoke(createTask(CUSTOM_EVENT, []), modelStub(() => 1)).then(res => {
         should.exists(res.arguments[2]);
         res.arguments[2].should.be.eql({ result: 1 });
       });
     });
 
     it('should wrap string value to object', function() {
-      return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(() => 'abc')).then(res => {
+      return invoke(createTask(CUSTOM_EVENT, []), modelStub(() => 'abc')).then(res => {
         should.exists(res.arguments[2]);
         res.arguments[2].should.be.eql({ result: 'abc' });
       });
     });
 
     it('should wrap boolean value to object', function() {
-      return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(() => true)).then(res => {
+      return invoke(createTask(CUSTOM_EVENT, []), modelStub(() => true)).then(res => {
         should.exists(res.arguments[2]);
         res.arguments[2].should.be.eql({ result: true });
       });
@@ -371,14 +359,14 @@ describe('[invoke-handler] task executor', function() {
     it('should wrap date value to object', function() {
       const date = new Date();
 
-      return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(() => date)).then(res => {
+      return invoke(createTask(CUSTOM_EVENT, []), modelStub(() => date)).then(res => {
         should.exists(res.arguments[2]);
-        res.arguments[2].should.be.eql({ result: date.toISOString() });
+        res.arguments[2].should.be.eql({ result: date });
       });
     });
 
     it('should wrap null', function() {
-      return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(() => null)).then(res => {
+      return invoke(createTask(CUSTOM_EVENT, []), modelStub(() => null)).then(res => {
         should.exists(res.arguments[2]);
         res.arguments[2].should.be.eql({ result: null });
       });
@@ -392,20 +380,20 @@ describe('[invoke-handler] task executor', function() {
         return result;
       }
 
-      return invokeAndParse(task, modelStub(handler)).then(res => {
+      return invoke(task, modelStub(handler)).then(res => {
         should.exists(res.arguments[2]);
         res.arguments[2].should.be.eql(result);
       });
     });
 
     it('should nullify undefined', function() {
-      return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(() => undefined)).then(res => {
+      return invoke(createTask(CUSTOM_EVENT, []), modelStub(() => undefined)).then(res => {
         res.arguments[2].should.be.eql({});
       });
     });
 
     it('should nullify function', function() {
-      return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(() => function() {
+      return invoke(createTask(CUSTOM_EVENT, []), modelStub(() => function() {
       })).then(res => {
         res.arguments[2].should.be.eql({});
       });
@@ -416,7 +404,7 @@ describe('[invoke-handler] task executor', function() {
         throw new Error('Error');
       }
 
-      return invokeAndParse(createTask(CUSTOM_EVENT, []), modelStub(handler)).then(res => {
+      return invoke(createTask(CUSTOM_EVENT, []), modelStub(handler)).then(res => {
         should.equal(res.exception.exceptionMessage, 'Error');
       });
     });

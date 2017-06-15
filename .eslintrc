@@ -2,9 +2,6 @@
   "extends": "eslint:recommended",
   "rules": {
 
-    // require function declarations instead of expressions
-    "func-style": [2, "declaration"],
-
     // disallow declaration of variables already declared in the outer scope
     "no-shadow": 2,
 

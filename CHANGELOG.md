@@ -1,5 +1,35 @@
 ## Change Log
 
+### v1.11.1 (2017/05/23)
+- fix invalid objectrefs calculations during json parse if object contains ___dates___ meta fields
+- decorate dates into ___dates___ metafields in a response to the server
+
+### v1.11.0 (2017/02/20)
+- add `Backendless.ServerCode.verbose()` method, giving a possibility to enable verbose logging mode
+
+### v1.10.1 (2016/11/25)
+- update Backendless SDK dependency to latest
+
+### v1.9.1 (2016/11/22)
+- resolve ___dates___ meta fields in server's JSON
+- when critical error, exit with zero status code to avoid too noisy NPM complains
+
+### v1.9.0 (2016/10/25)
+- add `PRO` mode
+
+### v1.8.0 (2016/08/17)
+- in `CLOUD` mode the CodeRunner forwards all console logging 
+(including CodeRunner task processing info) to `Backendless.Logging` which makes it possible to 
+monitor deployed Business Logic
+- When run in production, the CodeRunner now prints how much times it takes, to load a context specific 
+business logic modules and their dependencies 
+
+### v1.7.4 (2016/07/14)
+- fix: `false` returned from service's method results in `null` result on client side
+
+### v1.7.3 (2016/07/01)
+- fix `HashMap cannot be cast to InvocationResult` error when invoking service method which returns non string value
+
 ### v1.7.2 (2016/06/14)
 - change: same response shape for each task executors
 

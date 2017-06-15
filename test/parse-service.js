@@ -2,7 +2,7 @@
 
 const assert   = require('assert'),
       executor = require('../lib/server-code/runners/tasks/executor'),
-      argsUtil = require('../lib/server-code/runners/tasks/util/args');
+      invoke   = require('./helpers/invoke-task');
 
 require('backendless').ServerCode = require('../lib/server-code/api');
 require('mocha');
@@ -15,18 +15,6 @@ function createTask(path) {
     applicationId: '',
     relativePath : `test/${path}`
   };
-}
-
-function invoke(task, model) {
-  return executor.execute(task, { backendless: { repoPath: '' } }, model)
-    .then(res => res && JSON.parse(res))
-    .then(res => {
-      if (res && res.arguments) {
-        res.arguments = res.arguments && argsUtil.decode(res.arguments);
-      }
-
-      return res;
-    });
 }
 
 /*eslint max-len: ["off"]*/
@@ -43,9 +31,9 @@ describe('[parse-service] task executor', function() {
           '___jsonclass': 'com.backendless.coderunner.commons.model.ServiceModel',
           'xml'         : '<?xml version="1.0" encoding="ISO-8859-1"?>\n' +
           '<namespaces>\n' +
-          '  <namespace name="services" fullname="services">\n' + 
-          '    <service name="ShoppingCartService" fullname="services.ShoppingCartService">\n' + 
-          '      <method name="addItem" type="void" nativetype="void" fulltype="void" javatype="void">\n' + 
+          '  <namespace name="services" fullname="services">\n' +
+          '    <service name="ShoppingCartService" fullname="services.ShoppingCartService" namespace="services">\n' +
+          '      <method name="addItem" type="void" nativetype="void" fulltype="void" javatype="void">\n' +
           '        <arg name="cartName" type="String" nativetype="String" fulltype="String" javatype="java.lang.String"/>\n' +
           '        <arg name="item" type="ShoppingItem" nativetype="services.ShoppingItem" fulltype="services.ShoppingItem" javatype="services.ShoppingItem"/>\n' +
           '      </method>\n      ' +

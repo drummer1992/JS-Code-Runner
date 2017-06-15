@@ -10,7 +10,7 @@ require('should');
 const SHOPPING_CART_SERVICE_XML = `<?xml version="1.0" encoding="ISO-8859-1"?>
 <namespaces>
   <namespace name="services" fullname="services">
-    <service name="ShoppingCartService" fullname="services.ShoppingCartService">
+    <service name="ShoppingCartService" fullname="services.ShoppingCartService" namespace="services">
       <method name="addItem" type="void" nativetype="void" fulltype="void" javatype="void">
         <arg name="cartName" type="String" nativetype="String" fulltype="String" javatype="java.lang.String"/>
         <arg name="item" type="ShoppingItem" nativetype="services.ShoppingItem" fulltype="services.ShoppingItem" javatype="services.ShoppingItem"/>
