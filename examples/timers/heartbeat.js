@@ -2,6 +2,8 @@
 
 Backendless.ServerCode.addTimer({
 
+  name: 'test10',
+
   frequency: {
     schedule: 'custom',
     repeat  : { every: 600 }
