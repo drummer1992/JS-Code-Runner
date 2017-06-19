@@ -1,4 +1,8 @@
 ## Change Log
+### v4.3.0-beta.13 (2017/06/19)
+- handle negative timeouts
+- add support for Business Logic Models
+- add support for beforeSendEmail and afterSendEmail events
 
 ### v4.3.0-beta.12 (2017/05/23)
 - fix invalid objectrefs calculations during json parse if object contains ___dates___ meta fields
