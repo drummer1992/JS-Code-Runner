@@ -1,64 +1,25 @@
 ## Change Log
-### v4.3.0-beta.13 (2017/06/19)
-- handle negative timeouts
-- add support for Business Logic Models
-- add support for beforeSendEmail and afterSendEmail events
 
-### v4.3.0-beta.12 (2017/05/23)
-- fix invalid objectrefs calculations during json parse if object contains ___dates___ meta fields
-- decorate dates into ___dates___ metafields in a response to the server
-- better info about business logic parsing errors
-
-### v4.3.0-beta.11 (2017/05/12)
-- increase model build time by loading only files relevant to the event
-
-### v4.3.0-beta.10 (2017/05/11)
-- use relations API in ShoppingCartService example
-- fix (deploy) --keep-zip command line argument is ignored
-- fix exclusion pattern is ignored during model build phase
-- add setRelation and addRelation methods to PersistenceItem class
-
-### v4.3.0-beta.9 (2017/04/28)
-- add support for async service methods
-- fix processing files whose names start from underscore
-
-### v4.3.0-beta.5 (2017/04/08)
-- fix (deploy) `require(...).publish is not a function`
-
-### v4.3.0-beta.4 (2017/04/06)
-- Standalone work in `cloud` mode . CodeRunnerDriver is not required anymore.
-
-### v4.3.0-beta.1 (2017/03/29)
-- For `pro` and `debug` modes, each task result is sent to a task-specific message broker channel
-- runner registration is not required anymore to publish server code
-- `app.files` config param was replaced by `app.exclude`. Coderunner now searches for all files in the current working
-directory except those that matches `app.exclude` patterns
-
-### v4.2.0-beta (2017/03/02)
-- Service Methods now may have specific route defined in a jsdoc `@route` tag
-- Route may include path params like `/order/{orderId}/item/{itemId}`
+### v4.3.0 (2017/07/04)
+- Backendless Server v4.0 support (new communication protocol, deployment models)
+- Service Methods may have specific route defined in a jsdoc `@route` tag. Route may include path params like `/order/{orderId}/item/{itemId}`
 - Service and service methods description defined in jsdoc is visible in Backendless Dev Console
 - In service method there is `this.request` containing the execution context including http path, headers, path params,
 query params, user, user roles and so on
-
-### v4.1.0-beta (2017/02/23)
+- Service constructor now accepts service config and execution context arguments
 - Add `Backendless.Request` giving a possibility to make one liner http requests from BL
-
-### v4.0.3-beta (2017/02/21)
+- userToken of a user originated the BL execution is now injected into every Backendless API call made from the BL
+- fix invalid object references calculations during json parse if object contains `___dates___` meta fields
+- decorate dates into `___dates___` metafields in a response to the server
+- add `setRelation` and `addRelation` methods to `PersistenceItem` class
+- add support for async service methods
+- fix processing files whose names start with underscore
+- Standalone work in `cloud` mode. CodeRunnerDriver is not required anymore.
+- `app.files` config param was replaced by `app.exclude`. Coderunner now searches for all files in the current working
+directory except those that matches `app.exclude` patterns
 - add retry strategy for messages broker
-- change secretKey naming to apiKey
-
-### v4.0.1-beta (2017/02/07)
-- add Backendless.ServerCode.Data alias to Backendless.ServerCode.Persistence
-- pass config and context into Service constructor
-- fix `JSDOC_ERROR: There are no input files to process` related to services/types defined
-in a module without js extension
+- add `Backendless.ServerCode.Data` alias to `Backendless.ServerCode.Persistence`
 - stop logs sending attempt for RAI tasks
-
-### v4.0.0-beta (2017/02/03)
-- Backendless Server v4.0 support
-- add socialRegister events support
-- userToken of a user originated the BL execution to be injected into every Backendless API call made from the BL
 
 ### v1.11.0 (2017/02/20)
 - add `Backendless.ServerCode.verbose()` method, giving a possibility to enable verbose logging mode
