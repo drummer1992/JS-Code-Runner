@@ -1,5 +1,9 @@
 ## Change Log
 
+### v4.3.1 (2017/07/06)
+- Change events handlers params
+- Remove media events
+
 ### v4.3.0 (2017/07/04)
 - Backendless Server v4.0 support (new communication protocol, deployment models)
 - Service Methods may have specific route defined in a jsdoc `@route` tag. Route may include path params like `/order/{orderId}/item/{itemId}`
