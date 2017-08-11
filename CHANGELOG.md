@@ -1,5 +1,8 @@
 ## Change Log
 
+### v4.3.2 (2017/08/11)
+- add missed `response` argument in `Messaging.afterDeviceRegistration` handler
+
 ### v4.3.1 (2017/07/06)
 - Change events handlers params
 - Remove media events
