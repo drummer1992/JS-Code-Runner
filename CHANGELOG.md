@@ -1,5 +1,8 @@
 ## Change Log
 
+### v4.3.3 (2017/08/18)
+- add missed `response` argument in `Users.afterFind` handler
+
 ### v4.3.2 (2017/08/11)
 - add missed `response` argument in `Messaging.afterDeviceRegistration` handler
 
