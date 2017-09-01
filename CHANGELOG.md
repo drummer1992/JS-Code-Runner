@@ -1,5 +1,9 @@
 ## Change Log
 
+### v1.11.2 (2017/09/01)
+- exit debug code runner when disconnected
+- move `Reading ..` model tracing to debug log category
+
 ### v1.11.1 (2017/05/23)
 - fix invalid objectrefs calculations during json parse if object contains ___dates___ meta fields
 - decorate dates into ___dates___ metafields in a response to the server
