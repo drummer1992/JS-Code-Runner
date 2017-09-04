@@ -1,5 +1,8 @@
 ## Change Log
 
+### v4.3.4 (2017/09/04)
+- Apply current user id before service method execution
+
 ### v4.3.3 (2017/08/18)
 - add missed `response` argument in `Users.afterFind` handler
 
