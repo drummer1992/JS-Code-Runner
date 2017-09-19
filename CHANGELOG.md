@@ -1,5 +1,10 @@
 ## Change Log
 
+### v4.3.5 (2017/09/19)
+- Update Backendless Request to version 0.0.8
+- No sandbox for Market Place business logic
+- add bulkRemove and fetch methods to PersistenceItem
+
 ### v4.3.4 (2017/09/04)
 - Apply current user id before service method execution
 
