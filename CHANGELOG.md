@@ -1,5 +1,8 @@
 ## Change Log
 
+### v4.3.6 (2017/09/21)
+- Update Backendless JS SDK to version 4.0.10
+
 ### v4.3.5 (2017/09/19)
 - Update Backendless Request to version 0.0.8
 - No sandbox for Market Place business logic
