@@ -52,6 +52,17 @@ describe('[invoke-handler] task executor', function() {
     return invoke(task, modelStub(handler));
   });
 
+  it('should respect task execution timeout', function() {
+    function handler() {
+      return new Promise(() => undefined);
+    }
+
+    return invoke(Object.assign(createTask(BEFORE_CREATE), { timeout: 1000 }), modelStub(handler)).then(res => {
+      should.exist(res.exception);
+      res.exception.exceptionMessage.should.equal('Task execution is aborted due to timeout');
+    });
+  });
+
   it('should initialise Backendless with user-token from the request context', function() {
     const userToken = 'wddeupxnpjncbykrlpegexyiunuixxqfckrr';
     const task = createTask(BEFORE_CREATE, [{ userToken: userToken }]);
@@ -73,8 +84,10 @@ describe('[invoke-handler] task executor', function() {
     it('for persistence items', function() {
       class Foo {
       }
+
       class Bar {
       }
+
       class Baz {
       }
 
