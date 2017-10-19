@@ -37,12 +37,14 @@
   "dependencies": {
     "backendless": "^4.0.12",
     "backendless-request": "0.0.8",
+    "chalk": "^2.2.0",
     "commander": "^2.9.0",
     "glob": "^6.0.4",
     "jsdoc-api": "^1.1.0",
     "jsdoc-strip-async-await": "^0.1.0",
     "jszip": "^2.6.1",
     "redis": "^2.6.5",
+    "strip-ansi": "^4.0.0",
     "xml": "^1.0.1"
   },
   "license": "MIT",
