@@ -1,5 +1,8 @@
 ## Change Log
 
+### v4.4.1 (2017/11/7)
+- update dependencies
+
 ### v4.4.0 (2017/10/20)
 - add static methods: count, save, bulkUpdate to PersistenceItem
 - add saveWithRelations method to PersistenceItem
