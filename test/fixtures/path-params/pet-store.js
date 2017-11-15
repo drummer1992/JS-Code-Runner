@@ -4,6 +4,7 @@
  * @property {String} objectId
  * @property {String} name
  * @property {Number} birthday
+ * @property {Pet} parent
  */
 class Pet extends Backendless.ServerCode.PersistenceItem {
 }
