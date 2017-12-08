@@ -1,3 +1,2 @@
 --require test/support/env
 --reporter spec
---growl

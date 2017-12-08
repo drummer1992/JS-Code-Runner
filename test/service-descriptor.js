@@ -60,6 +60,7 @@ const PET_STORE_SERVICE_XML = `<?xml version="1.0" encoding="ISO-8859-1"?>
       <field name="objectId" type="String" nativetype="String" fulltype="String" javatype="java.lang.String"/>
       <field name="name" type="String" nativetype="String" fulltype="String" javatype="java.lang.String"/>
       <field name="birthday" type="Number" nativetype="float" fulltype="Number" javatype="float"/>
+      <field name="parent" type="Pet" nativetype="services.Pet" fulltype="services.Pet" javatype="services.Pet"/>
     </datatype>
     <datatype name="PetDeleteResponse" description="PetDeleteResponse" fullname="services.PetDeleteResponse" typeNamespace="services">
       <field name="deletionTime" type="Number" nativetype="float" fulltype="Number" javatype="float"/>

@@ -1,5 +1,9 @@
 {
   "extends": "eslint:recommended",
+  "env": {
+    "node": true,
+    "es6": true
+  },
   "rules": {
 
     // disallow declaration of variables already declared in the outer scope
@@ -45,31 +49,5 @@
         "Function": "function"
       }
     }]
-  },
-  "env": {
-    "node": true,
-    "es6": true
-  },
-  "ecmaFeatures": {
-    "arrowFunctions": true,
-    "binaryLiterals": true,
-    "blockBindings": true,
-    "classes": true,
-    "defaultParams": true,
-    "destructuring": true,
-    "forOf": true,
-    "generators": true,
-    "objectLiteralComputedProperties": true,
-    "objectLiteralDuplicateProperties": true,
-    "objectLiteralShorthandMethods": true,
-    "objectLiteralShorthandProperties": true,
-    "octalLiterals": true,
-    "regexUFlag": true,
-    "regexYFlag": true,
-    "spread": true,
-    "superInFunctions": true,
-    "templateStrings": true,
-    "unicodeCodePointEscapes": true,
-    "globalReturn": true
   }
 }

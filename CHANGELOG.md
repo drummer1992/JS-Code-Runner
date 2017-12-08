@@ -1,5 +1,20 @@
 ## Change Log
 
+### v4.4.1 (2017/11/7)
+- update dependencies
+
+### v4.4.0 (2017/10/20)
+- add static methods: count, save, bulkUpdate to PersistenceItem
+- add saveWithRelations method to PersistenceItem
+- PersistenceItem constructor now accepts arguments
+- fix: undefined service path in model build output
+- fix: geo points are not mapped to Backendless.GeoPoint
+- Don't send relation props to server when saving PersistenceItem
+- Don't send request to server if no props to save when saving PersistenceItem
+- Always print business logic error stack to console during tasks execution (unless it's timeout error)
+- print task execution time
+- update Backendless JS SDK dependency to latest
+
 ### v4.3.6 (2017/09/21)
 - Update Backendless JS SDK to version 4.0.10
 

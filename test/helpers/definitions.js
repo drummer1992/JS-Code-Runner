@@ -97,7 +97,8 @@ const PET = {
   properties : {
     objectId: { type: { name: 'String' } },
     name    : { type: { name: 'String' } },
-    birthday: { type: { name: 'Number' } }
+    birthday: { type: { name: 'Number' } },
+    parent  : { type: { name: 'Pet' } }
   }
 };
 
