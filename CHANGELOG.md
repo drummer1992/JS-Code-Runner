@@ -1,5 +1,14 @@
 ## Change Log
 
+### v4.4.3 (2017/11/12)
+- update dependencies (including backendless JS SDK)
+- fix: 'call stack issue' when deploy service with circular dependencies in JSDOC
+- add unhandled promise rejection printing to log
+- PersistenceItem constructor now can accept string with objectId now
+- PersistenceItem.find method works with plain object and simple 'where' strings
+- add PersistenceItem.deleteRelation method
+- add PersistenceItem.ref method convenient to minimize payload for model update requests
+
 ### v4.4.1 (2017/11/7)
 - update dependencies
 
