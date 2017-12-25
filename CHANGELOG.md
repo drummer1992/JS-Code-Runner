@@ -1,5 +1,9 @@
 ## Change Log
 
+### v4.4.4 (2017/12/25)
+- fix: 'Nothing to debug/deploy' error when only timers are present
+- fix: PersistenceItem.saveWithRelations ignores deep stale
+
 ### v4.4.3 (2017/11/12)
 - update dependencies (including backendless JS SDK)
 - fix: 'call stack issue' when deploy service with circular dependencies in JSDOC
