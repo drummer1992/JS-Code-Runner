@@ -135,6 +135,17 @@ describe('[invoke-handler] task executor', function() {
       });
     });
 
+    it('non string error', function() {
+      function handler() {
+        throw ['Error'];
+      }
+
+      return invoke(createTask(BEFORE_CREATE), modelStub(handler)).then(res => {
+        should.exist(res.exception);
+        res.exception.exceptionMessage.should.equal('["Error"]');
+      });
+    });
+
     it('errors raised in the event handler', function() {
       function handler() {
         throw new Error('Error');
