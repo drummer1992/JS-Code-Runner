@@ -1,5 +1,8 @@
 ## Change Log
 
+### v4.4.5 (2018/01/04)
+- add duplicateStrategy option allowing service or models subclasses
+
 ### v4.4.4 (2017/12/25)
 - fix: 'Nothing to debug/deploy' error when only timers are present
 - fix: PersistenceItem.saveWithRelations ignores deep stale
