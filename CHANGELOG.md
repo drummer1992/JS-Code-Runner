@@ -1,5 +1,8 @@
 ## Change Log
 
+### v4.4.6 (2018/01/24)
+- upgrade dependency Backendless JS-SDK to version `^4.3.2`
+
 ### v4.4.5 (2018/01/04)
 - add duplicateStrategy option allowing service or models subclasses
 
