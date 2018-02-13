@@ -1,5 +1,13 @@
 ## Change Log
 
+### v4.4.7 (2018/02/13)
+- upgrade dependency Backendless JS-SDK to version `^4.3.4`
+- add Messaging Event Handlers: 
+  - beforePush
+  - afterPush
+  - beforePushWithTemplate
+  - afterPushWithTemplate
+
 ### v4.4.6 (2018/01/24)
 - upgrade dependency Backendless JS-SDK to version `^4.3.2`
 
