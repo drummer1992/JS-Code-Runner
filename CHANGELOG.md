@@ -1,5 +1,8 @@
 ## Change Log
 
+### v4.5.2 (2018/03/02)
+- stop dead workers on timeout in `cloud` and `pro` modes
+
 ### v4.5.0 (2018/02/19)
 - code deployment is now 5 times faster
 
