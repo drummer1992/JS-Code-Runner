@@ -1,6 +1,9 @@
 ## Change Log
 
-### v4.5.2 (2018/03/02)
+### v4.5.4 (2018/03/09)
+- add `deletable` option to `PersistenceItem.saveWithRelations` method allowing auto deletion of 1:1 or 1:N relations
+
+### v4.5.3 (2018/03/05)
 - stop dead workers on timeout in `cloud` and `pro` modes
 
 ### v4.5.0 (2018/02/19)
