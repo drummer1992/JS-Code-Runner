@@ -1,5 +1,9 @@
 ## Change Log
 
+### v4.6.0 (2018/04/03)
+- add bulkCreate EventHandlers
+- add bulkCreate method to PersistenceItem
+
 ### v4.5.4 (2018/03/09)
 - add `deletable` option to `PersistenceItem.saveWithRelations` method allowing auto deletion of 1:1 or 1:N relations
 
