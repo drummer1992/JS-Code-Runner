@@ -35,7 +35,7 @@
     "backendless"
   ],
   "dependencies": {
-    "backendless": "^4.3.5",
+    "backendless": "^4.4.0",
     "commander": "^2.12.2",
     "glob": "^6.0.4",
     "jsdoc": "^3.5.5",
