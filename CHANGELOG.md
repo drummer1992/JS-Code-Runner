@@ -1,5 +1,8 @@
 ## Change Log
 
+### v4.6.1 (2018/04/04)
+- remove `tableName` argument from bulkCreate EventHandler 
+
 ### v4.6.0 (2018/04/03)
 - add bulkCreate EventHandlers
 - add bulkCreate method to PersistenceItem
