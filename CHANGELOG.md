@@ -1,5 +1,8 @@
 ## Change Log
 
+### v4.6.2 (2018/04/18)
+- upgrade dependency Backendless JS-SDK to version `^4.4.3`
+
 ### v4.6.1 (2018/04/04)
 - remove `tableName` argument from bulkCreate EventHandler 
 
