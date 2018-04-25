@@ -1,6 +1,6 @@
 ## Change Log
 
-### v4.6.3 (2018/04/25)
+### v4.6.4 (2018/04/25)
 - fix: PersistenceItem.save ignores ownerId if it's the only property in the payload
 - upgrade dev dependencies
 
