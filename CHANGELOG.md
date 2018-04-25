@@ -1,5 +1,9 @@
 ## Change Log
 
+### v4.6.3 (2018/04/25)
+- fix: PersistenceItem.save ignores ownerId if it's the only property in the payload
+- upgrade dev dependencies
+
 ### v4.6.2 (2018/04/18)
 - upgrade dependency Backendless JS-SDK to version `^4.4.3`
 
