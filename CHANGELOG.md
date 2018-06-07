@@ -1,5 +1,10 @@
 ## Change Log
 
+### v4.6.5 (2018/06/07)
+- add process id to every Backendless.logging message
+- add app id (or its alias) to every stdout message
+- update Backendless and dev dependencies
+
 ### v4.6.4 (2018/04/25)
 - fix: PersistenceItem.save ignores ownerId if it's the only property in the payload
 - upgrade dev dependencies
