@@ -1,5 +1,8 @@
 ## Change Log
 
+### v4.6.6 (2018/06/18)
+- fixed `runner is already attached` error when re-run coderunner in debug mode  
+
 ### v4.6.5 (2018/06/07)
 - add process id to every Backendless.logging message
 - add app id (or its alias) to every stdout message
