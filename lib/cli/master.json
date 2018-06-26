@@ -1,0 +1,24 @@
+{
+  "backendless": {
+    "apiServer": "http://localhost:9000",
+    "msgBroker": {
+      "host": "localhost",
+      "port": "6379",
+      "max_attempts": 5
+    },
+    "repoPath": "/Volumes/DATA/dev/Backendless/backendless/src/server/play/repo"
+  },
+  "app": {
+    "id": "",
+    "apiKey": "",
+    "exclude": [
+      "+(git|.idea|lib|test|docs|bin|deploy)/**",
+      "+(LICENSE|*.md|*.json|.*)",
+      "node_modules/**",
+      "examples/services/wsdl-proxy/**"
+    ]
+  },
+  "sandbox": true,
+  "verbose": true,
+  "workers": 2
+}
