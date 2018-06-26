@@ -3,3 +3,4 @@
 *.iml
 .DS_Store
 node_modules
+/lib/options/master.json
