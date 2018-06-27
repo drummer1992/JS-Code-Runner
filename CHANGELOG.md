@@ -1,5 +1,20 @@
 ## Change Log
 
+### v4.6.6 (2018/06/18)
+- fixed `runner is already attached` error when re-run coderunner in debug mode  
+
+### v4.6.5 (2018/06/07)
+- add process id to every Backendless.logging message
+- add app id (or its alias) to every stdout message
+- update Backendless and dev dependencies
+
+### v4.6.4 (2018/04/25)
+- fix: PersistenceItem.save ignores ownerId if it's the only property in the payload
+- upgrade dev dependencies
+
+### v4.6.2 (2018/04/18)
+- upgrade dependency Backendless JS-SDK to version `^4.4.3`
+
 ### v4.6.1 (2018/04/04)
 - remove `tableName` argument from bulkCreate EventHandler 
 
