@@ -1,4 +1,8 @@
 {
+  "workersHeartbeat": {
+    "interval": 10,
+    "timeout": 15
+  },
   "backendless": {
     "apiServer": "https://api.backendless.com",
     "msgBroker": {
