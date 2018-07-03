@@ -1,5 +1,8 @@
 ## Change Log
 
+### v4.6.7 (2018/07/03)
+- add `--zip-size-confirmation` command line argument to confirm generated zip size before deploying it
+
 ### v4.6.6 (2018/06/18)
 - fixed `runner is already attached` error when re-run coderunner in debug mode  
 
