@@ -1,7 +1,14 @@
 {
-  "workersHeartbeat": {
-    "interval": 5,
-    "timeout": 10
+  "workers": {
+    "count": 4,
+    "cache": {
+      "idle": 5,
+      "pool": 50
+    },
+    "heartbeat": {
+      "interval": 5,
+      "timeout": 10
+    }
   },
   "backendless": {
     "apiServer": "https://api.backendless.com",
