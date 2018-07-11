@@ -1,0 +1,11 @@
+{
+  "backendless": {
+    "apiPath": "{version}/config/server/httpAddress",
+    "repoPath": "{version}/config/repository/location",
+    "msgBroker": {
+      "host": "{version}/config/redis/bl/production/host",
+      "port": "{version}/config/redis/bl/production/port",
+      "password": "{version}/config/redis/bl/production/password"
+    }
+  }
+}
