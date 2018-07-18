@@ -1,5 +1,8 @@
 ## Change Log
 
+### v4.7.0 (2018/07/18)
+- now methods of `child_process` module are not accessible in Cloud
+
 ### v4.6.7 (2018/07/03)
 - add `--zip-size-confirmation` command line argument to confirm generated zip size before deploying it
 
