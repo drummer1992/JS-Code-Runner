@@ -1,5 +1,8 @@
 ## Change Log
 
+### v4.7.1 (2018/07/27)
+- remove config file from cache after reading 
+
 ### v4.7.0 (2018/07/18)
 - now methods of `child_process` module are not accessible in Cloud
 
