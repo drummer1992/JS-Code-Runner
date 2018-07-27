@@ -1,10 +1,7 @@
 {
   "workers": {
-    "count": 4,
-    "cache": {
-      "idle": 5,
-      "pool": 50
-    },
+    "limit": 50,
+    "concurrent": 4,
     "heartbeat": {
       "interval": 5,
       "timeout": 10

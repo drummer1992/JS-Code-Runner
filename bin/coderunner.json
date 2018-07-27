@@ -1,16 +1,14 @@
 {
   "workers": {
-    "count": 4,
-    "cache": {
-      "idle": 5,
-      "pool": 50
-    },
+    "limit": 20,
+    "concurrent": 4,
     "heartbeat": {
       "interval": 5,
       "timeout": 10
     }
   },
   "backendless": {
+    "managementHttpPort": 2992,
     "apiServer": "https://api.backendless.com",
     "msgBroker": {
       "host": "cl.backendless.com",
