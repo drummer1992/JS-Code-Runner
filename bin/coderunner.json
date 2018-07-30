@@ -1,4 +1,5 @@
 {
+  "managementHttpPort": 2992,
   "workers": {
     "limit": 20,
     "concurrent": 4,
@@ -8,7 +9,6 @@
     }
   },
   "backendless": {
-    "managementHttpPort": 2992,
     "apiServer": "https://api.backendless.com",
     "msgBroker": {
       "host": "cl.backendless.com",
