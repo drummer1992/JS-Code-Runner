@@ -1,6 +1,9 @@
 {
   "backendless": {
     "apiServer": "{version}/config/server/httpAddress",
+    "apiHost": "{version}/config/server/internalHost",
+    "apiPort": "{version}/config/server/internalPort",
+    "apiProtocol": "{version}/config/server/internalProtocol",
     "repoPath": "{version}/config/repository/location",
     "msgBroker": {
       "host": "{version}/config/redis/bl/production/host",

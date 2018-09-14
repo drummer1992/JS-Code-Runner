@@ -9,7 +9,6 @@
     }
   },
   "backendless": {
-    "apiServer": "https://api.backendless.com",
     "msgBroker": {
       "host": "cl.backendless.com",
       "port": 6379,
