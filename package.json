@@ -35,13 +35,17 @@
     "backendless"
   ],
   "dependencies": {
-    "backendless": "^4.4.4",
-    "backendless-consul-config-provider": "^1.0.1",
+    "backendless": "^5.1.0",
+    "backendless-consul-config-provider": "^1.0.3",
     "commander": "^2.12.2",
     "glob": "^6.0.4",
     "jsdoc": "^3.5.5",
     "jszip": "^2.6.1",
     "redis": "^2.6.5",
+    "winston": "^2.4.0",
+    "winston-daily-rotate-file": "^1.7.2",
+    "winston-logstash": "^0.4.0",
+    "wtfnode": "^0.7.0",
     "xml": "^1.0.1"
   },
   "license": "MIT",
