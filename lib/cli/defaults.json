@@ -1,7 +1,6 @@
 {
   "workers": {
     "cache": false,
-    "limit": 50,
     "concurrent": 4,
     "heartbeat": {
       "interval": 5,

@@ -1,8 +1,7 @@
 {
   "managementHttpPort": 2992,
   "workers": {
-    "cache": true,
-    "limit": 20,
+    "cache": false,
     "concurrent": 4,
     "heartbeat": {
       "interval": 5,
