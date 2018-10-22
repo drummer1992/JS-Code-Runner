@@ -1,14 +1,14 @@
 {
   "backendless": {
-    "apiServer": "{version}/config/server/httpAddress",
-    "apiHost": "{version}/config/server/internalHost",
-    "apiPort": "{version}/config/server/internalPort",
-    "apiProtocol": "{version}/config/server/internalProtocol",
-    "repoPath": "{version}/config/repository/location",
+    "apiServer": "config/server/httpAddress",
+    "apiHost": "config/server/internalHost",
+    "apiPort": "config/server/internalPort",
+    "apiProtocol": "config/server/internalProtocol",
+    "repoPath": "config/repository/location",
     "msgBroker": {
-      "host": "{version}/config/redis/bl/production/host",
-      "port": "{version}/config/redis/bl/production/port",
-      "password": "{version}/config/redis/bl/production/password"
+      "host": "config/redis/bl/production/host",
+      "port": "config/redis/bl/production/port",
+      "password": "config/redis/bl/production/password"
     }
   }
 }
