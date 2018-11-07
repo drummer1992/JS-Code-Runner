@@ -353,7 +353,7 @@ describe('[invoke-handler] task executor', function() {
 
   describe('for async events', function() {
     const task = createTask(AFTER_CREATE, [], true)
-    task.timeout = 3
+    task.timeout = 20
 
     it('should wait for handler`s promise', function() {
       let handlerFinished = false
@@ -363,7 +363,7 @@ describe('[invoke-handler] task executor', function() {
           setTimeout(() => {
             handlerFinished = true
             resolve()
-          }, 2)
+          }, 10)
         })
       }
 
