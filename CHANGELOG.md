@@ -1,5 +1,11 @@
 ## Change Log
 
+### v5.0.0 (2018/11/19)
+- add workers caching for Backendless PRO and Manage installations, it reduces invocation time of any Business Logic to almost 4 times  
+- add Consul as Config Manager, for using shared configs 
+- add Management HTTP Server for getting current state of workers
+- add various Log Providers like: `file`, `logstash`, `papertrail` 
+
 ### v4.7.2 (2018/08/29)
 - now `req` object in `before|after` DeleteFileOrDirectory EventHandler contains `pattern` and `recursive` values 
 
