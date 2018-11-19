@@ -1,6 +1,16 @@
 {
+  "managementHttpPort": 2992,
+  "workers": {
+    "cache": {
+      "limit": 20
+    },
+    "concurrent": 4,
+    "heartbeat": {
+      "interval": 5,
+      "timeout": 10
+    }
+  },
   "backendless": {
-    "apiServer": "https://api.backendless.com",
     "msgBroker": {
       "host": "cl.backendless.com",
       "port": 6379,
