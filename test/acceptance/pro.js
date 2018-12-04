@@ -2,7 +2,7 @@
 const path = require('path')
 
 const app = {
-  server   : 'http://localhost:9000',
+  apiUrl   : 'http://localhost:9000',
   msgBroker: {
     host: 'localhost',
     port: 6379
