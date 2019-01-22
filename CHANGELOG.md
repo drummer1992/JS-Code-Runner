@@ -1,5 +1,8 @@
 ## Change Log
 
+### v5.0.2 (2019/01/22)
+- fix: no tasks execution in debug mode
+
 ### v5.0.1 (2018/11/26)
 - upgrade dependency Backendless JS-SDK to version `^5.2.0`
 
