@@ -1,5 +1,9 @@
 ## Change Log
 
+### v5.0.4 (2019/02/01)
+- upgrade Backendless JS-SDK to v5.2.3
+- fix message about "Worker expiration by heartbeat timeout"
+
 ### v5.0.3 (2019/01/30)
 - upgrade Backendless JS-SDK to v5.2.1
 
