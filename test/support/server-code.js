@@ -119,7 +119,7 @@ class ServerCode {
     return CodeRunner.deploy({
       allowEmpty : true,
       backendless: {
-        apiServer: this.app.server
+        apiUrl: this.app.server
       },
       app        : {
         id     : this.app.id,
