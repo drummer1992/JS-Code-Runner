@@ -35,7 +35,7 @@
     "backendless"
   ],
   "dependencies": {
-    "backendless": "^5.2.5",
+    "backendless": "^5.2.7",
     "backendless-consul-config-provider": "^1.0.6",
     "commander": "^2.12.2",
     "glob": "^6.0.4",
