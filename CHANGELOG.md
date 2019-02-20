@@ -1,5 +1,10 @@
 ## Change Log
 
+### v5.1.0 (2019/02/20)
+- add an ability to process tasks with low-priority
+- fix reconnection to redis after redis restart 
+- upgrade Backendless JS-SDK to v5.2.7
+
 ### v5.0.5 (2019/02/03)
 - upgrade Backendless JS-SDK to v5.2.5
 
