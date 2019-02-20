@@ -8,7 +8,8 @@
     "heartbeat": {
       "interval": 5,
       "timeout": 10
-    }
+    },
+    "lowPriorityThreshold": 0
   },
   "backendless": {
     "msgBroker": {
