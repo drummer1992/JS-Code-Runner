@@ -1,5 +1,8 @@
 ## Change Log
 
+### v5.1.1 (2019/02/26)
+- fix composing run options from Consul 
+
 ### v5.1.0 (2019/02/20)
 - add an ability to process tasks with low-priority
 - fix reconnection to redis after redis restart 
