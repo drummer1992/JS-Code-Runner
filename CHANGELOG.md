@@ -1,5 +1,8 @@
 ## Change Log
 
+### v5.2.0 (2019/03/05)
+- add an ability to put worker's logs into file 
+
 ### v5.1.1 (2019/02/26)
 - fix composing run options from Consul 
 
