@@ -42,8 +42,8 @@
     "jsdoc": "^3.5.5",
     "jszip": "^2.6.1",
     "redis": "^2.6.5",
-    "winston": "^2.4.0",
-    "winston-daily-rotate-file": "^1.7.2",
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^3.8.0",
     "winston-logstash": "^0.4.0",
     "winston-papertrail": "^1.0.5",
     "xml": "^1.0.1"
