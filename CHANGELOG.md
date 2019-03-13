@@ -1,5 +1,8 @@
 ## Change Log
 
+### v5.2.1 (2019/03/13)
+- fix incorrect cloud workers stopping with winston logger enabled 
+
 ### v5.2.0 (2019/03/05)
 - add an ability to put worker's logs into file 
 
