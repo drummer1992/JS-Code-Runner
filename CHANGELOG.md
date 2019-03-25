@@ -1,5 +1,8 @@
 ## Change Log
 
+### v5.2.2 (2019/03/25)
+- fix issue with concurrent workers when caching is not enabled
+
 ### v5.2.1 (2019/03/13)
 - fix incorrect cloud workers stopping with winston logger enabled 
 
