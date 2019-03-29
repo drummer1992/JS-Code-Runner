@@ -9,7 +9,7 @@
       "interval": 5,
       "timeout": 10
     },
-    "lowPriorityThreshold": 0
+    "lowPriorityThreshold": 0.8
   },
   "backendless": {
     "msgBroker": {
