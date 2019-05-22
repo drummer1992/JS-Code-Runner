@@ -1,6 +1,6 @@
 {
   "name": "backendless-coderunner",
-  "version": "5.2.2-st.1",
+  "version": "5.2.6-st.2",
   "description": "Backendless CodeRunner for Node.js",
   "scripts": {
     "test": "mocha",
@@ -36,12 +36,12 @@
   ],
   "dependencies": {
     "backendless": "^5.2.9-st.1",
-    "backendless-consul-config-provider": "^1.0.6",
+    "backendless-consul-config-provider": "^1.0.12",
     "commander": "^2.12.2",
     "glob": "^6.0.4",
+    "ioredis": "^4.9.0",
     "jsdoc": "^3.5.5",
     "jszip": "^2.6.1",
-    "redis": "^2.6.5",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^3.8.0",
     "winston-logstash": "^0.4.0",
