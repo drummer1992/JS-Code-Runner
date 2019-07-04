@@ -1,5 +1,5 @@
 {
-  "managementHttpPort": 2992,
+  "managementHttpPort": null,
   "workers": {
     "cache": {
       "limit": 20
