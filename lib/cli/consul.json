@@ -5,6 +5,7 @@
       "port": "config/redis/bl/production/port",
       "password": "config/redis/bl/production/password",
       "tls": {
+        "rejectUnauthorized": "config/redis/bl/production/tls/rejectUnauthorized",
         "ca": "config/redis/bl/production/tls/ca",
         "cert": "config/redis/bl/production/tls/cert",
         "key": "config/redis/bl/production/tls/key",
