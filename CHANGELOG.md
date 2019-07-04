@@ -1,5 +1,21 @@
 ## Change Log
 
+### v5.2.7 (2019/07/04)
+- add Redis TSL config mapping for Consul  
+- upgrade `backendless-consul-config-provider` module to v1.0.13
+
+### v5.2.6 (2019/04/24)
+- upgrade `backendless-consul-config-provider` module to v1.0.12
+
+### v5.2.5 (2019/04/24)
+- upgrade `backendless-consul-config-provider` module to v1.0.11
+
+### v5.2.4 (2019/04/24)
+- upgrade `backendless-consul-config-provider` module to v1.0.10
+
+### v5.2.3 (2019/04/24)
+- add Sentinel Support
+
 ### v5.2.2 (2019/03/25)
 - fix issue with concurrent workers when caching is not enabled
 
