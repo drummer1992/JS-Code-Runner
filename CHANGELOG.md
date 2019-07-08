@@ -1,5 +1,8 @@
 ## Change Log
 
+### v5.2.8 (2019/07/08)
+- add "msgBroker.ssl" config option for quick enabling SSL connection to Redis 
+
 ### v5.2.7 (2019/07/04)
 - add Redis TSL config mapping for Consul  
 - upgrade `backendless-consul-config-provider` module to v1.0.13
