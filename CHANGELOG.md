@@ -1,5 +1,9 @@
 ## Change Log
 
+### v5.4.0 (2019/07/09)
+- upgrade `JS-SDK` to v5.4.0 
+- add EventHandlers for EmailTemplates 
+
 ### v5.2.8 (2019/07/08)
 - add "msgBroker.ssl" config option for quick enabling SSL connection to Redis 
 
