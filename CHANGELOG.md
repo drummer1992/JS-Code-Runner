@@ -1,5 +1,8 @@
 ## Change Log
 
+### v5.4.2 (2019/08/13)
+- add an ability to specify HTTP Response Headers 
+
 ### v5.4.0 (2019/07/09)
 - upgrade `JS-SDK` to v5.4.0 
 - add EventHandlers for EmailTemplates 
