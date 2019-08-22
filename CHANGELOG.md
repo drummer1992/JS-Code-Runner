@@ -1,5 +1,8 @@
 ## Change Log
 
+### v5.4.3 (2019/08/22)
+- upgrade `JS-SDK` to v5.4.2 
+
 ### v5.4.2 (2019/08/13)
 - add an ability to specify HTTP Response Headers 
 
