@@ -1,5 +1,9 @@
 ## Change Log
 
+### v5.4.4 (2019/08/30)
+- upgrade `JS-SDK` to v5.4.3
+- fix a problem when specified custom headers are not accessible in Web Browser   
+
 ### v5.4.3 (2019/08/22)
 - upgrade `JS-SDK` to v5.4.2 
 
