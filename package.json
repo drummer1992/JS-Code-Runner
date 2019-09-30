@@ -38,6 +38,7 @@
     "backendless": "^5.1.0",
     "backendless-consul-config-provider": "^1.0.4",
     "commander": "^2.12.2",
+    "coralogix-logger-winston": "^1.0.10",
     "glob": "^6.0.4",
     "jsdoc": "^3.5.5",
     "jszip": "^2.6.1",
