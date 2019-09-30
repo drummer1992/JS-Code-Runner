@@ -27,6 +27,9 @@
       "examples/services/wsdl-proxy/**"
     ]
   },
+  "loggers": {
+    "file": false
+  },
   "sandbox": true,
   "verbose": false
 }
