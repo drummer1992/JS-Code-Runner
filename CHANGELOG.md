@@ -1,5 +1,8 @@
 ## Change Log
 
+### v5.4.5 (2019/10/28)
+- remove setting "access-control-expose-headers" response HTTP header
+
 ### v5.4.4 (2019/08/30)
 - upgrade `JS-SDK` to v5.4.3
 - fix a problem when specified custom headers are not accessible in Web Browser   
