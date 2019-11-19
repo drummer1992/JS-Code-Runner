@@ -12,7 +12,7 @@ Backendless.ServerCode.customEvent('movieRating', request => {
     condition: `movie = '${movie}'`
   }
 
-  return Backendless.Persistence.of('Review').find(query).then(
+  return Backendless.Data.of('Review').find(query).then(
     reviews => {
       const totalReviews = reviews.data.length
       const totalStars = reviews.data.reduce((memo, review) => memo + review.stars, 0)
