@@ -32,7 +32,7 @@ Backendless.serverURL = app.server
 Backendless.initApp(app.id, app.restKey)
 
 function cleanTable(tableName) {
-  const dataStore = Backendless.Persistence.of(tableName)
+  const dataStore = Backendless.Data.of(tableName)
   const restUrl = dataStore.restUrl
 
   dataStore.restUrl = `${Backendless.appPath}/data/bulk/${dataStore.className}?where=created>0`
@@ -293,7 +293,7 @@ describe('In CLOUD', function() {
 
   describe('timer', function() {
     before(function() {
-      return Backendless.Persistence.of('TestTimer').save({})
+      return Backendless.Data.of('TestTimer').save({})
     })
 
     beforeEach(function() {
@@ -304,7 +304,7 @@ describe('In CLOUD', function() {
       this.timeout(200000)
 
       function timerTick() {
-        return Backendless.Persistence.of('TestTimer').save({ tick: new Date().getTime() })
+        return Backendless.Data.of('TestTimer').save({ tick: new Date().getTime() })
       }
 
       const timer = {
@@ -322,7 +322,7 @@ describe('In CLOUD', function() {
         .addTimer(timer)
         .deploy()
         .then(() => promise.wait(130000)) //wait for 2 ticks + pad
-        .then(() => Backendless.Persistence.of('TestTimer').find())
+        .then(() => Backendless.Data.of('TestTimer').find())
         .then(result => assert.equal(result.data.length, 2))
     })
   })
