@@ -1,5 +1,8 @@
 ## Change Log
 
+### v5.4.6 (2020/01/09)
+- upgrade `JS-SDK` to v5.7.1
+
 ### v5.4.5 (2019/10/28)
 - remove setting "access-control-expose-headers" response HTTP header
 
