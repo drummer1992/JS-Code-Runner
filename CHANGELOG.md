@@ -1,5 +1,8 @@
 ## Change Log
 
+### v5.4.7 (2020/02/07)
+- fix a problem with initializing JS-SDK
+
 ### v5.4.6 (2020/01/09)
 - upgrade `JS-SDK` to v5.7.1
 
