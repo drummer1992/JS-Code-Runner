@@ -1,5 +1,9 @@
 ## Change Log
 
+### v5.4.10 (2020/05/07)
+- upgrade `JS-SDK` to v5.8.12
+- add "beforeLoginAsGuest" and "afterLoginAsGuest" Event Handlers
+
 ### v5.4.9 (2020/03/11)
 - upgrade `JS-SDK` to v5.8.6
 
