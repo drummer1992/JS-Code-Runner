@@ -1,5 +1,8 @@
 ## Change Log
 
+### v5.4.11 (2020/05/15)
+- fix a problem when EventHandler fails with "not existing user token" 
+
 ### v5.4.10 (2020/05/07)
 - upgrade `JS-SDK` to v5.8.12
 - add "beforeLoginAsGuest" and "afterLoginAsGuest" Event Handlers
