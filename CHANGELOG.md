@@ -1,5 +1,9 @@
 ## Change Log
 
+### v5.5.0 (2020/05/29)
+- provide public config in Backendless.Config
+- put fileDownloadUrl, publicAPIUrl and internalAPIUrl to Backendless.Config
+
 ### v5.4.11 (2020/05/15)
 - fix a problem when EventHandler fails with "not existing user token" 
 
