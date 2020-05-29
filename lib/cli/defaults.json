@@ -9,9 +9,6 @@
   },
   "backendless": {
     "msgBroker": {},
-    "publicHost": "localhost",
-    "publicPort": "9000",
-    "publicProtocol": "http",
     "public": {
       "fileDownloadUrl": "http://localhost:9000",
       "publicAPIUrl": "http://localhost:9000",
