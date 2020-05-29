@@ -8,7 +8,12 @@
     }
   },
   "backendless": {
-    "msgBroker": {}
+    "msgBroker": {},
+    "public": {
+      "fileDownloadUrl": "http://localhost:9000",
+      "publicAPIUrl": "http://localhost:9000",
+      "internalAPIUrl": "http://localhost:9000"
+    }
   },
   "app": {
     "id": "",

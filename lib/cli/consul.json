@@ -15,6 +15,12 @@
         "keyFile": "config/redis/bl/production/tls/keyFile",
         "passphrase": "config/redis/bl/production/tls/passphrase"
       }
+    },
+    "publicHost": "config/server/publicHost",
+    "publicPort": "config/server/publicPort",
+    "publicProtocol": "config/server/publicProtocol",
+    "public": {
+      "fileDownloadUrl": "config/files/download/host"
     }
   }
 }
