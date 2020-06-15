@@ -1,5 +1,8 @@
 ## Change Log
 
+### v6.0.0 (2020/06/15)
+- upgrade `JS-SDK` to v6.0.0
+
 ### v5.5.0 (2020/05/29)
 - provide public config in Backendless.Config
 - put fileDownloadUrl, publicAPIUrl and internalAPIUrl to Backendless.Config
