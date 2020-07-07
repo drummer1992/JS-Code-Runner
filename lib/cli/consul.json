@@ -22,5 +22,9 @@
     "public": {
       "fileDownloadUrl": "config/files/download/host"
     }
+  },
+  "compression": {
+    "debug": "config/servercode/compression/debug",
+    "prod": "config/servercode/compression/prod"
   }
 }
