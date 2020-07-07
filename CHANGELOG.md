@@ -1,5 +1,9 @@
 ## Change Log
 
+### v6.0.1 (2020/07/07)
+- add traffic compression between server and coderunner
+- upgrade `JS-SDK` to v6.0.6
+
 ### v6.0.0 (2020/06/15)
 - upgrade `JS-SDK` to v6.0.0
 
