@@ -24,6 +24,7 @@
   "verbose": false,
   "compression": {
     "debug": false,
-    "prod": false
+    "prod": false,
+    "cloud": false
   }
 }
