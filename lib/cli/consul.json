@@ -25,6 +25,7 @@
   },
   "compression": {
     "debug": "config/servercode/compression/debug",
-    "prod": "config/servercode/compression/prod"
+    "prod": "config/servercode/compression/prod",
+    "cloud": "config/servercode/compression/cloud"
   }
 }
