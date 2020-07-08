@@ -1,5 +1,8 @@
 ## Change Log
 
+### v6.0.2 (2020/07/08)
+- fix traffic compression between server and coderunner and config prop names
+
 ### v6.0.1 (2020/07/07)
 - add traffic compression between server and coderunner
 - upgrade `JS-SDK` to v6.0.6
