@@ -1,5 +1,8 @@
 ## Change Log
 
+### v6.1.0 (2020/09/21)
+- add graceful shutdown, the JS-CodeRunner will wait until complete all the taken tasks    
+
 ### v6.0.2 (2020/07/08)
 - fix traffic compression between server and coderunner and config prop names
 
