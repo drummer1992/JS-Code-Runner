@@ -29,7 +29,8 @@
     ]
   },
   "loggers": {
-    "file": false
+    "file": false,
+    "workers": true
   },
   "sandbox": true,
   "verbose": false
