@@ -1,5 +1,8 @@
 ## Change Log
 
+### v6.1.1 (2020/09/24)
+- fix problem with unkillable workers when worker's cache is disabled
+
 ### v6.1.0 (2020/09/21)
 - add graceful shutdown, the JS-CodeRunner will wait until complete all the taken tasks    
 
