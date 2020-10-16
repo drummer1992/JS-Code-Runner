@@ -1,5 +1,9 @@
 ## Change Log
 
+### v6.1.2 (2020/10/16)
+- fix `PersistenceItem` API for loading object by id 
+- upgrade `JS-SDK` to v6.1.2
+
 ### v6.1.1 (2020/09/24)
 - fix problem with unkillable workers when worker's cache is disabled
 
