@@ -1,5 +1,9 @@
 ## Change Log
 
+### v6.1.3 (2020/10/30)
+- add support for `before/after transaction` events 
+- upgrade `JS-SDK` to v6.1.4
+
 ### v6.1.2 (2020/10/16)
 - fix `PersistenceItem` API for loading object by id 
 - upgrade `JS-SDK` to v6.1.2
