@@ -1,5 +1,8 @@
 ## Change Log
 
+### v6.1.4 (2020/11/03)
+- add support for `before/after OAuth login/register` events 
+
 ### v6.1.3 (2020/10/30)
 - add support for `before/after transaction` events 
 - upgrade `JS-SDK` to v6.1.4
