@@ -1,5 +1,10 @@
 ## Change Log
 
+### v6.1.5 (2020/11/12)
+- improve getting current statistics about workers
+- resolve worker only after app logs are flushed to the server
+- add an observer for workers load to detect when there are not enough workers 
+
 ### v6.1.4 (2020/11/03)
 - add support for `before/after OAuth login/register` events 
 
