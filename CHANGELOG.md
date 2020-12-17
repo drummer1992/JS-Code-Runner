@@ -1,5 +1,10 @@
 ## Change Log
 
+### v6.1.6 (2020/12/17)
+- remove legacy GEO API
+- upgrade `JS-SDK` to v6.1.8
+- upgrade `backendless-consul-config-provider` module to v1.0.14
+
 ### v6.1.5 (2020/11/12)
 - improve getting current statistics about workers
 - resolve worker only after app logs are flushed to the server
