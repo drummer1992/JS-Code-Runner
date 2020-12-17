@@ -25,7 +25,7 @@
     "url": "git@github.com:Backendless/JS-Code-Runner.git"
   },
   "bugs": {
-    "url": "http://support.backendless.com",
+    "url": "https://support.backendless.com",
     "email": "info@backendless.com"
   },
   "engines": {
@@ -35,8 +35,8 @@
     "backendless"
   ],
   "dependencies": {
-    "backendless": "^6.1.4",
-    "backendless-consul-config-provider": "^1.0.13",
+    "backendless": "^6.1.8",
+    "backendless-consul-config-provider": "^1.0.14",
     "commander": "^2.12.2",
     "glob": "^6.0.4",
     "ioredis": "^4.9.0",
