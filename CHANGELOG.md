@@ -1,5 +1,10 @@
 ## Change Log
 
+### v6.1.7 (2021/02/23)
+- improve the performance of json stringification 
+- upgrade `JS-SDK` to v6.2.3
+- upgrade `backendless-consul-config-provider` module to v1.0.15
+
 ### v6.1.6 (2020/12/17)
 - remove legacy GEO API
 - upgrade `JS-SDK` to v6.1.8
