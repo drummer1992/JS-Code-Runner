@@ -1,5 +1,8 @@
 ## Change Log
 
+### v6.1.8 (2021/03/15)
+- add `appId` to the process title 
+
 ### v6.1.7 (2021/02/23)
 - improve the performance of json stringification 
 - upgrade `JS-SDK` to v6.2.3
