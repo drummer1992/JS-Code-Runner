@@ -1,5 +1,8 @@
 ## Change Log
 
+### v6.1.9 (2021/03/15)
+- fix killing stuck workers 
+
 ### v6.1.8 (2021/03/15)
 - add `appId` to the process title 
 
