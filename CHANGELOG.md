@@ -1,5 +1,8 @@
 ## Change Log
 
+### v6.1.11 (2021/05/19)
+- fix using of httpProtocol for initializing the JS-SDK
+
 ### v6.1.10 (2021/05/19)
 - add an ability to init the JS-SDK with custom domain only
 
