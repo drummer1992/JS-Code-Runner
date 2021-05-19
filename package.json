@@ -1,6 +1,6 @@
 {
   "name": "backendless-coderunner",
-  "version": "6.1.9",
+  "version": "6.1.10",
   "description": "Backendless CodeRunner for Node.js",
   "scripts": {
     "test": "mocha",
@@ -40,7 +40,7 @@
     "commander": "^2.12.2",
     "glob": "^6.0.4",
     "ioredis": "^4.9.0",
-    "jsdoc": "^3.6.3",
+    "jsdoc": "^3.6.7",
     "jszip": "^2.6.1",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^3.8.0",
@@ -53,7 +53,7 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "eslint": "^4.19.1",
-    "mocha": "^5.2.0",
+    "mocha": "^8.4.0",
     "should": "^13.2.1",
     "supertest": "^3.1.0"
   }

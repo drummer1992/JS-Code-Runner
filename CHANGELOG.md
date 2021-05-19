@@ -1,5 +1,8 @@
 ## Change Log
 
+### v6.1.10 (2021/05/19)
+- add an ability to init the JS-SDK with custom domain only
+
 ### v6.1.9 (2021/03/15)
 - fix killing stuck workers 
 
