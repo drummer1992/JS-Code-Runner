@@ -1,5 +1,9 @@
 ## Change Log
 
+### v6.1.12 (2021/05/20)
+- temporary rollback changes related to customDomain
+- upgrade `JS-SDK` to v6.2.11
+
 ### v6.1.11 (2021/05/19)
 - fix using of httpProtocol for initializing the JS-SDK
 
