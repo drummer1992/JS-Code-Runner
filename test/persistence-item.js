@@ -67,10 +67,14 @@ describe('PersistenceItem', function() {
     const result = await Foo.count('foo>123')
 
     expect(req1).to.deep.include({
-      method : 'GET',
-      path   : `${APP_PATH}/data/Foo/count?where=foo%3E123`,
-      headers: {},
-      body   : undefined
+      method : 'POST',
+      path   : `${APP_PATH}/data/Foo/count`,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body   : {
+        where: 'foo>123'
+      }
     })
 
     expect(result).to.be.equal(123)
