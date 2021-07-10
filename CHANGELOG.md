@@ -1,5 +1,10 @@
 ## Change Log
 
+### v6.2.0 (2021/07/10)
+- upgrade `JS-SDK` to v6.2.20
+- add "before/afterGroup" and "before/afterCountInGroup" Event Handlers for the Data Service
+- add support for Event Handlers of the Cache and AtomicOperation Services
+
 ### v6.1.12 (2021/05/20)
 - temporary rollback changes related to customDomain
 - upgrade `JS-SDK` to v6.2.11
