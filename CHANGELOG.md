@@ -1,5 +1,8 @@
 ## Change Log
 
+### v6.2.1 (2021/07/27)
+- upgrade `JS-SDK` to v6.2.22
+
 ### v6.2.0 (2021/07/10)
 - upgrade `JS-SDK` to v6.2.20
 - add "before/afterGroup" and "before/afterCountInGroup" Event Handlers for the Data Service
