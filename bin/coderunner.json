@@ -11,6 +11,9 @@
     },
     "lowPriorityThreshold": 0.8
   },
+  "deploy": {
+    "progressInterval": 500
+  },
   "backendless": {
     "msgBroker": {
       "host": "cl.backendless.com",
