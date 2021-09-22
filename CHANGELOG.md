@@ -1,5 +1,9 @@
 ## Change Log
 
+### v6.3.0 (2021/09/22)
+- fix the problem with timeout when deploying a big business logic, change deployment process to asynchronous 
+- upgrade `JS-SDK` to v6.2.25
+
 ### v6.2.1 (2021/07/27)
 - upgrade `JS-SDK` to v6.2.22
 
