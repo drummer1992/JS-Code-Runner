@@ -1,5 +1,8 @@
 ## Change Log
 
+### v6.3.2 (2021/11/02)
+- enable using sentinel auth
+
 ### v6.3.1 (2021/10/07)
 - upgrade `JS-SDK` to v6.3.1
 
