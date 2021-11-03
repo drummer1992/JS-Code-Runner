@@ -36,7 +36,7 @@
   ],
   "dependencies": {
     "backendless": "^6.3.1",
-    "backendless-consul-config-provider": "^1.0.16",
+    "backendless-consul-config-provider": "^1.0.17",
     "commander": "^2.12.2",
     "glob": "^6.0.4",
     "ioredis": "^4.9.0",
