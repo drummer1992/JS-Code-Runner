@@ -1,5 +1,10 @@
 ## Change Log
 
+### v6.3.3 (2021/11/03)
+- improve logging for the master process
+- fix using sentinel auth
+- upgrade `JS-SDK` to v6.3.2
+
 ### v6.3.2 (2021/11/02)
 - enable using sentinel auth
 
