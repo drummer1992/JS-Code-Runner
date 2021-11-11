@@ -2,6 +2,7 @@
   "workers": {
     "cache": false,
     "concurrent": 4,
+    "minIdle": 4,
     "heartbeat": {
       "interval": 5,
       "timeout": 10
