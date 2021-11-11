@@ -1,5 +1,8 @@
 ## Change Log
 
+### v6.3.4 (2021/11/11)
+- add pre running idle workers
+
 ### v6.3.3 (2021/11/03)
 - improve logging for the master process
 - fix using sentinel auth
