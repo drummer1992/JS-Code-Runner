@@ -1,5 +1,8 @@
 ## Change Log
 
+### v6.3.5 (2021/11/12)
+- fix pre running idle workers when the caching enabled
+
 ### v6.3.4 (2021/11/11)
 - add pre running idle workers
 
