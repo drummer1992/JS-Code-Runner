@@ -1,5 +1,8 @@
 ## Change Log
 
+### v6.3.7 (2021/11/24)
+- fix generating a zip file for deploying
+
 ### v6.3.6 (2021/11/24)
 - upgrade NPM modules to the latest versions
 ```
