@@ -1,5 +1,21 @@
 ## Change Log
 
+### v6.3.6 (2021/11/24)
+- upgrade NPM modules to the latest versions
+```
+"commander":                 "^2.12.2" => "^8.3.0"
+"glob":                      "^6.0.4"  => "^7.2.0"
+"ioredis":                   "^4.9.0"  => "^4.28.1"
+"jszip":                     "^2.6.1"  => "^3.7.1"
+"winston":                   "^3.2.1"  => "^3.3.3"
+"winston-daily-rotate-file": "^3.8.0"  => "^4.5.5"
+"chai":                      "^4.2.0"  => "^4.3.4"
+"eslint":                    "^4.19.1" => "^7.32.0"
+"mocha":                     "^8.4.0"  => "^9.1.3"
+"should":                    "^13.2.1" => "^13.2.3"
+"supertest":                 "^3.1.0"  => "^6.1.6"
+```
+
 ### v6.3.5 (2021/11/12)
 - fix pre running idle workers when the caching enabled
 
