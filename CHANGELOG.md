@@ -1,5 +1,8 @@
 ## Change Log
 
+### v6.3.8 (2021/11/25)
+- do not cache worker if it fails due to FS error
+
 ### v6.3.7 (2021/11/24)
 - fix generating a zip file for deploying
 
