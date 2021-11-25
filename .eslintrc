@@ -9,6 +9,9 @@
   },
   "rules": {
 
+    "no-prototype-builtins": 0,
+    "no-setter-return": 0,
+
     "require-await": 2,
 
     // disallow declaration of variables already declared in the outer scope
