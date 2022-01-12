@@ -1,5 +1,8 @@
 ## Change Log
 
+### v6.3.9 (2022/01/12)
+- add support for `before/after Upsert/UpsertBulk` events 
+
 ### v6.3.8 (2021/11/25)
 - do not cache worker if it fails due to FS error
 
