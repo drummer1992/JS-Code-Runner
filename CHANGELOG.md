@@ -1,5 +1,8 @@
 ## Change Log
 
+### v6.3.10 (2022/01/14)
+- add `compression.threshold` config 
+
 ### v6.3.9 (2022/01/12)
 - add support for `before/after Upsert/UpsertBulk` events 
 
