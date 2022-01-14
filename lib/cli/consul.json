@@ -26,6 +26,7 @@
   "compression": {
     "debug": "config/servercode/compression/debug",
     "prod": "config/servercode/compression/prod",
-    "cloud": "config/servercode/compression/cloud"
+    "cloud": "config/servercode/compression/cloud",
+    "threshold": "config/servercode/compression/threshold"
   }
 }

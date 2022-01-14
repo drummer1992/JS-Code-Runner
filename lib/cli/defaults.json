@@ -29,6 +29,7 @@
   "compression": {
     "debug": false,
     "prod": false,
-    "cloud": false
+    "cloud": false,
+    "threshold": 8192
   }
 }
