@@ -35,6 +35,7 @@
     "backendless"
   ],
   "dependencies": {
+    "@babel/runtime": "^7.16.3",
     "backendless": "^6.3.2",
     "backendless-consul-config-provider": "^1.0.17",
     "commander": "^8.3.0",
